@@ -1,5 +1,4 @@
 /*  TODO Add test imports here
-import "../packages/core/src/index.spec";
 import "../packages/editor/src/index.spec";
 import "../packages/gauge/src/index.spec";
 import "../packages/layout/src/index.spec";
@@ -11,4 +10,4 @@ import "../packages/sankey/src/index.spec";
 import "../packages/treemap/src/index.spec";
 */
 
-export const todo2 = "Silence Compiler Errors";
+import "../packages/core/src/index.spec";

@@ -8,9 +8,5 @@ export * from "@hpcc-js/wc-pie";
 export * from "@hpcc-js/wc-preview";
 export * from "@hpcc-js/wc-sankey";
 export * from "@hpcc-js/wc-treemap";
-export { allMeta } from "@hpcc-js/wc-core";
 */
-
-export function allMeta() {
-    return {};
-}
+export { allMeta } from "@hpcc-js/wc-core";

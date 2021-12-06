@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "serve-dev",
+			"type": "npm",
+			"script": "serve-dev",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
+			"label": "build",
+			"dependsOn": [
+				"serve-dev"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		}
+	]
+}

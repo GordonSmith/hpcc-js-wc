@@ -1,0 +1,70 @@
+{
+  "name": "@hpcc-js/wc",
+  "version": "0.0.0",
+  "description": "hpcc-js - Web Components Library",
+  "keywords": [],
+  "main": "dist/esm/index.js",
+  "browser": "dist/index.js",
+  "jsdelivr": "dist/index.min.js",
+  "unpkg": "dist/index.min.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist/*",
+    "types/*"
+  ],
+  "scripts": {
+    "clean": "rimraf build dist lib* types *.tsbuildinfo",
+    "compile": "tsc -p ./tsconfig.json",
+    "compile-watch": "npm run compile -- -w",
+    "bundle": "rollup -c",
+    "bundle-watch": "npm run bundle -- -w",
+    "build": "run-s compile bundle",
+    "standard-version": "standard-version",
+    "standard-version-dryrun": "standard-version --dry-run",
+    "git-push": "git push --follow-tags upstream trunk",
+    "watch": "run-p compile-watch bundle-watch",
+    "serve-dev": "vite",
+    "serve-prod": "http-server -o /index.html",
+    "lint": "eslint src/**/*.ts",
+    "lint-fix": "npm run lint -- --fix",
+    "test": "run-s build serve-prod",
+    "tag": "run-s standard-version git-push"
+  },
+  "dependencies": {
+    "@hpcc-js/util": "^2.40.0",
+    "@microsoft/fast-element": "^1.6.2",
+    "d3": "^7.1.1",
+    "d3-sankey": "^0.12.3",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.8",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.4.0",
+    "http-server": "^14.0.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.60.2",
+    "rollup-plugin-filesize": "^9.1.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-transform-tagged-template": "^0.0.3",
+    "standard-version": "^9.3.2",
+    "typescript": "^4.5.2",
+    "vite": "^2.6.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hpcc-systems/hpcc-js-wc.git"
+  },
+  "author": "Gordon Smith <gordonjsmith@gmail.com>",
+  "contributors": [],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hpcc-systems/hpcc-js-wc/issues"
+  },
+  "homepage": "https://github.com/hpcc-systems/hpcc-js-wc#readme"
+}

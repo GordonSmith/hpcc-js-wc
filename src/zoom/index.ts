@@ -56,7 +56,8 @@ export class HPCCZoomElement extends HPCCElement {
             .extent([[0, 0], [rect.width, rect.height]])
             .scaleExtent([this.scaleMin, this.scaleMax])
             ;
-        if (changes.x || changes.y || changes.scale) {
+
+        if (changes.x !== undefined || changes.y !== undefined || changes.scale !== undefined) {
             this.content
                 .attr("transform", d3.zoomIdentity.translate(this.x, this.y).scale(this.scale))
                 ;

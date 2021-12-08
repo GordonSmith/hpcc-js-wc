@@ -1,4 +1,6 @@
-dist
-node_modules
-types
+/dist
+/docs/.vitepress/dist
+/docs/node_modules
+/node_modules
+/types
 *.tsbuildinfo

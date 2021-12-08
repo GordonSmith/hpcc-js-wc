@@ -43,7 +43,8 @@ export class HPCCSankeyElement extends HPCCElement {
     update(changes: ChangeMap) {
         super.update(changes);
         if (this.links?.length) {
-            SankeyChart({ nodesG: this.nodesG, linksG: this.linksG, textG: this.textG }, { nodes: undefined, links: this.links }, {
+            const links = typeof this.links === "string" ? JSON.parse(this.links) : this.links;
+            SankeyChart({ nodesG: this.nodesG, linksG: this.linksG, textG: this.textG }, { nodes: undefined, links }, {
                 nodeGroup: d => d.id.split(/\W/)[0], // take first word for color
                 nodeAlign: this.nodeAlign,
                 linkColor: this.linkColor, // e.g., "source" or "target"; set by input above

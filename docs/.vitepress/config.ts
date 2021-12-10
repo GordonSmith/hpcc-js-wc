@@ -6,17 +6,18 @@ module.exports = {
 
   themeConfig: {
     repo: 'GordonSmith/hpcc-js-wc',
+    docsDir: 'docs',
     docsBranch: 'trunk',
     editLinks: true,
     editLinkText: 'Edit this page on GitHub',
     lastUpdated: 'Last Updated',
 
     nav: [
-      { text: 'Guide', link: '/docs/guide/getting-started', activeMatch: '^/docs/guide/' },
+      { text: 'Guide', link: '/guide/getting-started', activeMatch: '^/guide/' },
       {
         text: 'Components',
-        link: '/docs/components/',
-        activeMatch: '^/docs/components/'
+        link: '/components/',
+        activeMatch: '^/components/'
       },
       {
         text: 'Release Notes',
@@ -25,8 +26,8 @@ module.exports = {
     ],
 
     sidebar: {
-      '/docs/guide/': getGuideSidebar(),
-      '/docs/components/': getComponentsSidebar(),
+      '/guide/': getGuideSidebar(),
+      '/components/': getComponentsSidebar(),
     }
   },
 
@@ -45,13 +46,13 @@ function getGuideSidebar() {
     {
       text: 'Introduction',
       children: [
-        { text: 'Getting Started', link: '/docs/guide/getting-started' },
+        { text: 'Getting Started', link: '/guide/getting-started' },
       ]
     },
     {
       text: 'Advanced',
       children: [
-        { text: 'API Reference', link: '/docs/guide/api' },
+        { text: 'API Reference', link: '/guide/api' },
       ]
     }
   ]
@@ -62,13 +63,13 @@ function getComponentsSidebar() {
     {
       text: 'Visualizations',
       children: [
-        { text: 'Sankey', link: '/docs/components/sankey' },
+        { text: 'Sankey', link: '/components/sankey' },
       ]
     },
     {
       text: 'Layouts',
       children: [
-        { text: 'Zoom', link: '/docs/components/zoom' },
+        { text: 'Zoom', link: '/components/zoom' },
       ]
     }
   ]

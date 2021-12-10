@@ -14,7 +14,7 @@
     "types/*"
   ],
   "scripts": {
-    "docs:dev": "vitepress dev .",
+    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs",
     "docs:copy-images": "copyfiles -u 2 \"./docs/images/**/*.{png,jpg,gif}\" ./docs/.vitepress/dist/images/",

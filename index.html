@@ -4,49 +4,58 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>hpcc-js-wc</title>
     <!-- <script type="module" src="./src/index.ts"></script> -->
     <!-- <script type="module" src="./dist/index.min.js"></script> -->
     <script>
+        //  Import  ---
+        import(window.location.port === "3000" ? "./src/index.ts" : "./dist/index.min.js");
         const links = [{ "source": "Agricultural 'waste'", "target": "Bio-conversion", "value": 124.729 }, { "source": "Bio-conversion", "target": "Liquid", "value": 0.597 }, { "source": "Bio-conversion", "target": "Losses", "value": 26.862 }, { "source": "Bio-conversion", "target": "Solid", "value": 280.322 }, { "source": "Bio-conversion", "target": "Gas", "value": 81.144 }, { "source": "Biofuel imports", "target": "Liquid", "value": 35 }, { "source": "Biomass imports", "target": "Solid", "value": 35 }, { "source": "Coal imports", "target": "Coal", "value": 11.606 }, { "source": "Coal reserves", "target": "Coal", "value": 63.965 }, { "source": "Coal", "target": "Solid", "value": 75.571 }, { "source": "District heating", "target": "Industry", "value": 10.639 }, { "source": "District heating", "target": "Heating and cooling - commercial", "value": 22.505 }, { "source": "District heating", "target": "Heating and cooling - homes", "value": 46.184 }, { "source": "Electricity grid", "target": "Over generation / exports", "value": 104.453 }, { "source": "Electricity grid", "target": "Heating and cooling - homes", "value": 113.726 }, { "source": "Electricity grid", "target": "H2 conversion", "value": 27.14 }, { "source": "Electricity grid", "target": "Industry", "value": 342.165 }, { "source": "Electricity grid", "target": "Road transport", "value": 37.797 }, { "source": "Electricity grid", "target": "Agriculture", "value": 4.412 }, { "source": "Electricity grid", "target": "Heating and cooling - commercial", "value": 40.858 }, { "source": "Electricity grid", "target": "Losses", "value": 56.691 }, { "source": "Electricity grid", "target": "Rail transport", "value": 7.863 }, { "source": "Electricity grid", "target": "Lighting & appliances - commercial", "value": 90.008 }, { "source": "Electricity grid", "target": "Lighting & appliances - homes", "value": 93.494 }, { "source": "Gas imports", "target": "Ngas", "value": 40.719 }, { "source": "Gas reserves", "target": "Ngas", "value": 82.233 }, { "source": "Gas", "target": "Heating and cooling - commercial", "value": 0.129 }, { "source": "Gas", "target": "Losses", "value": 1.401 }, { "source": "Gas", "target": "Thermal generation", "value": 151.891 }, { "source": "Gas", "target": "Agriculture", "value": 2.096 }, { "source": "Gas", "target": "Industry", "value": 48.58 }, { "source": "Geothermal", "target": "Electricity grid", "value": 7.013 }, { "source": "H2 conversion", "target": "H2", "value": 20.897 }, { "source": "H2 conversion", "target": "Losses", "value": 6.242 }, { "source": "H2", "target": "Road transport", "value": 20.897 }, { "source": "Hydro", "target": "Electricity grid", "value": 6.995 }, { "source": "Liquid", "target": "Industry", "value": 121.066 }, { "source": "Liquid", "target": "International shipping", "value": 128.69 }, { "source": "Liquid", "target": "Road transport", "value": 135.835 }, { "source": "Liquid", "target": "Domestic aviation", "value": 14.458 }, { "source": "Liquid", "target": "International aviation", "value": 206.267 }, { "source": "Liquid", "target": "Agriculture", "value": 3.64 }, { "source": "Liquid", "target": "National navigation", "value": 33.218 }, { "source": "Liquid", "target": "Rail transport", "value": 4.413 }, { "source": "Marine algae", "target": "Bio-conversion", "value": 4.375 }, { "source": "Ngas", "target": "Gas", "value": 122.952 }, { "source": "Oil imports", "target": "Oil", "value": 504.287 }, { "source": "Oil reserves", "target": "Oil", "value": 107.703 }, { "source": "Oil", "target": "Liquid", "value": 611.99 }, { "source": "Other waste", "target": "Solid", "value": 56.587 }, { "source": "Other waste", "target": "Bio-conversion", "value": 77.81 }, { "source": "Pumped heat", "target": "Heating and cooling - homes", "value": 193.026 }, { "source": "Pumped heat", "target": "Heating and cooling - commercial", "value": 70.672 }, { "source": "Solar PV", "target": "Electricity grid", "value": 59.901 }, { "source": "Solar Thermal", "target": "Heating and cooling - homes", "value": 19.263 }, { "source": "Solar", "target": "Solar Thermal", "value": 19.263 }, { "source": "Solar", "target": "Solar PV", "value": 59.901 }, { "source": "Solid", "target": "Agriculture", "value": 0.882 }, { "source": "Solid", "target": "Thermal generation", "value": 400.12 }, { "source": "Solid", "target": "Industry", "value": 46.477 }, { "source": "Thermal generation", "target": "Electricity grid", "value": 525.531 }, { "source": "Thermal generation", "target": "Losses", "value": 787.129 }, { "source": "Thermal generation", "target": "District heating", "value": 79.329 }, { "source": "Tidal", "target": "Electricity grid", "value": 9.452 }, { "source": "UK land based bioenergy", "target": "Bio-conversion", "value": 182.01 }, { "source": "Wave", "target": "Electricity grid", "value": 19.013 }, { "source": "Wind", "target": "Electricity grid", "value": 289.366 }];
         const links2 = [{ "source": "Agricultural 'waste'", "target": "Trams-conversion", "value": 1124.729 }, { "source": "Trams-conversion", "target": "Liquid", "value": 0.597 }, { "source": "Trams-conversion", "target": "Losses", "value": 26.862 }, { "source": "Trams-conversion", "target": "Solid", "value": 280.322 }, { "source": "Trams-conversion", "target": "Gas", "value": 81.144 }, { "source": "Biofuel imports", "target": "Liquid", "value": 35 }, { "source": "Biomass imports", "target": "Solid", "value": 35 }, { "source": "Coal imports", "target": "Coal", "value": 11.606 }, { "source": "Coal reserves", "target": "Coal", "value": 63.965 }, { "source": "Coal", "target": "Solid", "value": 75.571 }, { "source": "District heating", "target": "Industry", "value": 10.639 }, { "source": "District heating", "target": "Heating and cooling - commercial", "value": 22.505 }, { "source": "District heating", "target": "Heating and cooling - homes", "value": 46.184 }, { "source": "Electricity grid", "target": "Over generation / exports", "value": 104.453 }, { "source": "Electricity grid", "target": "Heating and cooling - homes", "value": 113.726 }, { "source": "Electricity grid", "target": "H2 conversion", "value": 27.14 }, { "source": "Electricity grid", "target": "Industry", "value": 342.165 }, { "source": "Electricity grid", "target": "Road transport", "value": 37.797 }, { "source": "Electricity grid", "target": "Agriculture", "value": 4.412 }, { "source": "Electricity grid", "target": "Heating and cooling - commercial", "value": 40.858 }, { "source": "Electricity grid", "target": "Losses", "value": 56.691 }, { "source": "Electricity grid", "target": "Rail transport", "value": 7.863 }, { "source": "Electricity grid", "target": "Lighting & appliances - commercial", "value": 90.008 }, { "source": "Electricity grid", "target": "Lighting & appliances - homes", "value": 93.494 }, { "source": "Gas imports", "target": "Ngas", "value": 40.719 }, { "source": "Gas reserves", "target": "Ngas", "value": 82.233 }, { "source": "Gas", "target": "Heating and cooling - commercial", "value": 0.129 }, { "source": "Gas", "target": "Losses", "value": 1.401 }, { "source": "Gas", "target": "Thermal generation", "value": 151.891 }, { "source": "Gas", "target": "Agriculture", "value": 2.096 }, { "source": "Gas", "target": "Industry", "value": 48.58 }, { "source": "Geothermal", "target": "Electricity grid", "value": 7.013 }, { "source": "H2 conversion", "target": "H2", "value": 20.897 }, { "source": "H2 conversion", "target": "Losses", "value": 6.242 }, { "source": "H2", "target": "Road transport", "value": 20.897 }, { "source": "Hydro", "target": "Electricity grid", "value": 6.995 }, { "source": "Liquid", "target": "Industry", "value": 121.066 }, { "source": "Liquid", "target": "International shipping", "value": 128.69 }, { "source": "Liquid", "target": "Road transport", "value": 135.835 }, { "source": "Liquid", "target": "Domestic aviation", "value": 14.458 }, { "source": "Liquid", "target": "International aviation", "value": 206.267 }, { "source": "Liquid", "target": "Agriculture", "value": 3.64 }, { "source": "Liquid", "target": "National navigation", "value": 33.218 }, { "source": "Liquid", "target": "Rail transport", "value": 4.413 }, { "source": "Marine algae", "target": "Trams-conversion", "value": 4.375 }, { "source": "Ngas", "target": "Gas", "value": 122.952 }, { "source": "Nuclear", "target": "Thermal generation", "value": 839.978 }, { "source": "Oil imports", "target": "Oil", "value": 504.287 }, { "source": "Oil reserves", "target": "Oil", "value": 107.703 }, { "source": "Oil", "target": "Liquid", "value": 611.99 }, { "source": "Other waste", "target": "Solid", "value": 56.587 }, { "source": "Other waste", "target": "Trams-conversion", "value": 77.81 }, { "source": "Pumped heat", "target": "Heating and cooling - homes", "value": 193.026 }, { "source": "Pumped heat", "target": "Heating and cooling - commercial", "value": 70.672 }];
     </script>
 </head>
 
 <body>
-    <hpcc-sankey id="sankey2" nodeAlign="left" linkColor="lightgray" height="400"></hpcc-sankey>
-    <div style="border:1px solid black;">
-        <hpcc-zoom id="zoom" scaleMin="0.5" scaleMax="2" height="400">
-            <hpcc-sankey id="sankey" nodeAlign="justify" linkColor="source-target" height="400"></hpcc-sankey>
-        </hpcc-zoom>
+    <hpcc-sankey>
+    </hpcc-sankey>
+    <hr>
+    <hpcc-sankey width=400 height=300>
+    </hpcc-sankey>
+    <hr>
+    <hpcc-sankey width="100%" height="300">
+    </hpcc-sankey>
+    <hr>
+    <div style=" height:500px;display:flex;flex-direction:column;">
+        <p style="flex: 0 0 auto;">Top</p>
+        <hpcc-sankey width="100%" height="100%" style="flex: 1 0 auto;">
+        </hpcc-sankey>
+        <p style="flex: 0 0 auto;">Bottom</p>
     </div>
-    <script type="module">
-        //  Import  ---
-        import(window.location.port === "3000" ? "./src/index.ts" : "./dist/index.min.js").then(() => {
-            const zoom = document.getElementById("zoom");
-            zoom.addEventListener("zoom", () => {
-                console.log("zoom", zoom.x, zoom.y, zoom.scale);
-            });
-
-            setTimeout(() => {
-                zoom.scale = 0.5;
-            }, 1000);
-
-            setTimeout(() => {
-                zoom.x = 0;
-                zoom.y = 0;
-                zoom.scale = 1;
-            }, 2000);
-
-            const sankey = document.getElementById("sankey");
-            sankey.links = links;
-
-            const sankey2 = document.getElementById("sankey2");
-            sankey2.links = links;
-        });
+    <hr>
+    <p>Top</p>
+    <hpcc-sankey height="40vh">
+        123
+    </hpcc-sankey>
+    <p>Bottom</p>
+    <hr>
+    <!-- <div style=" height:500px;display:flex;flex-direction:column;">
+        <p style="flex: 0 0 auto;">Top</p>
+        <hpcc-resize style="flex: 1 0 auto;">
+            123
+        </hpcc-resize>
+        <p style="flex: 0 0 auto;">Bottom</p>
+        </div>
+        <hr>
+        <div style="height:40vh">
+            <hpcc-resize>
+                999
+            </hpcc-resize>
+        </div> -->
+    <script>
+        for (const item of document.getElementsByTagName("hpcc-sankey")) {
+            item.links = links;
+        }
     </script>
-
 </body>
 
 </html>

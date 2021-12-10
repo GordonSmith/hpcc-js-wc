@@ -1,8 +1,8 @@
-import { HPCCElement, attribute, customElement, css, html, ref, ChangeMap } from "../base/hpcc-element";
+import { HPCCResizeElement, attribute, customElement, css, html, ref, ChangeMap } from "../base/hpcc-element";
 import * as d3 from "d3";
 
 const template = html<HPCCZoomElement>`
-<svg ${ref("_svg")} width="${s => s.width}" height="${s => s.height}" viewbox="[0, 0, ${s => s.width}, ${s => s.height}]">
+<svg ${ref("_svg")} width="${s => s.width}" height="${s => s.height}" viewbox="[0, 0, ${s => s._svg.clientWidth}, ${s => s._svg.clientHeight}]">
     <foreignObject ${ref("_content")} x="0" y="0" width="100%" height="100%">
         <slot>
         </slot>
@@ -12,18 +12,12 @@ const template = html<HPCCZoomElement>`
 
 const styles = css`
 svg {
-    min-height: 100px; 
-    max-width: 100%; 
-    height: auto;
-    height: intrinsic;
 }
 `;
 
 @customElement({ name: "hpcc-zoom", template, styles })
-export class HPCCZoomElement extends HPCCElement {
+export class HPCCZoomElement extends HPCCResizeElement {
 
-    @attribute width: number | string = "100%";
-    @attribute height: number | string = "100%";
     @attribute scaleMin: number = 0.1;
     @attribute scaleMax: number = 2;
     @attribute x = 0;
@@ -33,7 +27,6 @@ export class HPCCZoomElement extends HPCCElement {
     _svg: SVGElement;
     _content: SVGGElement;
     protected content: d3.Selection<SVGGElement, any, any, any>;
-    protected;
 
     _zoom = d3.zoom()
         .on("zoom", ({ transform }) => {
@@ -51,9 +44,8 @@ export class HPCCZoomElement extends HPCCElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        const rect = this._svg.getBoundingClientRect();
         this._zoom
-            .extent([[0, 0], [rect.width, rect.height]])
+            .extent([[0, 0], [this._svg.clientWidth, this._svg.clientHeight]])
             .scaleExtent([this.scaleMin, this.scaleMax])
             ;
 

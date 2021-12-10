@@ -1,7 +1,7 @@
-import { FASTElement, attr, observable } from "@microsoft/fast-element";
+import { FASTElement, attr, observable, volatile } from "@microsoft/fast-element";
 import { Dispatch, Message, IObserverHandle } from "@hpcc-js/util/lib-es6/dispatch";
 
-export { customElement, css, html, ref } from "@microsoft/fast-element";
+export { customElement, css, html, ref, volatile } from "@microsoft/fast-element";
 
 export interface Change { oldValue: any; newValue: any; }
 export interface ChangeMap { [what: string]: Change }
@@ -33,11 +33,11 @@ class AttrChangedMessage extends Message {
 
 export class HPCCElement extends FASTElement {
     private _dispath = new Dispatch<AttrChangedMessage>();
-    protected _fire = (what: string, oldVal = false, newVal = true) => {
+    protected _fire = (what: string, oldVal: any = false, newVal: any = true) => {
         this._dispath.post(new AttrChangedMessage(what, oldVal, newVal));
     };
-
     private _dispatchHandle: IObserverHandle;
+
     connectedCallback(): void {
         super.connectedCallback();
         this.enter();
@@ -99,4 +99,37 @@ export function attribute(target: object, prop: string): void {
 export function property(target: object, prop: string) {
     appendChangedHandler(target, prop);
     return observable(target, prop);
+}
+
+export class HPCCResizeElement extends HPCCElement implements EventListenerObject {
+
+    @attribute width?: number | string;
+    @attribute height?: number | string;
+
+    handleEvent(): void {
+        this._fire("resize");
+    }
+
+    protected observer = new ResizeObserver(() => {
+        this.handleEvent();
+    });
+
+    connectedCallback(): void {
+        super.connectedCallback();
+        if (this.parentElement === document.body) {
+            window.addEventListener("resize", this);
+            this.handleEvent();
+        } else {
+            this.observer.observe(this.parentElement!);
+        }
+    }
+
+    disconnectedCallback(): void {
+        if (this.parentElement === document.body) {
+            window.removeEventListener("resize", this);
+        } else {
+            this.observer.unobserve(this.parentElement!);
+        }
+        super.disconnectedCallback();
+    }
 }

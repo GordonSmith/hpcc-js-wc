@@ -7,6 +7,7 @@
     "declarationDir": "./types",
     "sourceMap": true,
     "moduleResolution": "Node",
+    "jsx": "react",
     "importHelpers": true,
     "isolatedModules": true,
     "esModuleInterop": true,

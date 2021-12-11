@@ -1,69 +1,116 @@
 # Sankey Graph
-
 <ClientOnly>
-  <hpcc-sankey width="100%" height="350" style="flex: 1 0 auto;"></hpcc-sankey>
+  <div style="height:350px;display:flex;flex-direction:column;">
+    <hpcc-sankey width="100%" height="100%" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  Sankey Graph Inside Flex Container</sub>
+  </div>
 </ClientOnly>
 
 1. Import the library (see [Getting Started](../guide/getting-started.md) for more details):
 
-<<< @/components/sankey.sample001.html#head
+<<< @/components/sankey.sample.html#head
 
-2. Add `hpcc-sankey` component to the page:
+2. Add `hpcc-sankey` element to the page:
 
-<<< @/components/sankey.sample001.html#body
+<<< @/components/sankey.sample.html#body{3}
 
-3. Load some data:
+3. Load some data: 
 
-<<< @/components/sankey.sample001.html#script
+<<< @/components/sankey.sample.html#script
 
 ## Attributes
+  
+### width
 
-* **width**
+  _Width of the element in pixels or percentage. Default:  100px_
 
-  _Width of the component in pixels or percentage. Default:  100px_
+### height
 
-* **height**
+  _Height of the element in pixels or percentage. Default:  50px_
 
-  _Height of the component in pixels or percentage. Default:  50px_
-
-* **nodeAlign**
-
+### nodeAlign
+ 
   _Layout algorithm, can be any of:  **justify** | **left** | **right**.  Default:  "justify"._
 
-* **nodeStroke** 
+<ClientOnly>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" nodeALign="left" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  nodeAlign="left"</sub>
+  </div>
+  <br/>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  nodeAlign="full"</sub>
+  </div>
+  <br/>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" nodeALign="right" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  nodeAlign="right"</sub>
+  </div>
+</ClientOnly>
+ 
+### nodeStroke 
 
   _Stroke around node rectangles.  Defaults to current color_
 
-* **nodeStrokeWidth**
+### nodeStrokeWidth
 
   _Width of stroke around node rectangles, in pixels._  Default:  1px
 
-* **nodeStrokeOpacity**
+### nodeStrokeOpacity
 
   _Opacity of stroke around node rectangles, in range 0-1.  Default:  1.0_
 
-* **nodeStrokeLinejoin**; 
+### nodeStrokeLinejoin 
 
   _Line join for stroke around node rectangles, can be any of:  **miter** | **round** | **bevel**.  Default:  miter_
 
-* **linkStrokeOpacity**; 
+### linkStrokeOpacity 
 
   _Link stroke opacity, in range 0-1.  Default:  0.5_
 
-* **linkColor**
+### linkColor
 
-  _Link color can be any of **source** | **target** | **source-target** | **html color**, Default:  **source-target**_
+  _Link color can be any of **source** | **target** | **source-target** | **"html color"**, Default:  **source-target**_
+
+<ClientOnly>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" linkColor="source" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  linkColor="source"</sub>
+  </div>
+  <br/>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  linkColor="source-target"</sub>
+  </div>
+  <br/>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" linkColor="target" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  linkColor="target"</sub>
+  </div>
+  <br/>
+  <div style="height:350px;display:flex;flex-direction:column;border:1px solid var(--c-divider)">
+    <hpcc-sankey width="100%" height="100%" linkColor="pink" style="flex: 1 0 auto;"></hpcc-sankey>
+    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  linkColor="pink"</sub>
+  </div>
+</ClientOnly>
 
 
 ## Properties
 
+### links
+
 ## Events
+
+### click
 
 <script>
 export default {
   mounted() {
     import('../../src/sankey').then(()=>{
-        document.getElementsByTagName("hpcc-sankey")[0].links = [{ "source": "Agricultural 'waste'", "target": "Bio-conversion", "value": 124.729 }, { "source": "Bio-conversion", "target": "Liquid", "value": 0.597 }, { "source": "Bio-conversion", "target": "Losses", "value": 26.862 }, { "source": "Bio-conversion", "target": "Solid", "value": 280.322 }, { "source": "Bio-conversion", "target": "Gas", "value": 81.144 }, { "source": "Biofuel imports", "target": "Liquid", "value": 35 }, { "source": "Biomass imports", "target": "Solid", "value": 35 }, { "source": "Coal imports", "target": "Coal", "value": 11.606 }, { "source": "Coal reserves", "target": "Coal", "value": 63.965 }, { "source": "Coal", "target": "Solid", "value": 75.571 }, { "source": "District heating", "target": "Industry", "value": 10.639 }, { "source": "District heating", "target": "Heating and cooling - commercial", "value": 22.505 }, { "source": "District heating", "target": "Heating and cooling - homes", "value": 46.184 }, { "source": "Electricity grid", "target": "Over generation / exports", "value": 104.453 }, { "source": "Electricity grid", "target": "Heating and cooling - homes", "value": 113.726 }, { "source": "Electricity grid", "target": "H2 conversion", "value": 27.14 }, { "source": "Electricity grid", "target": "Industry", "value": 342.165 }, { "source": "Electricity grid", "target": "Road transport", "value": 37.797 }, { "source": "Electricity grid", "target": "Agriculture", "value": 4.412 }, { "source": "Electricity grid", "target": "Heating and cooling - commercial", "value": 40.858 }, { "source": "Electricity grid", "target": "Losses", "value": 56.691 }, { "source": "Electricity grid", "target": "Rail transport", "value": 7.863 }, { "source": "Electricity grid", "target": "Lighting & appliances - commercial", "value": 90.008 }, { "source": "Electricity grid", "target": "Lighting & appliances - homes", "value": 93.494 }, { "source": "Gas imports", "target": "Ngas", "value": 40.719 }, { "source": "Gas reserves", "target": "Ngas", "value": 82.233 }, { "source": "Gas", "target": "Heating and cooling - commercial", "value": 0.129 }, { "source": "Gas", "target": "Losses", "value": 1.401 }, { "source": "Gas", "target": "Thermal generation", "value": 151.891 }, { "source": "Gas", "target": "Agriculture", "value": 2.096 }, { "source": "Gas", "target": "Industry", "value": 48.58 }, { "source": "Geothermal", "target": "Electricity grid", "value": 7.013 }, { "source": "H2 conversion", "target": "H2", "value": 20.897 }, { "source": "H2 conversion", "target": "Losses", "value": 6.242 }, { "source": "H2", "target": "Road transport", "value": 20.897 }, { "source": "Hydro", "target": "Electricity grid", "value": 6.995 }, { "source": "Liquid", "target": "Industry", "value": 121.066 }, { "source": "Liquid", "target": "International shipping", "value": 128.69 }, { "source": "Liquid", "target": "Road transport", "value": 135.835 }, { "source": "Liquid", "target": "Domestic aviation", "value": 14.458 }, { "source": "Liquid", "target": "International aviation", "value": 206.267 }, { "source": "Liquid", "target": "Agriculture", "value": 3.64 }, { "source": "Liquid", "target": "National navigation", "value": 33.218 }, { "source": "Liquid", "target": "Rail transport", "value": 4.413 }, { "source": "Marine algae", "target": "Bio-conversion", "value": 4.375 }, { "source": "Ngas", "target": "Gas", "value": 122.952 }, { "source": "Oil imports", "target": "Oil", "value": 504.287 }, { "source": "Oil reserves", "target": "Oil", "value": 107.703 }, { "source": "Oil", "target": "Liquid", "value": 611.99 }, { "source": "Other waste", "target": "Solid", "value": 56.587 }, { "source": "Other waste", "target": "Bio-conversion", "value": 77.81 }, { "source": "Pumped heat", "target": "Heating and cooling - homes", "value": 193.026 }, { "source": "Pumped heat", "target": "Heating and cooling - commercial", "value": 70.672 }, { "source": "Solar PV", "target": "Electricity grid", "value": 59.901 }, { "source": "Solar Thermal", "target": "Heating and cooling - homes", "value": 19.263 }, { "source": "Solar", "target": "Solar Thermal", "value": 19.263 }, { "source": "Solar", "target": "Solar PV", "value": 59.901 }, { "source": "Solid", "target": "Agriculture", "value": 0.882 }, { "source": "Solid", "target": "Thermal generation", "value": 400.12 }, { "source": "Solid", "target": "Industry", "value": 46.477 }, { "source": "Thermal generation", "target": "Electricity grid", "value": 525.531 }, { "source": "Thermal generation", "target": "Losses", "value": 787.129 }, { "source": "Thermal generation", "target": "District heating", "value": 79.329 }, { "source": "Tidal", "target": "Electricity grid", "value": 9.452 }, { "source": "UK land based bioenergy", "target": "Bio-conversion", "value": 182.01 }, { "source": "Wave", "target": "Electricity grid", "value": 19.013 }, { "source": "Wind", "target": "Electricity grid", "value": 289.366 }];
+      for (const sankey of document.getElementsByTagName("hpcc-sankey")){
+      sankey.links = [{ "source": "Agricultural 'waste'", "target": "Bio-conversion", "value": 124.729 }, { "source": "Bio-conversion", "target": "Liquid", "value": 0.597 }, { "source": "Bio-conversion", "target": "Losses", "value": 26.862 }, { "source": "Bio-conversion", "target": "Solid", "value": 280.322 }, { "source": "Bio-conversion", "target": "Gas", "value": 81.144 }, { "source": "Biofuel imports", "target": "Liquid", "value": 35 }, { "source": "Biomass imports", "target": "Solid", "value": 35 }, { "source": "Coal imports", "target": "Coal", "value": 11.606 }, { "source": "Coal reserves", "target": "Coal", "value": 63.965 }, { "source": "Coal", "target": "Solid", "value": 75.571 }, { "source": "District heating", "target": "Industry", "value": 10.639 }, { "source": "District heating", "target": "Heating and cooling - commercial", "value": 22.505 }, { "source": "District heating", "target": "Heating and cooling - homes", "value": 46.184 }, { "source": "Electricity grid", "target": "Over generation / exports", "value": 104.453 }, { "source": "Electricity grid", "target": "Heating and cooling - homes", "value": 113.726 }, { "source": "Electricity grid", "target": "H2 conversion", "value": 27.14 }, { "source": "Electricity grid", "target": "Industry", "value": 342.165 }, { "source": "Electricity grid", "target": "Road transport", "value": 37.797 }, { "source": "Electricity grid", "target": "Agriculture", "value": 4.412 }, { "source": "Electricity grid", "target": "Heating and cooling - commercial", "value": 40.858 }, { "source": "Electricity grid", "target": "Losses", "value": 56.691 }, { "source": "Electricity grid", "target": "Rail transport", "value": 7.863 }, { "source": "Electricity grid", "target": "Lighting & appliances - commercial", "value": 90.008 }, { "source": "Electricity grid", "target": "Lighting & appliances - homes", "value": 93.494 }, { "source": "Gas imports", "target": "Ngas", "value": 40.719 }, { "source": "Gas reserves", "target": "Ngas", "value": 82.233 }, { "source": "Gas", "target": "Heating and cooling - commercial", "value": 0.129 }, { "source": "Gas", "target": "Losses", "value": 1.401 }, { "source": "Gas", "target": "Thermal generation", "value": 151.891 }, { "source": "Gas", "target": "Agriculture", "value": 2.096 }, { "source": "Gas", "target": "Industry", "value": 48.58 }, { "source": "Geothermal", "target": "Electricity grid", "value": 7.013 }, { "source": "H2 conversion", "target": "H2", "value": 20.897 }, { "source": "H2 conversion", "target": "Losses", "value": 6.242 }, { "source": "H2", "target": "Road transport", "value": 20.897 }, { "source": "Hydro", "target": "Electricity grid", "value": 6.995 }, { "source": "Liquid", "target": "Industry", "value": 121.066 }, { "source": "Liquid", "target": "International shipping", "value": 128.69 }, { "source": "Liquid", "target": "Road transport", "value": 135.835 }, { "source": "Liquid", "target": "Domestic aviation", "value": 14.458 }, { "source": "Liquid", "target": "International aviation", "value": 206.267 }, { "source": "Liquid", "target": "Agriculture", "value": 3.64 }, { "source": "Liquid", "target": "National navigation", "value": 33.218 }, { "source": "Liquid", "target": "Rail transport", "value": 4.413 }, { "source": "Marine algae", "target": "Bio-conversion", "value": 4.375 }, { "source": "Ngas", "target": "Gas", "value": 122.952 }, { "source": "Oil imports", "target": "Oil", "value": 504.287 }, { "source": "Oil reserves", "target": "Oil", "value": 107.703 }, { "source": "Oil", "target": "Liquid", "value": 611.99 }, { "source": "Other waste", "target": "Solid", "value": 56.587 }, { "source": "Other waste", "target": "Bio-conversion", "value": 77.81 }, { "source": "Pumped heat", "target": "Heating and cooling - homes", "value": 193.026 }, { "source": "Pumped heat", "target": "Heating and cooling - commercial", "value": 70.672 }, { "source": "Solar PV", "target": "Electricity grid", "value": 59.901 }, { "source": "Solar Thermal", "target": "Heating and cooling - homes", "value": 19.263 }, { "source": "Solar", "target": "Solar Thermal", "value": 19.263 }, { "source": "Solar", "target": "Solar PV", "value": 59.901 }, { "source": "Solid", "target": "Agriculture", "value": 0.882 }, { "source": "Solid", "target": "Thermal generation", "value": 400.12 }, { "source": "Solid", "target": "Industry", "value": 46.477 }, { "source": "Thermal generation", "target": "Electricity grid", "value": 525.531 }, { "source": "Thermal generation", "target": "Losses", "value": 787.129 }, { "source": "Thermal generation", "target": "District heating", "value": 79.329 }, { "source": "Tidal", "target": "Electricity grid", "value": 9.452 }, { "source": "UK land based bioenergy", "target": "Bio-conversion", "value": 182.01 }, { "source": "Wave", "target": "Electricity grid", "value": 19.013 }, { "source": "Wind", "target": "Electricity grid", "value": 289.366 }]
+      }
     });
   }
 }

@@ -2,16 +2,31 @@ import { HPCCCodemirrorElement } from ".";
 import { HPCCResizeElement, ChangeMap, customElement, css, html, ref } from "../base/hpcc-element";
 
 const template = html<HPCCPreviewElement>`
-<div id="demo" sandbox style="height:${s => s.height}px;display:flex;flex-direction:column;">
-    <iframe ${ref("iframe")} style="flex: 1 0 auto;">
-    </iframe>
-    <hpcc-codemirror ${ref("cm")} style="flex: 1 0 auto;">
+<div id="demo">
+    <div>
+        <iframe ${ref("iframe")} width="${s => s.width}" height="${s => s.height}" frameborder="0">
+        </iframe>
+    </div>
+    <hpcc-codemirror ${ref("cm")}>
     </hpcc-codemirror>
 </div>
 `;
 
 const styles = css`
-:host {
+:host > div {
+    flex-direction: column;
+}
+
+:host > div > div {
+    padding-bottom: 4px;
+}
+
+:host iframe {
+    border: 1px solid #ccc;
+}
+
+:host > div > hpcc-codemirror {
+    padding-top: 4px;
 }
 `;
 
@@ -55,8 +70,8 @@ export class HPCCPreviewElement extends HPCCResizeElement {
 ${head}
 </head>
 
-<body>
-${this.cm.text}
+<body style="overflow:hidden">
+${this.cm.text.trim()}
 ${scripts}
 </body>
 `);

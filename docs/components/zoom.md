@@ -1,10 +1,8 @@
-# Zoom
-
-_Drag and zoom the content_
+# Drag and Zoom
 
 <ClientOnly>
-  <div style="height:300px;display:flex;flex-direction:column;background-color:var(--c-divider)">
-    <hpcc-zoom width="100%" height="100%" style="flex: 1 0 auto;">
+  <hpcc-preview width="100%" height="400px" style="background-color:pink">
+    <hpcc-zoom x=10 y=10 scale=0.63 width="100%" height="100%" style="flex: 1 0 auto;">
       <h1>HTML Ipsum Presents</h1>
       <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
       <h2>Header Level 2</h2>
@@ -19,16 +17,35 @@ _Drag and zoom the content_
         <li>Aliquam tincidunt mauris eu risus.</li>
       </ul>
     </hpcc-zoom>
-    <sub style="flex: 0 0 auto;text-align:right"><b>Diagram:</b>  Zoomable Placeholder</sub>
-  </div>
+  </hpcc-preview>
 </ClientOnly>
 
-1. Import the library (see [Getting Started](../guide/getting-started.md) for more details):
-
-2. Add `hpcc-zoom` element to the page:
+::: tip
+See [Getting Started](../guide/getting-started.md) for details on how to include @hpcc-js/web-components in your application
+:::
 
 ## Attributes
+
+#### x
+
+X position of the zoomed area, defaults to 0.
+
+#### y
+
+Y position of the zoomed area, defaults to 0.
+
+#### scale
+
+Zoom scale, defaults to 1.
+
+#### scaleMin
+
+Minimum zoom scale, defaults to 0.1.
+
+#### scaleMax
   
+Maximum zoom scale, defaults to 2.
+
 ## Properties
   
 ## Events

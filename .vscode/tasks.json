@@ -2,9 +2,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "serve-dev",
+			"label": "serve",
 			"type": "npm",
-			"script": "serve-dev",
+			"script": "serve",
 			"problemMatcher": [
 				"$tsc-watch"
 			],
@@ -15,7 +15,7 @@
 		{
 			"label": "build",
 			"dependsOn": [
-				"serve-dev"
+				"serve"
 			],
 			"group": {
 				"kind": "build",

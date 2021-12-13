@@ -21,9 +21,6 @@ svg {
 @customElement({ name: "hpcc-sankey", template, styles })
 export class HPCCSankeyElement extends HPCCResizeElement {
 
-    @attribute width?: number | string;
-    @attribute height?: number | string;
-
     @attribute nodeAlign: "justify" | "left" | "right" = "justify"; // stroke around node rects
     @attribute nodeStroke = "currentColor"; // stroke around node rects
     @attribute nodeStrokeWidth; // width of stroke around node rects, in pixels
@@ -42,8 +39,8 @@ export class HPCCSankeyElement extends HPCCResizeElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        if (this.links?.length) {
-            const links = typeof this.links === "string" ? JSON.parse(this.links) : this.links;
+        const links = typeof this.links === "string" ? JSON.parse(this.links) : this.links;
+        if (links?.length) {
             SankeyChart({ nodesG: this.nodesG, linksG: this.linksG, textG: this.textG }, { nodes: undefined, links }, {
                 nodeGroup: d => d.id.split(/\W/)[0], // take first word for color
                 nodeAlign: this.nodeAlign,

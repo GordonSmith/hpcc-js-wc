@@ -19,7 +19,6 @@ footer: Apache-2.0 Licensed | Copyright © 2021 hpcc-systems.com
 <script>
 export default {
   mounted() {
-    import('../src');
   }
 }
 </script>

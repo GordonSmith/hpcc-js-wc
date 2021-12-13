@@ -2,7 +2,7 @@ module.exports = {
   lang: 'en-US',
   title: '@hpcc-js/web-components',
   description: 'HPCC Systems Custom Web Components',
-  base: '/hpcc-js-wc/',
+  basexxx: '/hpcc-js-wc/',
 
   themeConfig: {
     repo: 'GordonSmith/hpcc-js-wc',
@@ -31,8 +31,14 @@ module.exports = {
     }
   },
 
-  vite: {
-    plugins: []
+  vueOptions: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => {
+          return tag.toLowerCase().indexOf("hpcc-") === 0;
+        }
+      }
+    }
   },
 
   markdown: {

@@ -25,11 +25,7 @@ _Drag and zoom the content_
 
 1. Import the library (see [Getting Started](../guide/getting-started.md) for more details):
 
-<<< @/components/zoom.sample.html#head
-
 2. Add `hpcc-zoom` element to the page:
-
-<<< @/components/zoom.sample.html#body{3}
 
 ## Attributes
   
@@ -40,7 +36,7 @@ _Drag and zoom the content_
 <script>
 export default {
   mounted() {
-    import('../../src');
+    // import('../../src');
   }
 }
 </script>

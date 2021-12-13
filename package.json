@@ -17,7 +17,10 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs",
+    "docs:copy-build": "copyfiles -u 1 \"./dist/index.min.js\" ./docs/.vitepress/dist/assets/",
     "docs:copy-images": "copyfiles -u 2 \"./docs/images/**/*.{png,jpg,gif}\" ./docs/.vitepress/dist/images/",
+    "docs:copy-res": "run-p docs:copy-build docs:copy-images",
+    "docs:patch": "node utils/patch-docs.mjs",
     "clean": "rimraf build dist lib* types *.tsbuildinfo docs/.vitepress/dist",
     "compile": "tsc -p ./tsconfig.json",
     "compile-watch": "npm run compile -- -w",
@@ -47,6 +50,8 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
+    "@codemirror/basic-setup": "^0.19.0",
+    "@codemirror/lang-html": "^0.19.4",
     "@rollup/plugin-alias": "^3.1.8",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",

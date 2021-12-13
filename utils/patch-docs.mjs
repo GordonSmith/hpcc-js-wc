@@ -1,10 +1,9 @@
 import { join } from "path";
-import { existsSync, readdirSync, lstatSync, readFile, writeFile } from "fs";
+import { copyFile, existsSync, readdirSync, lstatSync, readFile, writeFile } from "fs";
 
 function patch(filename) {
     readFile(filename, function (err, data) {
         if (err) throw err;
-        console.log(data.toString());
         writeFile(filename, data.toString().replace("</head>", '  <script type="module" src="/hpcc-js-wc/assets/index.min.js"></script>\n</head>'), function (err) {
             if (err) throw err;
         });
@@ -32,3 +31,7 @@ function fromDir(startPath, filter) {
 }
 
 fromDir("./docs/.vitepress/dist", ".html");
+
+copyFile("./README.md", "./docs/guide/getting-started.md", (err) => {
+    if (err) throw err;
+});

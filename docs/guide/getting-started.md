@@ -1,49 +1,71 @@
-# Getting Started
+# @hpcc-js/web-components
 
-This section will help you build a basic VitePress documentation site from ground up. If you already have an existing project and would like to keep documentation inside the project, start from Step 3.
+![GitHub](https://img.shields.io/github/license/GordonSmith/hpcc-js-wc) 
+![GitHub branch checks state](https://img.shields.io/github/checks-status/GordonSmith/hpcc-js-wc/trunk)
 
-- **Step. 1:** Create and change into a new directory.
 
-  ```bash
-  $ mkdir vitepress-starter && cd vitepress-starter
-  ```
+`@hpcc-js/web-components` is a library of Web Components that focuses on visualizations.  It also includes communication libraries for interacting with [HPCC Platforms](https://github.com/hpcc-systems/HPCC-Platform).
 
-- **Step. 2:** Initialize with your preferred package manager.
+## Installation
 
-  ```bash
-  $ yarn init
-  ```
+### From NPM
 
-- **Step. 3:** Install VitePress locally.
+To install the `@hpcc-js/web-components` library, use either `npm` or `yarn` as follows:
 
-  ```bash
-  $ yarn add --dev vitepress
-  ```
+```shell
+npm install --save @hpcc-js/web-components
+```
 
-- **Step. 4:** Create your first document.
+```shell
+yarn add @hpcc-js/web-components
+```
 
-  ```bash
-  $ mkdir docs && echo '# Hello VitePress' > docs/index.md
-  ```
+Within your JavaScript or TypeScript code, import the desired components (this is the recommended approach as it ensures that only the used components get included in your build - aka tree shaking):
 
-- **Step. 5:** Add some scripts to `package.json`.
+```ts
+import { HPCCSankeyElement, HPCCZoomElement } from "@hpcc-js/web-components"
+```
 
-  ```json
-  {
-    "scripts": {
-      "docs:dev": "vitepress dev docs",
-      "docs:build": "vitepress build docs",
-      "docs:serve": "vitepress serve docs"
-    }
-  }
-  ```
+Alternatively you can easily register all components:
 
-- **Step. 6:** Serve the documentation site in the local server.
+```ts
+import "@hpcc-js/web-components"
+```
+ 
+### From CDN
 
-  ```bash
-  $ yarn docs:dev
-  ```
+A pre-bundled script that contains all APIs needed to use FAST Foundation is available on CDN. You can use this script by adding [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) to the script element and then importing from the CDN.
 
-  VitePress will start a hot-reloading development server at http://localhost:3000.
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@hpcc-js/web-components/dist/index.min.js"></script>
+    </head>
+    <!-- ... -->
+</html>
+```
 
-By now, you should have a basic but functional VitePress documentation site.
+The markup above always references the latest release. When deploying to production, you will want to ship with a specific version. Here's an example of the markup for that:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/@hpcc-js/web-components@1.2.3/dist/index.min.js"></script>
+```
+
+::: info
+For simplicity, examples throughout the documentation will assume the library has been installed from NPM, but you can always replace the import location with the CDN URL.
+:::
+
+## Development
+
+To start the component development environment:
+
+```
+git clone https://github.com/GordonSmith/hpcc-js-wc.git
+cd hpcc-js-wc
+npm install
+npm run serve
+```
+
+In vscode pressing `ctrl+shift+b` will start the build and serve process.  Pressing `F5` will start debuggin in the browser.
+

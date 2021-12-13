@@ -32,11 +32,3 @@ _Drag and zoom the content_
 ## Properties
   
 ## Events
-  
-<script>
-export default {
-  mounted() {
-    // import('../../src');
-  }
-}
-</script>

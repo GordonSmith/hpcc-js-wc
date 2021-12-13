@@ -2,7 +2,7 @@ module.exports = {
   lang: 'en-US',
   title: '@hpcc-js/web-components',
   description: 'HPCC Systems Custom Web Components',
-  basexxx: '/hpcc-js-wc/',
+  base: '/hpcc-js-wc/',
 
   themeConfig: {
     repo: 'GordonSmith/hpcc-js-wc',

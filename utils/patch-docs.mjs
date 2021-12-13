@@ -5,7 +5,7 @@ function patch(filename) {
     readFile(filename, function (err, data) {
         if (err) throw err;
         console.log(data.toString());
-        writeFile(filename, data.toString().replace("</head>", '  <script type="module" src="/assets/index.min.js"></script>\n</head>'), function (err) {
+        writeFile(filename, data.toString().replace("</head>", '  <script type="module" src="/hpcc-js-wc/assets/index.min.js"></script>\n</head>'), function (err) {
             if (err) throw err;
         });
     });

@@ -99,11 +99,3 @@
 ## Events
 
 ### click
-
-<script>
-export default {
-  mounted() {
-  }
-}
-</script>
- 

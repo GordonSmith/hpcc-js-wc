@@ -15,10 +15,3 @@ features:
     details: Standards-based Web Components are the foundation of each visualization, making them compatible with almost any modern web framework.
 footer: Apache-2.0 Licensed | Copyright © 2021 hpcc-systems.com
 ---
-
-<script>
-export default {
-  mounted() {
-  }
-}
-</script>

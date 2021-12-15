@@ -1,6 +1,6 @@
 {
   "name": "@hpcc-js/web-components",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "hpcc-js - Web Components Library",
   "private": true,
   "keywords": [],
@@ -24,7 +24,8 @@
     "clean": "rimraf build dist docs/.vitepress/dist docs/api lib* types temp tmp *.tsbuildinfo ",
     "compile": "tsc -p ./tsconfig.json",
     "compile-watch": "npm run compile -- -w",
-    "api-extractor": "api-extractor run --local --verbose",
+    "api-extractor-dev": "api-extractor run --local --verbose",
+    "api-extractor": "api-extractor run --verbose",
     "api-documenter": "api-documenter markdown --input-folder ./temp --output-folder ./docs/api",
     "bundle": "rollup -c",
     "bundle-watch": "npm run bundle -- -w",
@@ -37,10 +38,27 @@
     "serve-index": "vite",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "npm run lint -- --fix",
+    "prettier": "run-s prettier:js prettier:ts",
+    "prettier:js": "prettier --check --write \"utils/**/*.mjs\"",
+    "prettier:ts": "prettier --check --write --parser typescript \"{src,utils}/**/*.ts\"",
     "test-karma": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
-    "test": "run-s build serve-prod",
+    "test": "run-s build",
     "tag": "run-s standard-version git-push",
     "update": "npx npm-check-updates -u"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write"
+    ],
+    "*.ts": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "dependencies": {
     "@hpcc-js/util": "^2.40.0",

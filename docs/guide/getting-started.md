@@ -1,8 +1,6 @@
 # @hpcc-js/web-components
 
 ![GitHub](https://img.shields.io/github/license/GordonSmith/hpcc-js-wc) 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/GordonSmith/hpcc-js-wc/trunk)
-
 
 `@hpcc-js/web-components` is a library of Web Components that focuses on visualizations.  It also includes communication libraries for interacting with [HPCC Platforms](https://github.com/hpcc-systems/HPCC-Platform).
 
@@ -23,13 +21,18 @@ yarn add @hpcc-js/web-components
 Within your JavaScript or TypeScript code, import the desired components (this is the recommended approach as it ensures that only the used components get included in your build - aka tree shaking):
 
 ```ts
-import { HPCCSankeyElement, HPCCZoomElement } from "@hpcc-js/web-components"
+import { HPCCSankeyElement, HPCCZoomElement } from "@hpcc-js/web-components";
+
+HPCCSankeyElement; // Force bundler to include Sankey components
+HPCCZoomElement; // Force bundler to include Zoom components
 ```
 
 Alternatively you can easily register all components:
 
 ```ts
-import "@hpcc-js/web-components"
+import * as all from "@hpcc-js/web-components";
+
+all; // Force bundler to include all components
 ```
  
 ### From CDN

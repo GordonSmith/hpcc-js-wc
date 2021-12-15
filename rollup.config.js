@@ -1,7 +1,6 @@
 import alias from "@rollup/plugin-alias";
 import resolve from "@rollup/plugin-node-resolve";
 import commonJS from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
 import transformTaggedTemplate from "rollup-plugin-transform-tagged-template";
 import filesize from "rollup-plugin-filesize";
 
@@ -31,16 +30,12 @@ const parserOptions = {
 
 export default [
     {
-        input: "src/index.ts",
+        input: "dist/index.js",
         treeshake: {
             // preset: "smallest",
             // moduleSideEffects: false,
         },
         output: [
-            {
-                file: pkg.browser,
-                format: "es",
-            },
             {
                 file: pkg.jsdelivr,
                 format: "es",
@@ -55,7 +50,6 @@ export default [
             }),
             resolve(),
             commonJS(),
-            typescript(),
             transformTaggedTemplate({
                 tagsToProcess: ["css"],
                 transformer: transformCSSFragment,

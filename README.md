@@ -1,8 +1,6 @@
 # @hpcc-js/web-components
 
 ![GitHub](https://img.shields.io/github/license/GordonSmith/hpcc-js-wc) 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/GordonSmith/hpcc-js-wc/trunk)
-
 
 `@hpcc-js/web-components` is a library of Web Components that focuses on visualizations.  It also includes communication libraries for interacting with [HPCC Platforms](https://github.com/hpcc-systems/HPCC-Platform).
 

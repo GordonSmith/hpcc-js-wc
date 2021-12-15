@@ -58,7 +58,7 @@ function getGuideSidebar() {
     {
       text: 'Advanced',
       children: [
-        { text: 'API Reference', link: '/guide/api' },
+        { text: 'API Reference', link: '/api/web-components' },
       ]
     }
   ]

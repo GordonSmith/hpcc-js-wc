@@ -6,6 +6,7 @@
     "declaration": true,
     "declarationDir": "./types",
     "sourceMap": true,
+    "declarationMap": true,
     "moduleResolution": "Node",
     "jsx": "react",
     "importHelpers": true,

@@ -15,7 +15,7 @@
 		{
 			"label": "build",
 			"dependsOn": [
-				"serve"
+				"serve",
 			],
 			"group": {
 				"kind": "build",

@@ -6,7 +6,7 @@ import filesize from "rollup-plugin-filesize";
 
 import { terser } from "rollup-plugin-terser";
 
-const pkg = require("./package.json");
+import * as pkg from "./package.json";
 
 function transformHTMLFragment(data) {
     data = data.replace(/\s*([<>])\s*/g, "$1"); // remove spaces before and after angle brackets

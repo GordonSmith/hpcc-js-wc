@@ -1,5 +1,7 @@
 # Drag and Zoom
 
+**tag**: `<hpcc-zoom>`
+
 <ClientOnly>
   <hpcc-preview width="100%" height="400px" style="background-color:pink">
     <hpcc-zoom x=10 y=10 scale=0.63 width="100%" height="100%" style="flex: 1 0 auto;">
@@ -24,28 +26,10 @@
 See [Getting Started](../guide/getting-started.md) for details on how to include @hpcc-js/web-components in your application
 :::
 
-## Attributes
+## `HPCCZoomElement`
 
-#### x
-
-X position of the zoomed area, defaults to 0.
-
-#### y
-
-Y position of the zoomed area, defaults to 0.
-
-#### scale
-
-Zoom scale, defaults to 1.
-
-#### scaleMin
-
-Minimum zoom scale, defaults to 0.1.
-
-#### scaleMax
-  
-Maximum zoom scale, defaults to 2.
-
-## Properties
-  
 ## Events
+
+### `changed`
+
+_Emitted whenever the content is panned or zoomed_

@@ -1,18 +1,19 @@
 import * as React from "react";
 import { expect } from "chai";
 
-interface TestProps {
-}
+interface TestProps {}
 
-export const Test: React.FunctionComponent<TestProps> = ({
-}) => {
-
-    return <>
-        {// #region snippet
-        }
-        {// #endregion snippet
-        }
-    </>;
+export const Test: React.FunctionComponent<TestProps> = ({}) => {
+    return (
+        <>
+            {
+                // #region snippet
+            }
+            {
+                // #endregion snippet
+            }
+        </>
+    );
 };
 
 const test1 = `

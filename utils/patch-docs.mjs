@@ -4,14 +4,22 @@ import { copyFile, existsSync, readdirSync, lstatSync, readFile, writeFile } fro
 function patch(filename) {
     readFile(filename, function (err, data) {
         if (err) throw err;
-        writeFile(filename, data.toString().replace("</head>", '  <script type="module" src="/hpcc-js-wc/assets/index.min.js"></script>\n</head>'), function (err) {
-            if (err) throw err;
-        });
+        writeFile(
+            filename,
+            data
+                .toString()
+                .replace(
+                    "</head>",
+                    '  <script type="module" src="/hpcc-js-wc/assets/index.min.js"></script>\n</head>'
+                ),
+            function (err) {
+                if (err) throw err;
+            }
+        );
     });
 }
 
 function fromDir(startPath, filter) {
-
     if (!existsSync(startPath)) {
         console.log("no dir ", startPath);
         return;
@@ -23,8 +31,7 @@ function fromDir(startPath, filter) {
         var stat = lstatSync(filename);
         if (stat.isDirectory()) {
             fromDir(filename, filter); //recurse
-        }
-        else if (filename.indexOf(filter) >= 0) {
+        } else if (filename.indexOf(filter) >= 0) {
             patch(filename);
         }
     }

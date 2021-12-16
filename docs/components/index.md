@@ -2,6 +2,7 @@
 
 ## Visualizations
 
+* [CodeMirror](./codemirror)
 * [Sankey](./sankey)
 
 ## Layouts

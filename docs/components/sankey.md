@@ -1,4 +1,7 @@
 # Sankey Graph
+
+**tag**: `<hpcc-sankey>`
+
 <ClientOnly>
   <hpcc-preview width="100%" height="404px">
       <hpcc-sankey nodeAlign="justify" linkColor="source-target" width="100%" height=400 id="sk"></hpcc-sankey>
@@ -12,48 +15,7 @@
 See [Getting Started](../guide/getting-started.md) for details on how to include @hpcc-js/web-components in your application
 :::
 
-## Attributes
-  
-#### width
-
-  _Width of the element in pixels or percentage. Default:  100px_
-
-#### height
-
-  _Height of the element in pixels or percentage. Default:  50px_
-
-#### nodeAlign
- 
-  _Layout algorithm, can be any of:  **justify** | **left** | **right**.  Default:  "justify"._
-
-#### nodeStroke 
-
-  _Stroke around node rectangles.  Defaults to current color_
-
-#### nodeStrokeWidth
-
-  _Width of stroke around node rectangles, in pixels._  Default:  1px
-
-#### nodeStrokeOpacity
-
-  _Opacity of stroke around node rectangles, in range 0-1.  Default:  1.0_
-
-#### nodeStrokeLinejoin 
-
-  _Line join for stroke around node rectangles, can be any of:  **miter** | **round** | **bevel**.  Default:  miter_
-
-#### linkStrokeOpacity 
-
-  _Link stroke opacity, in range 0-1.  Default:  0.5_
-
-#### linkColor
-
-  _Link color can be any of **source** | **target** | **source-target** | **"html color"**, Default:  **source-target**_
-
-## Properties
-
-#### links
+## `HPCCSankeyElement`
 
 ## Events
 
-#### click

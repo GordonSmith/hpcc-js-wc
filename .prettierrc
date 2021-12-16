@@ -1,0 +1,5 @@
+semi: true
+singleQuote: false
+printWidth: 500
+trailingComma: none
+tabWidth: 4

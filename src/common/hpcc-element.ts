@@ -3,12 +3,21 @@ import { Dispatch, Message, IObserverHandle } from "@hpcc-js/util/lib-es6/dispat
 
 export { customElement, css, html, ref, volatile } from "@microsoft/fast-element";
 
-export interface Change { oldValue: any; newValue: any; }
-export interface ChangeMap { [what: string]: Change }
+export interface Change {
+    oldValue: any;
+    newValue: any;
+}
+
+export interface ChangeMap {
+    [what: string]: Change;
+}
+
+export type HTMLColor = string;
 
 class AttrChangedMessage extends Message {
-
-    get canConflate(): boolean { return true; }
+    get canConflate(): boolean {
+        return true;
+    }
 
     changes: ChangeMap = {};
 
@@ -41,7 +50,7 @@ export class HPCCElement extends FASTElement {
     connectedCallback(): void {
         super.connectedCallback();
         this.enter();
-        this._dispatchHandle = this._dispath.attach(messages => {
+        this._dispatchHandle = this._dispath.attach((messages) => {
             if (this.isConnected) {
                 const changes: ChangeMap = {};
                 if (messages.length > 1) throw new Error("Conflation issue.");
@@ -64,17 +73,14 @@ export class HPCCElement extends FASTElement {
         super.disconnectedCallback();
     }
 
-    enter() {
-    }
+    enter() {}
 
-    update(changes: ChangeMap) {
-    }
+    update(changes: ChangeMap) {}
 
-    exit() {
-    }
+    exit() {}
 
     render(): Promise<this> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             const handle = this._dispath.attach(() => {
                 handle.release();
                 resolve(this);
@@ -102,8 +108,14 @@ export function property(target: object, prop: string) {
 }
 
 export class HPCCResizeElement extends HPCCElement implements EventListenerObject {
-
+    /**
+     * The element width
+     */
     @attribute width?: number | string;
+
+    /**
+     * The element height
+     */
     @attribute height?: number | string;
 
     handleEvent(): void {

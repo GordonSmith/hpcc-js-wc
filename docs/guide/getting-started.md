@@ -70,5 +70,5 @@ npm install
 npm run serve
 ```
 
-In vscode pressing `ctrl+shift+b` will start the build and serve process.  Pressing `F5` will start debuggin in the browser.
+In vscode pressing `ctrl+shift+b` will start the build and serve process.  Pressing `F5` will start debugging in the browser.
 

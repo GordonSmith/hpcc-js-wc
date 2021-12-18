@@ -15,7 +15,7 @@
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
+    "docs:serve": "vitepress serve --port 3000 docs",
     "docs:copy-build": "copyfiles -u 1 \"./dist/index.min.js\" ./docs/.vitepress/dist/assets/",
     "docs:copy-images": "copyfiles -u 2 \"./docs/images/**/*.{png,jpg,gif}\" ./docs/.vitepress/dist/images/",
     "docs:copy-res": "run-p docs:copy-build docs:copy-images",
@@ -51,6 +51,7 @@
   "dependencies": {
     "@codemirror/theme-one-dark": "^0.19.1",
     "@hpcc-js/util": "^2.40.0",
+    "@lumino/widgets": "^1.30.1",
     "@microsoft/fast-element": "^1.6.2",
     "@microsoft/fast-foundation": "^2.27.1",
     "@observablehq/inspector": "^3.2.4",
@@ -70,7 +71,6 @@
     "@rollup/plugin-alias": "^3.1.8",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.1.1",
-    "@rollup/plugin-replace": "^3.0.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.0.0",
@@ -84,13 +84,12 @@
     "react": "^17.0.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.61.1",
-    "rollup-plugin-api-extractor": "^0.2.2",
     "rollup-plugin-filesize": "^9.1.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-transform-tagged-template": "^0.0.3",
     "standard-version": "^9.3.2",
     "typescript": "^4.5.4",
-    "vitepress": "^0.20.8"
+    "vitepress": "^0.20.9"
   },
   "repository": {
     "type": "git",

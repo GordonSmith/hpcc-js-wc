@@ -1,6 +1,40 @@
 import { ApiClass, ApiItem, ApiModel, ApiProperty } from "@microsoft/api-extractor-model";
 import { IndentedWriter, writeApiItem } from "./mdWriter";
 
+function getGuideSidebar() {
+    return [
+        {
+            text: "Introduction",
+            children: [
+                { text: "Getting Started", link: "/guide/getting-started" }
+            ]
+        },
+        {
+            text: "Advanced",
+            children: [{ text: "API Reference", link: "/api/web-components" }]
+        }
+    ];
+}
+
+function getComponentsSidebar() {
+    return [
+        {
+            text: "Visualizations",
+            children: [
+                { text: "CodeMirror", link: "/components/codemirror" },
+                { text: "Sankey", link: "/components/sankey" },
+            ]
+        },
+        {
+            text: "Layouts",
+            children: [
+                { text: "Splitter", link: "/components/splitter" },
+                { text: "Zoom", link: "/components/zoom" }
+            ]
+        }
+    ];
+}
+
 module.exports = {
     lang: "en-US",
     title: "@hpcc-js/web-components",
@@ -40,6 +74,11 @@ module.exports = {
 
     vite: {
         cacheDir: "./.vitepress/cache",
+        resolve: {
+            alias: {
+                crypto: "",
+            },
+        },
         plugins: [
         ]
     },
@@ -75,9 +114,14 @@ module.exports = {
 
             md.core.ruler.before("normalize", "types", function replace(state) {
                 const apiModel = new ApiModel();
-                const apiPackage = apiModel.loadPackage("./temp/web-components.api.json");
+                let apiPackage;
+                try {
+                    apiPackage = apiModel.loadPackage("./temp/web-components.api.json");
+                } catch (e) {
+                    //  File might not exit yet  ---
+                }
 
-                for (const entyrPoint of apiPackage.members) {
+                apiPackage?.members.forEach(entyrPoint => {
                     for (const struct of entyrPoint.members) {
                         // if (struct.displayName.indexOf("HPCC") === 0 && struct.displayName.indexOf("Element") > 0) {
                         structs[struct.displayName] = struct;
@@ -86,7 +130,7 @@ module.exports = {
                         }
                         // }
                     }
-                }
+                });
 
 
                 for (const key in structs) {
@@ -114,34 +158,3 @@ module.exports = {
         }
     }
 };
-
-function getGuideSidebar() {
-    return [
-        {
-            text: "Introduction",
-            children: [
-                { text: "Getting Started", link: "/guide/getting-started" }
-            ]
-        },
-        {
-            text: "Advanced",
-            children: [{ text: "API Reference", link: "/api/web-components" }]
-        }
-    ];
-}
-
-function getComponentsSidebar() {
-    return [
-        {
-            text: "Visualizations",
-            children: [
-                { text: "CodeMirror", link: "/components/codemirror" },
-                { text: "Sankey", link: "/components/sankey" },
-            ]
-        },
-        {
-            text: "Layouts",
-            children: [{ text: "Zoom", link: "/components/zoom" }]
-        }
-    ];
-}

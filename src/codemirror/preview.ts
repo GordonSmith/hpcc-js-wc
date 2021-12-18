@@ -1,10 +1,9 @@
 import { HPCCCodemirrorElement } from ".";
-import { HPCCResizeElement, ChangeMap, customElement, css, html, ref } from "../common/hpcc-element";
+import { HPCCResizeElement, attribute, ChangeMap, customElement, css, html, ref, volatile } from "../common/hpcc-element";
 
 const template = html<HPCCPreviewElement>`
     <div>
-        <div>
-            <iframe ${ref("_iframe")} width="${(s) => s.width}" height="${(s) => s.height}" frameborder="0"> </iframe>
+        <div ${ref("_iframeDiv")}>
         </div>
         <hpcc-codemirror ${ref("_cm")}></hpcc-codemirror>
     </div>
@@ -19,10 +18,6 @@ const styles = css`
         padding-bottom: 4px;
     }
 
-    :host iframe {
-        border: 1px solid #ccc;
-    }
-
     :host > div > hpcc-codemirror {
         padding-top: 4px;
     }
@@ -30,11 +25,35 @@ const styles = css`
 
 @customElement({ name: "hpcc-preview", template, styles })
 export class HPCCPreviewElement extends HPCCResizeElement {
+
+    /**
+     * Border style for the preview iframe
+     *
+     * @defaultValue "1px solid #ccc"
+    */
+    @attribute previewBorder = "1px solid #ccc";
+
+    /**
+     * Force full reload of iframe, on each change.
+     * 
+     * @defaultValue false
+     */
+    @attribute fullReload = false;
+
+    /**
+     * Force full reload of iframe, on each change.
+     * 
+     * @defaultValue ""
+     */
+    @attribute headExt = "";
+
+    @attribute content = "";
+
+    _iframeDiv: HTMLDivElement;
     _iframe: HTMLIFrameElement;
     _cm: HPCCCodemirrorElement;
 
-    gatherScripts(node: HTMLElement, scripts: string[]): HTMLElement {
-        const retVal = node.cloneNode() as typeof node;
+    gatherScripts(node: HTMLElement, scripts: string[]) {
         Array.prototype.slice
             .call(node.children, 0)
             .filter((child) => child !== this)
@@ -43,38 +62,52 @@ export class HPCCPreviewElement extends HPCCResizeElement {
             })
             .forEach((child) => {
                 if (child.tagName === "SCRIPT") {
-                    scripts.push(child.outerHTML);
+                    scripts.push(child.src);
                 }
-                const clone = this.gatherScripts(child, scripts);
-                retVal.append(clone);
+                // this.gatherScripts(child, scripts);
             });
-        return retVal;
     }
+
+    protected _head = "";
+    protected _scripts: string[] = [];
 
     enter() {
         super.enter();
-        const head = document.head.innerHTML;
-        const scripts = [];
-        const clone = this.gatherScripts(document.body, scripts);
-        const body = clone.innerHTML;
+        this._head = document.head.innerHTML.toString();
         const codeElements = this.getElementsByTagName("code")[0];
         this._cm.text = codeElements?.innerText ?? "" + this.innerHTML;
+        this.gatherScripts(document.body, this._scripts);
         this._cm.addEventListener("change", (evt) => {
-            this._iframe.contentWindow?.document.write(`
-<head>
-${head}
-</head>
-
-<body style="overflow:hidden">
-${this._cm.text.trim()}
-${scripts}
-</body>
-`);
-            this._iframe.contentWindow?.document.close();
+            this.content = this._cm.text.trim();
         });
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
+        // if (changes.content) {
+        if (this.fullReload || !this._iframe) {
+            this._iframeDiv.innerHTML = "";
+            this._iframe = document.createElement("iframe");
+            this._iframe.style.border = this.previewBorder;
+            this._iframe.width = `${this.width}`;
+            this._iframe.height = `${this.height}`;
+            this._iframeDiv.append(this._iframe);
+        } else {
+            this._iframe.innerHTML = "";
+        }
+        this._iframe.contentWindow?.document.open();
+        this._iframe.contentWindow?.document.write(`\
+<head>
+<script type="module" src="/hpcc-js-wc/assets/index.min.js"></script>
+</head>
+
+<body style="overflow:hidden">
+<div>
+${this._cm.text.trim()}
+</div>
+<script>
+</script>
+</body>`);
+        this._iframe.contentWindow?.document.close();
     }
 }

@@ -7,4 +7,5 @@
 
 ## Layouts
 
+* [Splitter](./splitter)
 * [Zoom](./zoom)

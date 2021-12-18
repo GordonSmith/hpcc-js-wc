@@ -45,6 +45,7 @@ export default [
         plugins: [
             alias({
                 entries: [
+                    { find: "crypto", replacement: "" },
                     // { find: '@hpcc-js/util', replacement: '@hpcc-js/util/lib-es6/index.js' },
                 ]
             }),

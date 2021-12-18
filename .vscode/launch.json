@@ -8,7 +8,7 @@
             "name": "docs",
             "request": "launch",
             "type": "pwa-msedge",
-            "url": "http://localhost:3000",
+            "url": "http://localhost:3000/hpcc-js-wc/",
             "webRoot": "${workspaceFolder}"
         },
         {
@@ -21,4 +21,4 @@
             "type": "pwa-node"
         }
     ]
-} 
+}

@@ -19,16 +19,24 @@ const styles = css`
 
 @customElement({ name: "hpcc-codemirror", template, styles })
 export class HPCCCodemirrorElement extends HPCCResizeElement {
-    @attribute width?: number | string = "100%";
-    @attribute height?: number | string = "100%";
 
     /**  
      * Text to be displayed in the editor
+     * 
+     * @typeParam html - HTML document
+     * @typeParam JSON - JSON document
+     * 
+     * @defaultValue html
      */
-    @attribute type: "html" | "json" = "html";
+    @attribute mode: "html" | "json" = "html";
 
     /**  
      * Text to be displayed in the editor
+     * 
+     * @typeParam light - Light theme
+     * @typeParam dark - Dark theme
+     * 
+     * @defaultValue light
      */
     @attribute theme: "light" | "dark" = "light";
 
@@ -48,7 +56,7 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
 
     protected extension() {
         const retVal = [basicSetup];
-        switch (this.type) {
+        switch (this.mode) {
             case "json":
                 retVal.push(this._cmJson);
                 break;

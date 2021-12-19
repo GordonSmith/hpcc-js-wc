@@ -3,6 +3,14 @@ import { HPCCResizeElement, attribute, customElement, css, html, ref, ChangeMap 
 import { SplitPanel, Widget, Panel, Layout, SplitLayout } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
 
+function getAbsoluteHeight(el: HTMLElement): number {
+    const styles = window.getComputedStyle(el);
+    const margin = parseFloat(styles["marginTop"]) +
+        parseFloat(styles["marginBottom"]);
+
+    return Math.floor(el.offsetHeight + margin);
+}
+
 const template = html<HPCCSplitterElement>`
     <div ${ref("_div")}>
     </div>
@@ -91,7 +99,6 @@ export class HPCCSplitterElement extends HPCCResizeElement {
     _div: HTMLDivElement;
 
     protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
-    protected _widgets: WidgetPlaceholder[] = [];
 
     enter() {
         super.enter();
@@ -99,20 +106,19 @@ export class HPCCSplitterElement extends HPCCResizeElement {
         this._div.append(this._splitPanel.node);
         MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterAttach);
         const codeElements = this.children;
+        let childHeight = 0;
         for (let i = codeElements.length - 1; i >= 0; --i) {
-            this._widgets.unshift(new WidgetPlaceholder(codeElements[i]));
+            const node = codeElements[i] as HTMLElement;
+            const w = new WidgetPlaceholder(node);
+            this._splitPanel.insertWidget(0, w);
+            const height = getAbsoluteHeight(node);
+            childHeight = height > childHeight ? height : childHeight;
         }
-        this._widgets.forEach((w) => {
-            this._splitPanel.addWidget(w);
-        });
+        this._splitPanel.node.style.height = `${childHeight}px`;
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
-        const height = this._widgets.reduce((prev, curr) => {
-            return prev >= curr.node.clientHeight ? prev : curr.node.clientHeight;
-        }, 0);
-        this._splitPanel.node.style.height = `${height + 2}px`;
         this._splitPanel.update();
     }
 

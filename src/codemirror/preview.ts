@@ -62,7 +62,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
             })
             .forEach((child) => {
                 if (child.tagName === "SCRIPT") {
-                    scripts.push(child.src);
+                    scripts.push(child.outerHTML.toString());
                 }
                 // this.gatherScripts(child, scripts);
             });
@@ -98,15 +98,14 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         this._iframe.contentWindow?.document.open();
         this._iframe.contentWindow?.document.write(`\
 <head>
-<script type="module" src="/hpcc-js-wc/assets/index.min.js"></script>
+${this._head}
 </head>
 
 <body style="overflow:hidden">
 <div>
 ${this._cm.text.trim()}
 </div>
-<script>
-</script>
+${this._scripts.join("\n")}
 </body>`);
         this._iframe.contentWindow?.document.close();
     }

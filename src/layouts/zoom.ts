@@ -51,13 +51,13 @@ export class HPCCZoomElement extends HPCCResizeElement {
      */
     @attribute scale = 1;
 
-    _svg: SVGElement;
+    _svg: SVGSVGElement;
     protected svg: d3.Selection<SVGSVGElement, any, any, any>;
     _content: SVGGElement;
     protected content: d3.Selection<SVGGElement, any, any, any>;
 
     _zoom = d3
-        .zoom()
+        .zoom<SVGSVGElement, unknown>()
         .duration(0)
         .on("zoom", ({ transform }) => {
             this.x = transform.x;
@@ -82,7 +82,7 @@ export class HPCCZoomElement extends HPCCResizeElement {
             ])
             .scaleExtent([this.scaleMin, this.scaleMax]);
         if (changes.x !== undefined || changes.y !== undefined || changes.scale !== undefined) {
-            this.content.attr("transform", d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));
+            this.content.attr("transform", d3.zoomIdentity.translate(this.x, this.y).scale(this.scale).toString());
             this.$emit("zoom");
         }
         this._zoom.transform(this.svg, d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));

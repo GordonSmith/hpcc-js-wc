@@ -4,6 +4,7 @@
 
 * [CodeMirror](./codemirror)
 * [Sankey](./sankey)
+* [Treemap](./treemap)
 
 ## Layouts
 

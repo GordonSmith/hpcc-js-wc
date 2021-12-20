@@ -23,6 +23,7 @@ function getComponentsSidebar() {
             children: [
                 { text: "CodeMirror", link: "/components/codemirror" },
                 { text: "Sankey", link: "/components/sankey" },
+                { text: "Treemap", link: "/components/treemap" },
             ]
         },
         {

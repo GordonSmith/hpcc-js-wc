@@ -110,3 +110,4 @@ ${this._scripts.join("\n")}
         this._iframe.contentWindow?.document.close();
     }
 }
+  

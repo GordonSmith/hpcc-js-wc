@@ -1,18 +1,10 @@
 import { display } from "@microsoft/fast-foundation";
-import { HPCCResizeElement, attribute, customElement, css, html, ref, ChangeMap } from "../common/hpcc-element";
-import { SplitPanel, Widget, Panel, Layout, SplitLayout } from "@lumino/widgets";
+import { HPCCResizeElement, customElement, css, html, ref, ChangeMap } from "../common/hpcc-element";
+import { SplitPanel, Widget } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
 
-function getAbsoluteHeight(el: HTMLElement): number {
-    const styles = window.getComputedStyle(el);
-    const margin = parseFloat(styles["marginTop"]) +
-        parseFloat(styles["marginBottom"]);
-
-    return Math.floor(el.offsetHeight + margin);
-}
-
 const template = html<HPCCSplitterElement>`
-    <div ${ref("_div")}>
+    <div ${ref("_div")} style="width:${s => s.width};height:${s => s.height}">
     </div>
 `;
 
@@ -83,49 +75,72 @@ ${display("inline")} :host {
 
 export class WidgetPlaceholder extends Widget {
 
-    constructor(node: Element) {
-        super({ node: node as HTMLElement });
-        this.addClass("widget-placeholder");
-    }
+  constructor(node: Element) {
+    super({ node: node as HTMLElement });
+    this.addClass("widget-placeholder");
+  }
 
-    protected onResize(msg: Widget.ResizeMessage): void {
-        super.onResize(msg);
-    }
+  protected onResize(msg: Widget.ResizeMessage): void {
+    super.onResize(msg);
+  }
 }
 
-@customElement({ name: "hpcc-splitter", template, styles })
 export class HPCCSplitterElement extends HPCCResizeElement {
 
-    _div: HTMLDivElement;
+  _div: HTMLDivElement;
 
-    protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
+  protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
 
-    enter() {
-        super.enter();
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeAttach);
-        this._div.append(this._splitPanel.node);
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterAttach);
-        const codeElements = this.children;
-        let childHeight = 0;
-        for (let i = codeElements.length - 1; i >= 0; --i) {
-            const node = codeElements[i] as HTMLElement;
-            const w = new WidgetPlaceholder(node);
-            this._splitPanel.insertWidget(0, w);
-            const height = getAbsoluteHeight(node);
-            childHeight = height > childHeight ? height : childHeight;
-        }
-        this._splitPanel.node.style.height = `${childHeight}px`;
+  enter() {
+    super.enter();
+    MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeAttach);
+    this._div.append(this._splitPanel.node);
+    MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterAttach);
+    const codeElements = this.children;
+    for (let i = codeElements.length - 1; i >= 0; --i) {
+      const node = codeElements[i] as HTMLElement;
+      const w = new WidgetPlaceholder(node);
+      this._splitPanel.insertWidget(0, w);
     }
+  }
 
-    update(changes: ChangeMap) {
-        super.update(changes);
-        this._splitPanel.update();
-    }
+  update(changes: ChangeMap) {
+    super.update(changes);
+    this._splitPanel.update();
+  }
 
-    exit() {
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeDetach);
-        this._splitPanel.node.parentNode?.removeChild(this._splitPanel.node);
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterDetach);
-        super.exit();
-    }
+  exit() {
+    MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeDetach);
+    this._splitPanel.node.parentNode?.removeChild(this._splitPanel.node);
+    MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterDetach);
+    super.exit();
+  }
+}
+
+@customElement({ name: "hpcc-hsplitter", template, styles })
+export class HPCCHSplitterElement extends HPCCSplitterElement {
+
+  protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
+
+  update(changes: ChangeMap) {
+    const width = typeof this.width === "string" ? this.width : this.width + "px";
+    const height = typeof this.height === "string" ? this.height : this.height + "px";
+    this._splitPanel.node.style.width = width;
+    this._splitPanel.node.style.height = height;
+    super.update(changes);
+  }
+}
+
+@customElement({ name: "hpcc-vsplitter", template, styles })
+export class HPCCVSplitterElement extends HPCCSplitterElement {
+
+  protected _splitPanel = new SplitPanel({ orientation: "vertical" });
+
+  update(changes: ChangeMap) {
+    const width = typeof this.width === "string" ? this.width : this.width + "px";
+    const height = typeof this.height === "string" ? this.height : this.height + "px";
+    this._splitPanel.node.style.width = width;
+    this._splitPanel.node.style.height = height;
+    super.update(changes);
+  }
 }

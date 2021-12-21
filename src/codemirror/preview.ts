@@ -38,7 +38,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
      * 
      * @defaultValue false
      */
-    @attribute fullReload = false;
+    @attribute({ mode: "boolean" }) fullReload = false;
 
     /**
      * Force full reload of iframe, on each change.
@@ -99,15 +99,14 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         this._iframe.contentWindow?.document.write(`\
 <head>
 ${this._head}
+${this._scripts.join("\n")}
 </head>
 
 <body style="overflow:hidden">
 <div>
 ${this._cm.text.trim()}
 </div>
-${this._scripts.join("\n")}
 </body>`);
         this._iframe.contentWindow?.document.close();
     }
 }
-  

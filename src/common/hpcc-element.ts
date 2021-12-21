@@ -1,4 +1,4 @@
-import { FASTElement, attr, observable, volatile } from "@microsoft/fast-element";
+import { FASTElement, attr, observable, volatile, DecoratorAttributeConfiguration, AttributeConfiguration } from "@microsoft/fast-element";
 import { Dispatch, Message, IObserverHandle } from "@hpcc-js/util/lib-es6/dispatch";
 
 export { customElement, css, html, ref, volatile } from "@microsoft/fast-element";
@@ -41,10 +41,13 @@ class AttrChangedMessage extends Message {
 }
 
 export class HPCCElement extends FASTElement {
+
     private _dispath = new Dispatch<AttrChangedMessage>();
+
     protected _fire = (what: string, oldVal: any = false, newVal: any = true) => {
         this._dispath.post(new AttrChangedMessage(what, oldVal, newVal));
     };
+
     private _dispatchHandle: IObserverHandle;
 
     connectedCallback(): void {
@@ -73,11 +76,11 @@ export class HPCCElement extends FASTElement {
         super.disconnectedCallback();
     }
 
-    enter() {}
+    enter() { }
 
-    update(changes: ChangeMap) {}
+    update(changes: ChangeMap) { }
 
-    exit() {}
+    exit() { }
 
     render(): Promise<this> {
         return new Promise((resolve) => {
@@ -97,14 +100,38 @@ function appendChangedHandler(configOrTarget, prop) {
     };
 }
 
-export function attribute(target: object, prop: string): void {
-    appendChangedHandler(target, prop);
-    return attr(target, prop!);
+export function attribute(config?: DecoratorAttributeConfiguration): (target: object, property: string) => void;
+export function attribute(target: object, prop: string): void;
+export function attribute(configOrTarget?: DecoratorAttributeConfiguration | object, prop?: string): void | ((target: object, property: string) => void) {
+
+    function decorator($target: object, $prop: string): void {
+        appendChangedHandler($target, $prop);
+        return attr($target, $prop);
+    }
+
+    if (arguments.length > 1) {
+        decorator(configOrTarget!, prop!);
+        return;
+    }
+
+    return decorator;
 }
 
-export function property(target: object, prop: string) {
-    appendChangedHandler(target, prop);
-    return observable(target, prop);
+export function property(config?: DecoratorAttributeConfiguration): (target: object, property: string) => void;
+export function property(target: object, prop: string): void;
+export function property(configOrTarget?: DecoratorAttributeConfiguration | object, prop?: string): void | ((target: object, property: string) => void) {
+
+    function decorator($target: object, $prop: string): void {
+        appendChangedHandler($target, $prop);
+        return observable($target, $prop);
+    }
+
+    if (arguments.length > 1) {
+        decorator(configOrTarget!, prop!);
+        return;
+    }
+
+    return decorator;
 }
 
 export class HPCCResizeElement extends HPCCElement implements EventListenerObject {
@@ -118,8 +145,15 @@ export class HPCCResizeElement extends HPCCElement implements EventListenerObjec
      */
     @attribute height?: number | string;
 
+    @attribute innerWidth: number = 0;
+
+    @attribute innerHeight: number = 0;
+
+    protected _computedStyle: CSSStyleDeclaration;
+
     handleEvent(): void {
-        this._fire("resize");
+        this.innerWidth = this.clientWidth - parseFloat(this._computedStyle.paddingLeft) - parseFloat(this._computedStyle.paddingRight);
+        this.innerHeight = this.clientHeight - parseFloat(this._computedStyle.paddingTop) - parseFloat(this._computedStyle.paddingBottom);
     }
 
     protected observer = new ResizeObserver(() => {
@@ -128,11 +162,12 @@ export class HPCCResizeElement extends HPCCElement implements EventListenerObjec
 
     connectedCallback(): void {
         super.connectedCallback();
+        this._computedStyle = getComputedStyle(this);
         if (this.parentElement === document.body) {
             window.addEventListener("resize", this);
             this.handleEvent();
         } else {
-            this.observer.observe(this.parentElement!);
+            this.observer.observe(this);
         }
     }
 
@@ -140,7 +175,7 @@ export class HPCCResizeElement extends HPCCElement implements EventListenerObjec
         if (this.parentElement === document.body) {
             window.removeEventListener("resize", this);
         } else {
-            this.observer.unobserve(this.parentElement!);
+            this.observer.unobserve(this);
         }
         super.disconnectedCallback();
     }

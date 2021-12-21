@@ -3,7 +3,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonJS from "@rollup/plugin-commonjs";
 import transformTaggedTemplate from "rollup-plugin-transform-tagged-template";
 import filesize from "rollup-plugin-filesize";
-
 import { terser } from "rollup-plugin-terser";
 
 import * as pkg from "./package.json";
@@ -45,7 +44,7 @@ export default [
         plugins: [
             alias({
                 entries: [
-                    { find: "crypto", replacement: "" },
+                    // { find: "crypto", replacement: "" },
                     // { find: '@hpcc-js/util', replacement: '@hpcc-js/util/lib-es6/index.js' },
                 ]
             }),

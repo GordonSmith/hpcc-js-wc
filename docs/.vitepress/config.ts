@@ -84,7 +84,7 @@ module.exports = {
         ]
     },
 
-    vueOptions: {
+    vue: {
         template: {
             compilerOptions: {
                 isCustomElement: (tag) => {

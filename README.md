@@ -2,6 +2,10 @@
 
 ![GitHub](https://img.shields.io/github/license/GordonSmith/hpcc-js-wc) 
 
+::: warning
+This is currently a POC repository and has not been released to the npmjs repository.
+:::
+
 `@hpcc-js/web-components` is a library of Web Components that focuses on visualizations.  It also includes communication libraries for interacting with [HPCC Platforms](https://github.com/hpcc-systems/HPCC-Platform).
 
 ## Installation

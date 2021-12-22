@@ -84,29 +84,28 @@ export class HPCCPreviewElement extends HPCCResizeElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        // if (changes.content) {
-        if (this.fullReload || !this._iframe) {
-            this._iframeDiv.innerHTML = "";
-            this._iframe = document.createElement("iframe");
-            this._iframe.style.border = this.previewBorder;
-            this._iframe.width = `${this.width}`;
-            this._iframe.height = `${this.height}`;
-            this._iframeDiv.append(this._iframe);
-        } else {
-            this._iframe.innerHTML = "";
-        }
-        this._iframe.contentWindow?.document.open();
-        this._iframe.contentWindow?.document.write(`\
+        if (changes.content) {
+            if (this.fullReload || !this._iframe) {
+                this._iframeDiv.innerHTML = "";
+                this._iframe = document.createElement("iframe");
+                this._iframe.style.border = this.previewBorder;
+                this._iframe.width = `${this.width}`;
+                this._iframe.height = `${this.height}`;
+                this._iframeDiv.append(this._iframe);
+            }
+            this._iframe.contentWindow?.document.open();
+            this._iframe.contentWindow?.document.write(`\
 <head>
 ${this._head}
-${this._scripts.join("\n")}
 </head>
 
 <body style="overflow:hidden">
 <div>
 ${this._cm.text.trim()}
 </div>
+${this._scripts.join("\n")}
 </body>`);
-        this._iframe.contentWindow?.document.close();
+            this._iframe.contentWindow?.document.close();
+        }
     }
 }

@@ -16,3 +16,6 @@ features:
 footer: Apache-2.0 Licensed | Copyright © 2021 hpcc-systems.com
 ---
 
+::: warning
+This is currently a POC repository and has not been released to the npmjs repository.
+:::

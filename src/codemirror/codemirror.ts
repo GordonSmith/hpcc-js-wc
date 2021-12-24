@@ -4,7 +4,7 @@ import { html as cmHtml } from "@codemirror/lang-html";
 import { json as cmJson } from "@codemirror/lang-json";
 import { defaultHighlightStyle } from "@codemirror/highlight";
 import { oneDarkTheme, oneDarkHighlightStyle } from "@codemirror/theme-one-dark";
-import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref } from "../common/hpcc-element";
+import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref } from "../common/element";
 
 const template = html<HPCCCodemirrorElement>` <div ${ref("_div")}></div> `;
 

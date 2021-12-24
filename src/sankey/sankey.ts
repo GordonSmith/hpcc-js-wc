@@ -1,4 +1,4 @@
-import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref, HTMLColor } from "../common/hpcc-element";
+import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref, HTMLColor } from "../common/element";
 import { format as d3Format } from "d3";
 import { sankeyFunc } from "./sankeyFunc";
 

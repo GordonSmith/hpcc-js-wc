@@ -1,1 +1,1 @@
-export * from "./hpcc-element";
+export * from "./element";

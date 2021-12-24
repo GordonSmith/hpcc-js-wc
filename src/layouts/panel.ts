@@ -1,4 +1,4 @@
-import { attribute, ChangeMap, HPCCResizeElement, customElement, css, html, volatile } from "../common/hpcc-element";
+import { attribute, ChangeMap, HPCCResizeElement, customElement, css, html, volatile } from "../common/element";
 import { display } from "@microsoft/fast-foundation";
 
 const template = html<HPCCPanelElement>`

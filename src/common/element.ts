@@ -145,6 +145,14 @@ export class HPCCResizeElement extends HPCCElement implements EventListenerObjec
      */
     @attribute height?: number | string;
 
+    get widthString() {
+        return typeof this.width === "string" ? this.width : this.width + "px";
+
+    }
+    get heightString() {
+        return typeof this.height === "string" ? this.height : this.height + "px";
+    }
+
     @attribute innerWidth: number = 0;
 
     @attribute innerHeight: number = 0;

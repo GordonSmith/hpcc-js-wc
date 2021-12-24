@@ -1,10 +1,10 @@
 # Splitter
 
-**tag**: `<hpcc-hsplitter>`
+**tag**: `<hpcc-splitter>`
 
 <ClientOnly>
   <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
-    <hpcc-hsplitter width="100%" height="400px">
+    <hpcc-splitter orientation="horizontal" width="100%" height="400px">
       <div style="overflow:auto">
         <h1>HTML Ipsum Presents</h1>
         <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
@@ -13,15 +13,15 @@
         <h1>HTML Ipsum Presents</h1>
         <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
       </div>
-    </hpcc-hsplitter>
+    </hpcc-splitter>
   </hpcc-preview>
 </ClientOnly>
 
-**tag**: `<hpcc-vsplitter>`
+**tag**: `<hpcc-splitter orientation="vertical">`
 
 <ClientOnly>
   <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
-    <hpcc-vsplitter width="100%" height="400px">
+    <hpcc-splitter orientation="vertical" width="100%" height="400px">
       <div style="overflow:auto">
         <h1>HTML Ipsum Presents</h1>
         <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
@@ -30,20 +30,20 @@
         <h1>HTML Ipsum Presents</h1>
         <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
       </div>
-    </hpcc-vsplitter>
+    </hpcc-splitter>
   </hpcc-preview>
 </ClientOnly>
 
-**tag**: `<hpcc-hsplitter> + <hpcc-vsplitter> combined`
+**tag**: `<hpcc-splitter> + <hpcc-splitter orientation="vertical"> combined`
 
 <ClientOnly>
   <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
-    <hpcc-hsplitter width="100%" height="400px">
+    <hpcc-splitter width="100%" height="400px">
       <div style="overflow:auto">
         <h1>HTML Ipsum Presents</h1>
         <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
       </div>
-      <hpcc-vsplitter width="100%" height="100%" style="border:0px;padding:0px">
+      <hpcc-splitter orientation="vertical" width="100%" height="100%" style="border:0px;padding:0px">
         <div style="overflow:auto">
           <h1>HTML Ipsum Presents</h1>
           <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
@@ -52,8 +52,8 @@
           <h1>HTML Ipsum Presents</h1>
           <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
         </div>
-      </hpcc-vsplitter>
-    </hpcc-hsplitter>
+      </hpcc-splitter>
+    </hpcc-splitter>
   </hpcc-preview>
 </ClientOnly>
 

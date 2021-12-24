@@ -1,4 +1,4 @@
-import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref, HTMLColor } from "../common/hpcc-element";
+import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref, HTMLColor } from "../common/element";
 import { treemapFunc, Node, Leaf, Mode } from "./treemapFunc";
 
 export type { Node, Mode, Leaf };

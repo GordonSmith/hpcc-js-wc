@@ -1,5 +1,5 @@
-import { HPCCCodemirrorElement } from ".";
-import { HPCCResizeElement, attribute, ChangeMap, customElement, css, html, ref, volatile } from "../common/hpcc-element";
+import { HPCCCodemirrorElement } from "../codemirror";
+import { HPCCResizeElement, attribute, ChangeMap, customElement, css, html, ref } from "../common/element";
 
 const template = html<HPCCPreviewElement>`
     <div>

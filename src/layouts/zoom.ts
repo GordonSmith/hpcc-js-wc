@@ -1,4 +1,4 @@
-import { HPCCResizeElement, attribute, customElement, css, html, ref, ChangeMap } from "../common/hpcc-element";
+import { HPCCResizeElement, attribute, customElement, css, html, ref, ChangeMap } from "../common/element";
 import * as d3 from "d3";
 
 const template = html<HPCCZoomElement>`

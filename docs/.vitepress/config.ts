@@ -29,6 +29,7 @@ function getComponentsSidebar() {
         {
             text: "Layouts",
             children: [
+                { text: "Dock Panel", link: "/components/dockpanel" },
                 { text: "Splitter", link: "/components/splitter" },
                 { text: "Zoom", link: "/components/zoom" }
             ]
@@ -75,6 +76,11 @@ module.exports = {
 
     vite: {
         cacheDir: "./.vitepress/cache",
+        server: {
+            fs: {
+                strict: false
+            }
+        },
         resolve: {
             alias: {
                 crypto: "",

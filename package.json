@@ -32,7 +32,7 @@
     "bundle": "rollup -c",
     "bundle-watch": "npm run bundle -- -w",
     "build-docs": "run-s compile api-extractor api-documenter vitepress-build",
-    "build": "npm-run-all --serial build-docs --parallel bundle copy-res docs:patch",
+    "build": "run-s build-docs bundle copy-res docs:patch",
     "standard-version": "standard-version",
     "standard-version-dryrun": "standard-version --dry-run",
     "git-push": "git push --follow-tags upstream trunk",
@@ -53,7 +53,7 @@
     "@codemirror/theme-one-dark": "^0.19.1",
     "@hpcc-js/util": "^2.40.0",
     "@lumino/dragdrop": "file:../lumino/packages/dragdrop",
-    "@lumino/messaging": "^1.10.1",
+    "@lumino/messaging": "file:../lumino/packages/messaging",
     "@lumino/widgets": "file:../lumino/packages/widgets",
     "@microsoft/fast-element": "^1.6.2",
     "@microsoft/fast-foundation": "^2.27.1",
@@ -93,7 +93,7 @@
     "rollup-plugin-transform-tagged-template": "^0.0.3",
     "standard-version": "^9.3.2",
     "typescript": "^4.5.4",
-    "vitepress": "^0.20.9"
+    "vitepress": "file:../vitepress"
   },
   "repository": {
     "type": "git",

@@ -55,7 +55,7 @@ module.exports = {
         "prefer-spread": "off",
 
         "semi": ["error", "always"],
-        "quotesXXX": [
+        "quotes": [
             "error",
             "double", {
                 "avoidEscape": true

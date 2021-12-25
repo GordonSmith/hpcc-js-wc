@@ -1,9 +1,9 @@
 import { display } from "@microsoft/fast-foundation";
-import { HPCCResizeElement, customElement, css, html, ref, ChangeMap, attribute } from "../common/element";
+import { HPCCResizeElement, customElement, css, html, ref, ChangeMap, attribute } from "../../common/element";
 import { SplitPanel, Widget } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
-import { WidgetAdapterCSS, WidgetAdapter } from "./lumino/widgetAdapter";
-import { splitpanel } from "./lumino/styles";
+import { WidgetAdapterCSS, WidgetAdapter } from "./widgetAdapter";
+import { splitpanel } from "./styles";
 
 const template = html<HPCCSplitterElement>`
     <div ${ref("_div")} style="width:${s => s.width};height:${s => s.height}">

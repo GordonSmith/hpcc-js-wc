@@ -1,6 +1,7 @@
 import { css } from "../../common/element";
 
-export const accordionpanel = css`
+export namespace light {
+  export const accordionpanel = css`
 .lm-AccordionPanel .lm-AccordionPanel-title {
     box-sizing: border-box;
     padding: 0px 10px;
@@ -51,7 +52,7 @@ export const accordionpanel = css`
   }
   `;
 
-export const commandpalette = css`
+  export const commandpalette = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Copyright (c) 2014-2017, PhosphorJS Contributors
@@ -185,7 +186,7 @@ export const commandpalette = css`
 }
 `;
 
-export const datagrid = css`
+  export const datagrid = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) 2014-2018, PhosphorJS Contributors
 |
@@ -293,7 +294,7 @@ export const datagrid = css`
 }
 `;
 
-export const dockpanel = css`
+  export const dockpanel = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Copyright (c) 2014-2017, PhosphorJS Contributors
@@ -314,7 +315,7 @@ export const dockpanel = css`
 }
 `;
 
-export const menu = css`
+  export const menu = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Copyright (c) 2014-2017, PhosphorJS Contributors
@@ -422,7 +423,7 @@ export const menu = css`
 }
 `;
 
-export const menubar = css`
+  export const menubar = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Copyright (c) 2014-2017, PhosphorJS Contributors
@@ -474,7 +475,7 @@ export const menubar = css`
 }
 `;
 
-export const scrollbar = css`
+  export const scrollbar = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Copyright (c) 2014-2017, PhosphorJS Contributors
@@ -600,7 +601,7 @@ export const scrollbar = css`
 }
 `;
 
-export const tabbar = css`
+  export const tabbar = css`
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
 | Copyright (c) 2014-2017, PhosphorJS Contributors
@@ -701,8 +702,10 @@ export const tabbar = css`
 .p-TabBar-tab.p-mod-closable > .p-TabBar-tabCloseIcon:before,
 /* </DEPRECATED> */
 .lm-TabBar-tab.lm-mod-closable > .lm-TabBar-tabCloseIcon:before {
-  content: '\f00d';
-  font-family: FontAwesome;
+  // content: '\f00d';
+  // font-family: FontAwesome;
+  content: 'x';
+  font-weight: bold
 }
 
 .lm-TabBar .lm-TabBar-addButton:before {
@@ -723,7 +726,7 @@ export const tabbar = css`
 }
 `;
 
-export const all = css`
+  export const all = css`
 ${accordionpanel}
 ${commandpalette}
 ${datagrid}
@@ -733,3 +736,5 @@ ${menubar}
 ${scrollbar}
 ${tabbar}
 `;
+}
+

@@ -1,5 +1,6 @@
-import { css } from "../../common/element";
 import { Widget } from "@lumino/widgets";
+import { Message } from "@lumino/messaging";
+import { css } from "../../common/element";
 
 export const WidgetAdapterCSS = css`
 
@@ -24,5 +25,9 @@ export class WidgetAdapter extends Widget {
 
     protected onResize(msg: Widget.ResizeMessage): void {
         super.onResize(msg);
+    }
+
+    protected onCloseRequest(msg: Message): void {
+        super.onCloseRequest(msg);
     }
 }

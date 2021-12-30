@@ -1,21 +1,17 @@
-import { HPCCResizeElement, attribute, customElement, css, html, ref, ChangeMap } from "../common/element";
+import { HPCCSVGElement, attribute, customElement, css, ChangeMap, html, ref, classMeta } from "../common";
 import * as d3 from "d3";
 
-const template = html<HPCCZoomElement>`
-    <svg ${ref("_svg")} width="${(s) => s.width}" height="${(s) => s.height}" viewbox="[0, 0, ${(s) => s._svg.clientWidth}, ${(s) => s._svg.clientHeight}]">
-        <foreignObject ${ref("_content")} x="0" y="0" width="100%" height="800px">
-            <slot> </slot>
-        </foreignObject>
-    </svg>
+const template = html<HPCCZoomElement>`\
+<foreignObject ${ref("_content")} x="0" y="0" width="100%" height="100%" style="overflow:visible">
+    <slot></slot>
+</foreignObject>
 `;
 
 const styles = css`
-    svg {
-    }
 `;
 
-@customElement({ name: "hpcc-zoom", template, styles })
-export class HPCCZoomElement extends HPCCResizeElement {
+@customElement("hpcc-zoom", styles, template)
+export class HPCCZoomElement extends HPCCSVGElement {
     /**
      * The minimum scale extent that can be applied to the content
      *
@@ -51,7 +47,6 @@ export class HPCCZoomElement extends HPCCResizeElement {
      */
     @attribute scale = 1;
 
-    _svg: SVGSVGElement;
     protected svg: d3.Selection<SVGSVGElement, any, any, any>;
     _content: SVGGElement;
     protected content: d3.Selection<SVGGElement, any, any, any>;
@@ -66,15 +61,25 @@ export class HPCCZoomElement extends HPCCResizeElement {
             this.$emit("changed");
         });
 
+    constructor() {
+        super();
+    }
+
     enter() {
         super.enter();
         this.svg = d3.select(this._svg);
-        this.content = d3.select(this._content);
+        this.svg.html(classMeta(this.constructor.name).template!);
+        this.content = this.svg.select("foreignObject");
         this.svg.call(this._zoom, d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
+        this.svg.attr("viewbox", "[0, 0, 0, 0]");
+        this.content
+            .attr("width", `${this.width}`)
+            .attr("height", `${this.height}`)
+            ;
         this._zoom
             .extent([
                 [0, 0],

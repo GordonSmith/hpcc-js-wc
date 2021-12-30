@@ -1,6 +1,6 @@
 import { Widget } from "@lumino/widgets";
 import { Message } from "@lumino/messaging";
-import { css } from "../../common/element";
+import { css } from "../../common";
 
 export const WidgetAdapterCSS = css`
 

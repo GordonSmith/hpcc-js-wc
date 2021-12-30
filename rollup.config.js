@@ -36,6 +36,12 @@ export default [
         },
         output: [
             {
+                file: pkg.browser,
+                format: "umd",
+                plugins: [],
+                name: pkg.name
+            },
+            {
                 file: pkg.jsdelivr,
                 format: "es",
                 plugins: [terser()],

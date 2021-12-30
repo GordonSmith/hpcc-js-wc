@@ -1,4 +1,4 @@
-import { css } from "../../common/element";
+import { css } from "../../common";
 
 export const widget = css`
 /*-----------------------------------------------------------------------------

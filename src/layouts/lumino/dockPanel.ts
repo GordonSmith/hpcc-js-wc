@@ -1,5 +1,4 @@
-import { display } from "@microsoft/fast-foundation";
-import { HPCCResizeElement, customElement, css, html, ref, ChangeMap, attribute } from "../../common/element";
+import { HPCCDivElement, customElement, ChangeMap, css, display } from "../../common";
 import { DockPanel, Widget } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
 import { WidgetAdapter } from "./widgetAdapter";
@@ -8,13 +7,15 @@ import * as luminoTheme from "./theme";
 
 const isTrue = (value?: string | number | boolean): boolean => value === true || value === 1 || value === "true" || value === "1";
 
-const template = html<HPCCDockPanelElement>`
-    <div ${ref("_div")} style="width:${s => s.width};height:${s => s.height}">
-    </div>
-`;
+// const template = html<HPCCDockPanelElement>`
+//     <div ${ref("_div")} style="width:${s => s.width};height:${s => s.height}">
+//     </div>
+// `;
 
 const styles = css`
-${display("inline")} :host {
+${display("inline")} 
+
+:host {
 }
 
 :host > div {
@@ -31,10 +32,8 @@ ${luminoTheme.light.all}
 }
 `;
 
-@customElement({ name: "hpcc-dockpanel", template, styles })
-export class HPCCDockPanelElement extends HPCCResizeElement {
-
-    _div: HTMLDivElement;
+@customElement("hpcc-dockpanel", styles)
+export class HPCCDockPanelElement extends HPCCDivElement {
 
     protected _dockPanel?: DockPanel;
 

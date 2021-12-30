@@ -1,24 +1,31 @@
-import { display } from "@microsoft/fast-foundation";
 import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
 import { html as cmHtml } from "@codemirror/lang-html";
 import { json as cmJson } from "@codemirror/lang-json";
 import { defaultHighlightStyle } from "@codemirror/highlight";
 import { oneDarkTheme, oneDarkHighlightStyle } from "@codemirror/theme-one-dark";
-import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref } from "../common/element";
+import { HPCCDivElement, attribute, property, ChangeMap, customElement } from "../common";
 
-const template = html<HPCCCodemirrorElement>` <div ${ref("_div")}></div> `;
+// const template = html<HPCCCodemirrorElement>` <div ${ref("_div")}></div> `;
 
-const styles = css`
-    ${display("inline")} :host {
-    }
+const styles = `\
+:host([hidden]) {
+    display:none
+}
 
-    .cm-editor {
-        border: 1px solid #ddd;
-    }
+:host{
+    display:inline
+}
+
+:host {
+}
+
+.cm-editor {
+    border: 1px solid #ddd;
+}
 `;
 
-@customElement({ name: "hpcc-codemirror", template, styles })
-export class HPCCCodemirrorElement extends HPCCResizeElement {
+@customElement("hpcc-codemirror", styles)
+export class HPCCCodemirrorElement extends HPCCDivElement {
 
     /**  
      * Text to be displayed in the editor
@@ -53,6 +60,11 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
 
     _div: HTMLDivElement;
     _view: EditorView;
+
+    constructor() {
+        super();
+        this._styles.innerHTML = styles;
+    }
 
     protected extension() {
         const retVal = [basicSetup];

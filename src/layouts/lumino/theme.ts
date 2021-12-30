@@ -1,4 +1,4 @@
-import { css } from "../../common/element";
+import { css } from "../../common";
 
 export namespace light {
   export const accordionpanel = css`

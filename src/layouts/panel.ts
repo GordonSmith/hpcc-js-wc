@@ -1,11 +1,11 @@
-import { attribute, ChangeMap, HPCCResizeElement, customElement, css, html, volatile } from "../common/element";
+import { attribute, ChangeMap, HPCCDivElement, customElement, css } from "../common";
 import { display } from "@microsoft/fast-foundation";
 
-const template = html<HPCCPanelElement>`
-    <div style="height:${s => s.innerHeight}px">
-        <slot></slot>
-    </div>
-`;
+// const template = html<HPCCPanelElement>`
+//     <div style="height:${s => s.innerHeight}px">
+//         <slot></slot>
+//     </div>
+// `;
 
 const styles = css`
 ${display("inline")} :host {
@@ -17,7 +17,6 @@ ${display("inline")} :host {
     overflow: auto;
 `;
 
-@customElement({ name: "hpcc-panel", template, styles })
-export class HPCCPanelElement extends HPCCResizeElement {
-
+@customElement("hpcc-panel", styles)
+export class HPCCPanelElement extends HPCCDivElement {
 }

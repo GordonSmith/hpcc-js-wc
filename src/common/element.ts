@@ -1,46 +1,36 @@
-import { FASTElement, attr, observable, volatile, DecoratorAttributeConfiguration, AttributeConfiguration } from "@microsoft/fast-element";
-import { Dispatch, Message, IObserverHandle } from "@hpcc-js/util/lib-es6/dispatch";
-
-export { customElement, css, html, ref, volatile } from "@microsoft/fast-element";
-
-export interface Change {
-    oldValue: any;
-    newValue: any;
-}
-
-export interface ChangeMap {
-    [what: string]: Change;
-}
+import { Dispatch, IObserverHandle } from "@hpcc-js/util/lib-es6/dispatch";
+import { classMeta } from "./decorator";
+import { AttrChangedMessage, ChangeMap } from "./message";
 
 export type HTMLColor = string;
 
-class AttrChangedMessage extends Message {
-    get canConflate(): boolean {
-        return true;
+const defaultEventOptions = {
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+};
+
+export class HPCCElement extends HTMLElement {
+
+    static get observedAttributes(): string[] {
+        return classMeta(this.name).observedAttributes;
     }
 
-    changes: ChangeMap = {};
-
-    constructor(what: string, oldValue: any, newValue: any) {
-        super();
-        this.changes[what] = { oldValue, newValue };
+    get observedAttributes(): string[] {
+        return classMeta(this.constructor.name).observedAttributes;
     }
 
-    conflate(other: AttrChangedMessage): boolean {
-        for (const what in other.changes) {
-            const thisChange = this.changes[what];
-            const otherChange = other.changes[what];
-            if (thisChange) {
-                this.changes[what].newValue = otherChange.newValue;
-            } else {
-                this.changes[what] = otherChange;
-            }
-        }
-        return true;
+    get observedProperties(): string[] {
+        return classMeta(this.constructor.name).observedProperties;
     }
-}
 
-export class HPCCElement extends FASTElement {
+    get observed(): string[] {
+        return classMeta(this.constructor.name).observed;
+    }
+
+    get styles(): string {
+        return classMeta(this.constructor.name).styles;
+    }
 
     private _dispath = new Dispatch<AttrChangedMessage>();
 
@@ -50,9 +40,44 @@ export class HPCCElement extends FASTElement {
 
     private _dispatchHandle: IObserverHandle;
 
-    connectedCallback(): void {
-        super.connectedCallback();
+    protected _styles: HTMLStyleElement;
+
+    constructor() {
+        super();
+        this._styles = document.createElement("style");
+        this._styles.innerHTML = this.styles;
+        this.attachShadow({ mode: "open" });
+        this.shadowRoot!.appendChild(this._styles);
+    }
+
+    private _initialized = false;
+    private initalizeAttributes(): ChangeMap {
+        if (this._initialized) return {};
+        this._initialized = true;
+        const retVal: ChangeMap = {};
+        this.observedAttributes.forEach(attr => {
+            const innerID = `_${attr}`;
+            const value = this[innerID];
+            if (value === undefined) {
+                this[innerID] = this.getAttribute(attr);
+                retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
+            } else {
+                this.setAttribute(attr, value);
+                retVal[attr] = { oldValue: undefined, newValue: value };
+            }
+        });
+        this.observedProperties.forEach(prop => {
+            const innerID = `_${prop}`;
+            retVal[prop] = { oldValue: undefined, newValue: this[innerID] };
+        });
+        return retVal;
+    }
+
+    connectedCallback() {
+        const changes = this.initalizeAttributes();
         this.enter();
+        this.update(changes);
+        this._dispath.flush();
         this._dispatchHandle = this._dispath.attach((messages) => {
             if (this.isConnected) {
                 const changes: ChangeMap = {};
@@ -70,121 +95,52 @@ export class HPCCElement extends FASTElement {
         });
     }
 
-    disconnectedCallback(): void {
+    disconnectedCallback() {
         this._dispatchHandle.release();
         this.exit();
-        super.disconnectedCallback();
     }
 
-    enter() { }
-
-    update(changes: ChangeMap) { }
-
-    exit() { }
-
-    render(): Promise<this> {
-        return new Promise((resolve) => {
-            const handle = this._dispath.attach(() => {
-                handle.release();
-                resolve(this);
-            });
-            this._fire("render");
-        });
-    }
-}
-
-function appendChangedHandler(configOrTarget, prop) {
-    const __proto__ = Object.getPrototypeOf(configOrTarget);
-    __proto__[`${prop}Changed`] = function (this: HPCCElement, oldValue, newValue) {
-        this._fire(prop, oldValue, newValue);
-    };
-}
-
-export function attribute(config?: DecoratorAttributeConfiguration): (target: object, property: string) => void;
-export function attribute(target: object, prop: string): void;
-export function attribute(configOrTarget?: DecoratorAttributeConfiguration | object, prop?: string): void | ((target: object, property: string) => void) {
-
-    function decorator($target: object, $prop: string): void {
-        appendChangedHandler($target, $prop);
-        return attr($target, $prop);
+    adoptedCallback() {
     }
 
-    if (arguments.length > 1) {
-        decorator(configOrTarget!, prop!);
-        return;
-    }
-
-    return decorator;
-}
-
-export function property(config?: DecoratorAttributeConfiguration): (target: object, property: string) => void;
-export function property(target: object, prop: string): void;
-export function property(configOrTarget?: DecoratorAttributeConfiguration | object, prop?: string): void | ((target: object, property: string) => void) {
-
-    function decorator($target: object, $prop: string): void {
-        appendChangedHandler($target, $prop);
-        return observable($target, $prop);
-    }
-
-    if (arguments.length > 1) {
-        decorator(configOrTarget!, prop!);
-        return;
-    }
-
-    return decorator;
-}
-
-export class HPCCResizeElement extends HPCCElement implements EventListenerObject {
-    /**
-     * The element width
-     */
-    @attribute width?: number | string;
-
-    /**
-     * The element height
-     */
-    @attribute height?: number | string;
-
-    get widthString() {
-        return typeof this.width === "string" ? this.width : this.width + "px";
-
-    }
-    get heightString() {
-        return typeof this.height === "string" ? this.height : this.height + "px";
-    }
-
-    @attribute innerWidth: number = 0;
-
-    @attribute innerHeight: number = 0;
-
-    protected _computedStyle: CSSStyleDeclaration;
-
-    handleEvent(): void {
-        this.innerWidth = this.clientWidth - parseFloat(this._computedStyle.paddingLeft) - parseFloat(this._computedStyle.paddingRight);
-        this.innerHeight = this.clientHeight - parseFloat(this._computedStyle.paddingTop) - parseFloat(this._computedStyle.paddingBottom);
-    }
-
-    protected observer = new ResizeObserver(() => {
-        this.handleEvent();
-    });
-
-    connectedCallback(): void {
-        super.connectedCallback();
-        this._computedStyle = getComputedStyle(this);
-        if (this.parentElement === document.body) {
-            window.addEventListener("resize", this);
-            this.handleEvent();
-        } else {
-            this.observer.observe(this);
+    attributeChangedCallback(name, oldValue, newValue) {
+        const innerID = `_${name}`;
+        if (this[innerID] !== newValue) {
+            this[innerID] = newValue;
+            this._fire(name, oldValue, newValue);
         }
     }
 
-    disconnectedCallback(): void {
-        if (this.parentElement === document.body) {
-            window.removeEventListener("resize", this);
-        } else {
-            this.observer.unobserve(this);
+    //  Lifecycle  ---
+    enter() {
+        for (const key of this.observedAttributes) {
+            if (this[key] != this.getAttribute(key)) {
+                console.log("enter error", key, this[key], this.getAttribute(key));
+            }
         }
-        super.disconnectedCallback();
+    }
+
+    update(changes: ChangeMap) {
+        for (const key in changes) {
+            if (this[key] != this.getAttribute(key)) {
+                this.setAttribute(key, this[key]);
+            }
+        }
+        for (const key of this.observedAttributes) {
+            if (this[key] != this.getAttribute(key)) {
+                console.log("update error", key, this[key], this.getAttribute(key));
+            }
+        }
+    }
+
+    exit() {
+    }
+
+    //  Events  ---
+    $emit(type: string, detail?: any, options?) {
+        if (this.isConnected) {
+            return this.dispatchEvent(new CustomEvent(type, Object.assign(Object.assign({ detail }, defaultEventOptions), options)));
+        }
+        return false;
     }
 }

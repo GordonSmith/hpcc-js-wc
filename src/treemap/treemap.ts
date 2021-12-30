@@ -1,23 +1,25 @@
-import { HPCCResizeElement, attribute, property, ChangeMap, customElement, css, html, ref, HTMLColor } from "../common/element";
+import { HPCCSVGElement, attribute, property, ChangeMap, customElement, css, display } from "../common";
 import { treemapFunc, Node, Leaf, Mode } from "./treemapFunc";
 
 export type { Node, Mode, Leaf };
 
-const template = html<HPCCTreemapElement>`
-    <svg ${ref("_svg")} width="${(s) => s.width}" height="${(s) => s.height}" viewbox="[0, 0, ${(s) => s._svg.clientWidth}, ${(s) => s._svg.clientHeight}]">
-    </svg>
-`;
+// const template = html<HPCCTreemapElement>`
+//     <svg ${ref("_svg")} width="${(s) => s.width}" height="${(s) => s.height}" viewbox="[0, 0, ${(s) => s._svg.clientWidth}, ${(s) => s._svg.clientHeight}]">
+//     </svg>
+// `;
 
 const styles = css`
-    :host {
-    }
+${display("inline")}
 
-    svg {
-    }
+:host {
+}
+
+svg {
+}
 `;
 
-@customElement({ name: "hpcc-treemap", template, styles })
-export class HPCCTreemapElement extends HPCCResizeElement {
+@customElement("hpcc-treemap", styles)
+export class HPCCTreemapElement extends HPCCSVGElement {
 
     /**
     * Render mode
@@ -38,8 +40,6 @@ export class HPCCTreemapElement extends HPCCResizeElement {
      * @defaultValue undefined
      */
     @property data: Node;
-
-    _svg: SVGSVGElement;
 
     update(changes: ChangeMap) {
         super.update(changes);

@@ -8,7 +8,6 @@
     "sourceMap": true,
     "declarationMap": true,
     "moduleResolution": "Node",
-    "jsx": "react",
     "importHelpers": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -18,6 +17,9 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "lib": [
       "ES2020",
       "DOM"

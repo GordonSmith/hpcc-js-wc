@@ -15,6 +15,7 @@ export interface Node {
 }
 
 export interface HierarchyNodeEx<Datum> extends d3.HierarchyNode<Datum> {
+    group: string;
     x0: number;
     x1: number;
     y0: number;
@@ -93,7 +94,11 @@ export function treemapFunc(
 
     // Prior to sorting, if a group channel is specified, construct an ordinal color scale.
     const leaves = root.leaves() as HierarchyNodeEx<Node>[];
-    const G = group == null ? null : leaves.map(d => group(d.data, d));
+    const G = group == null ? null : leaves.map(d => {
+        const retVal = group(d.data, d);
+        d.group = retVal;
+        return retVal;
+    });
     if (zDomain === undefined) zDomain = G;
     zDomain = new d3.InternSet(zDomain);
     const color = group == null ? null : d3.scaleOrdinal(zDomain, colors);
@@ -124,8 +129,8 @@ export function treemapFunc(
         .attr("transform", d => `translate(${d.x0},${d.y0})`)
         ;
 
-    node.append("rect")
-        .attr("fill", color ? (d, i) => color(G![i]) : fill)
+    node.selectAll("rect").data(d => d).join("rect")
+        .attr("fill", color ? d => color(d.group) : fill)
         .attr("fill-opacity", fillOpacity)
         .attr("stroke", stroke)
         .attr("stroke-width", strokeWidth)

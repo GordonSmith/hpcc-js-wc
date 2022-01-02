@@ -3,18 +3,14 @@ import { html as cmHtml } from "@codemirror/lang-html";
 import { json as cmJson } from "@codemirror/lang-json";
 import { defaultHighlightStyle } from "@codemirror/highlight";
 import { oneDarkTheme, oneDarkHighlightStyle } from "@codemirror/theme-one-dark";
-import { HPCCDivElement, attribute, property, ChangeMap, customElement } from "../common";
+import { HPCCResizeElement, attribute, property, ChangeMap, customElement, display, html, ref } from "../common";
 
-// const template = html<HPCCCodemirrorElement>` <div ${ref("_div")}></div> `;
+const template = html<HPCCCodemirrorElement>`\
+<div ${ref("_div")}>
+</div>`;
 
 const styles = `\
-:host([hidden]) {
-    display:none
-}
-
-:host{
-    display:inline
-}
+${display("inline")}
 
 :host {
 }
@@ -24,8 +20,8 @@ const styles = `\
 }
 `;
 
-@customElement("hpcc-codemirror", { styles })
-export class HPCCCodemirrorElement extends HPCCDivElement {
+@customElement("hpcc-codemirror", { template, styles })
+export class HPCCCodemirrorElement extends HPCCResizeElement {
 
     /**  
      * Text to be displayed in the editor
@@ -50,16 +46,16 @@ export class HPCCCodemirrorElement extends HPCCDivElement {
     /**  
    * Text to be displayed in the editor
    */
-    @property text: string = "";
-    private _text: string;
+    @property content: string = "";
+    private _content: string;
 
     protected _cmLight = [defaultHighlightStyle];
     protected _cmDark = [oneDarkTheme, oneDarkHighlightStyle];
     protected _cmJson = cmJson();
     protected _cmHtml = cmHtml();
 
-    _div: HTMLDivElement;
-    _view: EditorView;
+    protected _div: HTMLDivElement;
+    protected _view: EditorView;
 
     constructor() {
         super();
@@ -99,8 +95,8 @@ export class HPCCCodemirrorElement extends HPCCDivElement {
             dispatch: (tr) => {
                 this._view.update([tr]);
                 if (!tr.changes.empty) {
-                    this._text = this._view.state.doc.toString();
-                    this.$emit("change", this._text);
+                    this._content = this._view.state.doc.toString();
+                    this.$emit("change", this._content);
                 }
             }
         });
@@ -108,19 +104,20 @@ export class HPCCCodemirrorElement extends HPCCDivElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        if (changes.type) {
+        console.log(changes);
+        if (changes.type || changes.theme) {
             this._view.dispatch({
                 reconfigure: {
                     full: this.extension(),
                 }
             } as any);
         }
-        if (changes.text) {
+        if (changes.content) {
             this._view.dispatch({
                 changes: {
                     from: 0,
                     to: this._view.state.doc.length,
-                    insert: this.text
+                    insert: this.content
                 }
             });
         }

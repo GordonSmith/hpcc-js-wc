@@ -107,7 +107,7 @@ module.exports = {
 
             function writeClass(struct: ApiItem, writer: IndentedWriter) {
                 const structClass = struct as ApiClass;
-                writer.writeLine(struct.displayName);
+                // writer.writeLine(struct.displayName);
                 const baseClass = structs[structClass.extendsType?.excerpt?.text?.trim()];
                 if (baseClass) {
                     writeClass(baseClass, writer);

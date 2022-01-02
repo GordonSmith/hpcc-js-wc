@@ -1,12 +1,11 @@
-import { HPCCSVGElement, attribute, property, ChangeMap, customElement, css, display } from "../common";
+import { HPCCSVGElement, attribute, property, ChangeMap, customElement, css, display, html, ref } from "../common";
 import { treemapFunc, Node, Leaf, Mode } from "./treemapFunc";
 
 export type { Node, Mode, Leaf };
 
-// const template = html<HPCCTreemapElement>`
-//     <svg ${ref("_svg")} width="${(s) => s.width}" height="${(s) => s.height}" viewbox="[0, 0, ${(s) => s._svg.clientWidth}, ${(s) => s._svg.clientHeight}]">
-//     </svg>
-// `;
+const template = html<HPCCTreemapElement>`\
+<svg ${ref("_svg")}>
+</svg>`;
 
 const styles = css`
 ${display("inline")}
@@ -18,7 +17,7 @@ svg {
 }
 `;
 
-@customElement("hpcc-treemap", { styles })
+@customElement("hpcc-treemap", { template, styles })
 export class HPCCTreemapElement extends HPCCSVGElement {
 
     /**

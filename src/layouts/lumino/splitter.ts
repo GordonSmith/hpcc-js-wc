@@ -1,14 +1,12 @@
-import { display } from "@microsoft/fast-foundation";
-import { HPCCResizeElement, customElement, css, html, ref, ChangeMap, attribute } from "../../common_old/element";
+import { HPCCResizeElement, customElement, css, display, html, ref, ChangeMap, attribute } from "../../common";
 import { SplitPanel, Widget } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
 import { WidgetAdapterCSS, WidgetAdapter } from "./widgetAdapter";
 import { splitpanel } from "./styles";
 
-const template = html<HPCCSplitterElement>`
-    <div ${ref("_div")} style="width:${s => s.width};height:${s => s.height}">
-    </div>
-`;
+const template = html<HPCCSplitterElement>`\
+<div ${ref("_div")}">
+</div>`;
 
 const styles = css`
 ${display("inline")} :host {
@@ -24,10 +22,9 @@ ${splitpanel}
 .hpcc-LuminoAdapter {
     padding: 8px;
     border: 1px solid #c0c0c0;
-}
-`;
+}`;
 
-@customElement({ name: "hpcc-splitter", template, styles })
+@customElement("hpcc-splitter", { template, styles })
 export class HPCCSplitterElement extends HPCCResizeElement {
 
     /**
@@ -41,9 +38,8 @@ export class HPCCSplitterElement extends HPCCResizeElement {
 
     @attribute orientation: "horizontal" | "vertical" = "horizontal";
 
-    _div: HTMLDivElement;
-
     protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
+    protected _div: HTMLDivElement;
 
     constructor() {
         super();

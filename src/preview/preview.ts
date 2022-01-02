@@ -1,29 +1,30 @@
 import { HPCCCodemirrorElement } from "../codemirror";
-import { HPCCResizeElement, attribute, ChangeMap, customElement, css, html, ref } from "../common_old/element";
+import { HPCCResizeElement, attribute, ChangeMap, customElement, css, display, html, ref } from "../common";
 
-const template = html<HPCCPreviewElement>`
-    <div>
-        <div ${ref("_iframeDiv")}>
-        </div>
-        <hpcc-codemirror ${ref("_cm")}></hpcc-codemirror>
+const template = html<HPCCPreviewElement>`\
+<div>
+    <div ${ref("_iframeDiv")}>
     </div>
-`;
+    <hpcc-codemirror ${ref("_cm")}></hpcc-codemirror>
+</div>`;
 
 const styles = css`
-    :host > div {
-        flex-direction: column;
-    }
+${display("inline")} 
 
-    :host > div > div {
-        padding-bottom: 4px;
-    }
+:host > div {
+    flex-direction: column;
+}
 
-    :host > div > hpcc-codemirror {
-        padding-top: 4px;
-    }
+:host > div > div {
+    padding-bottom: 4px;
+}
+
+:host > div > hpcc-codemirror {
+    padding-top: 4px;
+}
 `;
 
-@customElement({ name: "hpcc-preview", template, styles })
+@customElement("hpcc-preview", { template, styles })
 export class HPCCPreviewElement extends HPCCResizeElement {
 
     /**
@@ -49,9 +50,9 @@ export class HPCCPreviewElement extends HPCCResizeElement {
 
     @attribute content = "";
 
-    _iframeDiv: HTMLDivElement;
-    _iframe: HTMLIFrameElement;
-    _cm: HPCCCodemirrorElement;
+    protected _iframeDiv: HTMLDivElement;
+    protected _iframe: HTMLIFrameElement;
+    protected _cm: HPCCCodemirrorElement;
 
     gatherScripts(node: HTMLElement, scripts: string[]) {
         Array.prototype.slice
@@ -75,17 +76,17 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         super.enter();
         this._head = document.head.innerHTML.toString();
         const codeElements = this.getElementsByTagName("code")[0];
-        this._cm.text = codeElements?.innerText ?? "" + this.innerHTML;
+        this._cm.content = codeElements?.innerText ?? "" + this.innerHTML;
         this.gatherScripts(document.body, this._scripts);
         this._cm.addEventListener("change", (evt) => {
-            this.content = this._cm.text.trim();
+            this.content = this._cm.content.trim();
         });
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
         if (changes.content) {
-            if (this.fullReload || !this._iframe) {
+            if (!this._iframe || this.fullReload) {
                 this._iframeDiv.innerHTML = "";
                 this._iframe = document.createElement("iframe");
                 this._iframe.style.border = this.previewBorder;
@@ -101,7 +102,7 @@ ${this._head}
 
 <body style="overflow:hidden">
 <div>
-${this._cm.text.trim()}
+${this._cm.content.trim()}
 </div>
 ${this._scripts.join("\n")}
 </body>`);

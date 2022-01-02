@@ -1,9 +1,9 @@
 import { HPCCElement } from "./element";
 
-class Directive {
+export class Directive {
 }
 
-class Ref extends Directive {
+export class Ref extends Directive {
 
     constructor(public id: string) {
         super();
@@ -22,11 +22,12 @@ export function html<T extends HPCCElement>(templateData: TemplateStringsArray, 
         const arg = args[i];
         if (arg instanceof Directive) {
             directives.push(arg);
+            if (arg instanceof Ref) {
+                html += `id="${arg.id}"`;
+            }
+        } else {
+            html += String(args[i]);
         }
-        if (arg instanceof Ref) {
-            html += `id="${arg.id}"`;
-        }
-        html += String(args[i]);
         html += templateData[i + 1];
     }
     return { html, directives };

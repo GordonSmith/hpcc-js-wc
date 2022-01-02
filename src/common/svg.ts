@@ -7,14 +7,15 @@ export class HPCCSVGElement extends HPCCResizeElement {
 
     constructor() {
         super();
-        this._svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.shadowRoot?.appendChild(this._svg);
+        if (!this._svg) {
+            throw new Error("SVG element not found");
+        }
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
         this._svg.setAttribute("width", `${this.innerWidth}px`);
         this._svg.setAttribute("height", this.heightString);
-        this._svg.setAttribute("viewbox", `[0,0,${this._svg.clientWidth},${this._svg.clientHeight}]`);
+        this._svg.setAttribute("viewBox", `0 0 ${this._svg.clientWidth} ${this._svg.clientHeight}`);
     }
 }

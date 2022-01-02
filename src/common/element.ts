@@ -1,5 +1,7 @@
 import { Dispatch, IObserverHandle } from "@hpcc-js/util";
+import { isTrue } from "../util";
 import { classMeta } from "./decorator";
+import { Ref } from "./html";
 import { AttrChangedMessage, ChangeMap } from "./message";
 
 export type HTMLColor = string;
@@ -30,11 +32,21 @@ export class HPCCElement extends HTMLElement {
     protected set styles(_: string) {
         this.$styles.innerHTML = _;
     }
+    protected get styles() {
+        return this.$styles.innerHTML;
+    }
 
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot!.innerHTML = this.$meta.template?.html.trim() || "";
+        for (const directive of this.$meta.template?.directives || []) {
+            if (directive instanceof Ref) {
+                const ref = this.shadowRoot!.getElementById(directive.id);
+                this[directive.id] = ref;
+                ref?.removeAttribute("id");
+            }
+        }
         this.$styles = document.createElement("style");
         this.$styles.innerHTML = this.$meta.styles.trim();
         this.shadowRoot!.insertBefore(this.$styles, this.shadowRoot!.firstChild);
@@ -48,8 +60,12 @@ export class HPCCElement extends HTMLElement {
         this.$meta.observedAttributes.forEach(attr => {
             const innerID = `_${attr}`;
             const value = this[innerID];
-            if (value === undefined) {
-                this[innerID] = this.getAttribute(attr);
+            if (this.hasAttribute(attr)) {
+                if (typeof this[innerID] === "boolean") {
+                    this[innerID] = true;
+                } else {
+                    this[innerID] = this.getAttribute(attr);
+                }
                 retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
             } else {
                 this.setAttribute(attr, value);
@@ -95,6 +111,9 @@ export class HPCCElement extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         const innerID = `_${name}`;
+        if (typeof this[innerID] === "boolean") {
+            newValue = isTrue(newValue);
+        }
         if (this[innerID] !== newValue) {
             this[innerID] = newValue;
             this.$fire(name, oldValue, newValue);

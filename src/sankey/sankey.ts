@@ -1,14 +1,13 @@
-import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, HTMLColor, display } from "../common";
+import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, HTMLColor, display, html, ref } from "../common";
 import { format as d3Format } from "d3";
 import { sankeyFunc } from "./sankeyFunc";
 
-// const template = html<HPCCSankeyElement>`
-//     <svg ${ref("_svg")} width="${(s) => s.width}" height="${(s) => s.height}" viewbox="[0, 0, ${(s) => s._svg.clientWidth}, ${(s) => s._svg.clientHeight}]">
-//         <g ${ref("_nodesG")} stroke="${(s) => s.nodeStroke}" stroke-width="${(s) => s.nodeStrokeWidth}" stroke-opacity="${(s) => s.nodeStrokeOpacity}"></g>
-//         <g ${ref("_linksG")} fill="none" stroke-opacity="${(s) => s.linkStrokeOpacity}"></g>
-//         <g ${ref("_textG")} font-family="sans-serif" font-size="10"></g>
-//     </svg>
-// `;
+const template = html<HPCCSankeyElement>`\
+<svg ${ref("_svg")}>
+    <g ${ref("_nodesG")}></g>
+    <g ${ref("_linksG")} fill="none"></g>
+    <g ${ref("_textG")} font-family="sans-serif" font-size="10"></g>
+</svg>`;
 
 const styles = css`
 ${display("inline")}
@@ -26,7 +25,7 @@ g.links {
 }
 `;
 
-@customElement("hpcc-sankey", { styles })
+@customElement("hpcc-sankey", { template, styles })
 export class HPCCSankeyElement extends HPCCSVGElement {
     /**
      * Alignment of the nodes
@@ -92,24 +91,14 @@ export class HPCCSankeyElement extends HPCCSVGElement {
 
     constructor() {
         super();
-        this._nodesG = this._svg.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-        this._linksG = this._svg.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-        this._linksG.setAttribute("class", "links");
-        this._textG = this._svg.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-        this.shadowRoot?.appendChild(this._svg);
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
-        this._svg.setAttribute("width", `${this.innerWidth}px`);
-        this._svg.setAttribute("height", this.heightString);
-        this._svg.setAttribute("viewBox", `[0,0,${this._svg.clientWidth},${this._svg.clientHeight}]`);
         this._nodesG.setAttribute("stroke", this.nodeStroke);
         this._nodesG.setAttribute("stroke-width", `${this.nodeStrokeWidth}`);
         this._nodesG.setAttribute("stroke-opacity", `${this.nodeStrokeOpacity}`);
         this._linksG.setAttribute("stroke-opacity", `${this.linkStrokeOpacity}`);
-        this._nodesG.setAttribute("stroke", this.nodeStroke);
-        this._nodesG.setAttribute("stroke", this.nodeStroke);
 
         const links = typeof this.links === "string" ? JSON.parse(this.links) : this.links;
         if (links?.length) {

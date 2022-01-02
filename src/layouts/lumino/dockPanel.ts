@@ -1,16 +1,14 @@
-import { HPCCDivElement, customElement, ChangeMap, css, display } from "../../common";
+import { HPCCResizeElement, customElement, ChangeMap, css, display, html, ref } from "../../common";
 import { DockPanel, Widget } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
 import { WidgetAdapter } from "./widgetAdapter";
 import * as luminoStyles from "./styles";
 import * as luminoTheme from "./theme";
+import { isTrue } from "../../util";
 
-const isTrue = (value?: string | number | boolean): boolean => value === true || value === 1 || value === "true" || value === "1";
-
-// const template = html<HPCCDockPanelElement>`
-//     <div ${ref("_div")} style="width:${s => s.width};height:${s => s.height}">
-//     </div>
-// `;
+const template = html<HPCCDockPanelElement>`\
+<div ${ref("_div")}>
+</div>`;
 
 const styles = css`
 ${display("inline")} 
@@ -32,10 +30,12 @@ ${luminoTheme.light.all}
 }
 `;
 
-@customElement("hpcc-dockpanel", { styles })
-export class HPCCDockPanelElement extends HPCCDivElement {
+@customElement("hpcc-dockpanel", { template, styles })
+export class HPCCDockPanelElement extends HPCCResizeElement {
 
     protected _dockPanel?: DockPanel;
+
+    protected _div: HTMLDivElement;
 
     constructor() {
         super();

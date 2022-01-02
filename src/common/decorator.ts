@@ -30,7 +30,7 @@ export function classMeta(className: string): ClassMeta {
     return _allMeta[className];
 }
 
-type CustomElementOption = { template?: HTMLTemplate, styles?: string };
+export type CustomElementOption = { template?: HTMLTemplate, styles?: string };
 
 export function customElement(name: string, opts?: CustomElementOption): (target: CustomElementConstructor) => void {
 
@@ -85,9 +85,10 @@ function changedHandler(target: HPCCElement, prop: string, isAttribute) {
     });
 }
 
-declare type AttributeConfiguration = {
+export interface AttributeConfiguration {
     property: string;
-};
+    mode?: "string" | "boolean" | "number";
+}
 
 export declare type DecoratorAttributeConfiguration = Omit<AttributeConfiguration, "property">;
 

@@ -17,6 +17,6 @@ ${display("inline")} :host {
     overflow: auto;
 `;
 
-@customElement("hpcc-panel", styles)
+@customElement("hpcc-panel", { styles })
 export class HPCCPanelElement extends HPCCDivElement {
 }

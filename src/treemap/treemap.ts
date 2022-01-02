@@ -18,7 +18,7 @@ svg {
 }
 `;
 
-@customElement("hpcc-treemap", styles)
+@customElement("hpcc-treemap", { styles })
 export class HPCCTreemapElement extends HPCCSVGElement {
 
     /**

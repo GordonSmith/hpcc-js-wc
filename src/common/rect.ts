@@ -1,6 +1,6 @@
 import { attribute, ChangeMap, customElement, HPCCElement, HPCCResizeElement, HTMLColor, property } from ".";
 
-@customElement("hpcc-lite", "")
+@customElement("hpcc-lite")
 export class RectLite extends HPCCResizeElement {
 
     @attribute l = "100";

@@ -1,17 +1,18 @@
-import { HPCCSVGElement, attribute, customElement, css, ChangeMap, html, ref, classMeta } from "../common";
+import { HPCCResizeElement, attribute, customElement, css, ChangeMap, html, ref, classMeta } from "../common";
 import * as d3 from "d3";
 
 const template = html<HPCCZoomElement>`\
-<foreignObject ${ref("_content")} x="0" y="0" width="100%" height="100%" style="overflow:visible">
-    <slot></slot>
-</foreignObject>
-`;
+<svg>
+    <foreignObject ${ref("_content")} x="0" y="0" width="100%" height="100%" style="overflow:visible">
+        <slot></slot>
+    </foreignObject>
+</svg>`;
 
 const styles = css`
 `;
 
-@customElement("hpcc-zoom", styles, template)
-export class HPCCZoomElement extends HPCCSVGElement {
+@customElement("hpcc-zoom", { template, styles })
+export class HPCCZoomElement extends HPCCResizeElement {
     /**
      * The minimum scale extent that can be applied to the content
      *
@@ -67,14 +68,15 @@ export class HPCCZoomElement extends HPCCSVGElement {
 
     enter() {
         super.enter();
-        this.svg = d3.select(this._svg);
-        this.svg.html(classMeta(this.constructor.name).template!);
+        this.svg = d3.select(this.shadowRoot! as any).select("svg");
         this.content = this.svg.select("foreignObject");
         this.svg.call(this._zoom, d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
+        this.svg.attr("width", `${this.innerWidth}px`);
+        this.svg.attr("height", this.heightString);
         this.svg.attr("viewbox", "[0, 0, 0, 0]");
         this.content
             .attr("width", `${this.width}`)
@@ -83,7 +85,7 @@ export class HPCCZoomElement extends HPCCSVGElement {
         this._zoom
             .extent([
                 [0, 0],
-                [this._svg.clientWidth, this._svg.clientHeight]
+                [this.innerWidth, this.innerHeight]
             ])
             .scaleExtent([this.scaleMin, this.scaleMax]);
         if (changes.x !== undefined || changes.y !== undefined || changes.scale !== undefined) {

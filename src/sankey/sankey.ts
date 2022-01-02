@@ -26,7 +26,7 @@ g.links {
 }
 `;
 
-@customElement("hpcc-sankey", styles)
+@customElement("hpcc-sankey", { styles })
 export class HPCCSankeyElement extends HPCCSVGElement {
     /**
      * Alignment of the nodes

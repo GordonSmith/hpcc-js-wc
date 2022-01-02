@@ -1,12 +1,13 @@
 import type { HPCCElement } from "./element";
+import { HTMLTemplate } from "./html";
 
-interface Property {
+export interface Property {
     name: string;
     isAttribute: boolean;
 }
 
-interface ClassMeta {
-    template?: string;
+export interface ClassMeta {
+    template?: HTMLTemplate;
     styles: string;
     properties: Property[];
     observedAttributes: string[];
@@ -18,7 +19,7 @@ const _allMeta: { [className: string]: ClassMeta } = {};
 export function classMeta(className: string): ClassMeta {
     if (!_allMeta[className]) {
         _allMeta[className] = {
-            template: "",
+            template: { html: "", directives: [] },
             styles: "",
             properties: [],
             observedAttributes: [],
@@ -29,7 +30,11 @@ export function classMeta(className: string): ClassMeta {
     return _allMeta[className];
 }
 
-export function customElement(name: string, styles: string, template?: string): (target: CustomElementConstructor) => void {
+type CustomElementOption = { template?: HTMLTemplate, styles?: string };
+
+export function customElement(name: string, opts?: CustomElementOption): (target: CustomElementConstructor) => void {
+
+    const { template = { html: "", directives: [] }, styles = "" }: CustomElementOption = opts || {};
 
     function decorator(target: CustomElementConstructor): void {
         const meta = classMeta(target.name);
@@ -74,7 +79,7 @@ function changedHandler(target: HPCCElement, prop: string, isAttribute) {
         set: function (newVal) {
             const oldVal = this[innerID];
             this[innerID] = newVal;
-            this._fire(prop, oldVal, newVal);
+            this.$fire(prop, oldVal, newVal);
         },
         get: function () { return this[`_${prop}`]; }
     });

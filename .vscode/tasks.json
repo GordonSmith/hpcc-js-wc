@@ -5,6 +5,14 @@
 			"label": "serve",
 			"type": "npm",
 			"script": "serve",
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
+			"label": "syntax-watch",
+			"type": "npm",
+			"script": "syntax-watch",
 			"problemMatcher": [
 				"$tsc-watch"
 			],
@@ -16,6 +24,7 @@
 			"label": "build",
 			"dependsOn": [
 				"serve",
+				"syntax-watch"
 			],
 			"group": {
 				"kind": "build",

@@ -32,7 +32,7 @@ ${luminoTheme.light.all}
 }
 `;
 
-@customElement("hpcc-dockpanel", styles)
+@customElement("hpcc-dockpanel", { styles })
 export class HPCCDockPanelElement extends HPCCDivElement {
 
     protected _dockPanel?: DockPanel;

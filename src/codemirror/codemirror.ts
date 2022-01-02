@@ -24,7 +24,7 @@ const styles = `\
 }
 `;
 
-@customElement("hpcc-codemirror", styles)
+@customElement("hpcc-codemirror", { styles })
 export class HPCCCodemirrorElement extends HPCCDivElement {
 
     /**  
@@ -63,7 +63,6 @@ export class HPCCCodemirrorElement extends HPCCDivElement {
 
     constructor() {
         super();
-        this._styles.innerHTML = styles;
     }
 
     protected extension() {

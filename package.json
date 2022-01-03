@@ -26,7 +26,7 @@
     "api-extractor-watch": "nodemon --watch types \"run-s api-extractor\"",
     "api-documenter": "api-documenter markdown --input-folder ./temp --output-folder ./docs/api",
     "gen-api": "run-s compile api-extractor api-documenter",
-    "copy-build": "copyfiles -u 1 \"./dist/index.min.js\" ./docs/.vitepress/dist/assets/",
+    "copy-build": "copyfiles -u 1 \"./dist/index.min.*\" ./docs/.vitepress/dist/assets/",
     "copy-images": "copyfiles -u 2 \"./docs/images/**/*.{png,jpg,gif}\" ./docs/.vitepress/dist/images/",
     "copy-res": "run-p copy-build copy-images",
     "bundle-dev": "rollup -c ./rollup.dev.config.js",
@@ -90,11 +90,12 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.62.0",
     "rollup-plugin-filesize": "^9.1.1",
+    "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-transform-tagged-template": "^0.0.3",
     "standard-version": "^9.3.2",
     "typescript": "^4.5.4",
-    "vitepress": "^0.20.10"
+    "vitepress": "file:../vitepress"
   },
   "repository": {
     "type": "git",

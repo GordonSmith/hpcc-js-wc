@@ -1,8 +1,8 @@
 import { HPCCResizeElement, customElement, css, display, html, ref, ChangeMap, attribute } from "../../common";
 import { SplitPanel, Widget } from "@lumino/widgets";
 import { MessageLoop } from "@lumino/messaging";
-import { WidgetAdapterCSS, WidgetAdapter } from "./widgetAdapter";
-import { splitpanel } from "./styles";
+import { WidgetAdapter } from "./widgetAdapter";
+import { splitpanel, widget } from "./styles";
 
 const template = html<HPCCSplitterElement>`\
 <div ${ref("_div")}">
@@ -15,8 +15,7 @@ ${display("inline")} :host {
 :host > div {
 }
 
-${WidgetAdapterCSS}
-
+${widget}
 ${splitpanel}
 
 .hpcc-LuminoAdapter {

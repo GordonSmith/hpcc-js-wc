@@ -1,4 +1,4 @@
-import type { HPCCElement } from "./element";
+import { HPCCElement } from "./element";
 import { HTMLTemplate } from "./html";
 
 export interface Property {
@@ -45,7 +45,7 @@ export function customElement(name: string, opts?: CustomElementOption): (target
         let self = target;
         while (true) {
             allProperties = [...allProperties, ...classMeta(self.name).properties];
-            if (self?.name === "HPCCElement") {
+            if (self?.name === HPCCElement.name) {
                 break;
             }
             self = Object.getPrototypeOf(self);

@@ -24,6 +24,8 @@ export function html<T extends HPCCElement>(templateData: TemplateStringsArray, 
             directives.push(arg);
             if (arg instanceof Ref) {
                 html += `id="${arg.id}"`;
+            } else {
+                html += String(args[i]);
             }
         } else {
             html += String(args[i]);

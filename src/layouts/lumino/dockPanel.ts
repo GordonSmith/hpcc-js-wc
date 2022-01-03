@@ -19,9 +19,15 @@ ${display("inline")}
 :host > div {
 }
 
-${luminoStyles.all}
+${luminoStyles.dragdrop}
+${luminoStyles.widget}
+${luminoStyles.dockpanel}
+${luminoStyles.splitpanel}
+${luminoStyles.tabbar}
+${luminoStyles.tabpanel}
 
-${luminoTheme.light.all}
+${luminoTheme.dockpanel}
+${luminoTheme.tabbar}
 
 .hpcc-LuminoAdapter {
     padding: 8px;

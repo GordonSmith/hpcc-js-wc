@@ -37,13 +37,6 @@ export class HPCCPreviewElement extends HPCCResizeElement {
     /**
      * Force full reload of iframe, on each change.
      * 
-     * @defaultValue false
-     */
-    @attribute({ mode: "boolean" }) fullReload = false;
-
-    /**
-     * Force full reload of iframe, on each change.
-     * 
      * @defaultValue ""
      */
     @attribute headExt = "";
@@ -53,6 +46,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
     protected _iframeDiv: HTMLDivElement;
     protected _iframe: HTMLIFrameElement;
     protected _cm: HPCCCodemirrorElement;
+    protected _vitepress: boolean = false;
 
     gatherScripts(node: HTMLElement, scripts: string[]) {
         Array.prototype.slice
@@ -63,6 +57,9 @@ export class HPCCPreviewElement extends HPCCResizeElement {
             })
             .forEach((child) => {
                 if (child.tagName === "SCRIPT") {
+                    if (child.src.indexOf("/@fs/") >= 0) {
+                        this._vitepress = true;
+                    }
                     scripts.push(child.outerHTML.toString());
                 }
                 // this.gatherScripts(child, scripts);
@@ -76,35 +73,38 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         super.enter();
         this._head = document.head.innerHTML.toString();
         const codeElements = this.getElementsByTagName("code")[0];
-        this._cm.content = codeElements?.innerText ?? "" + this.innerHTML;
+        this._cm.text = codeElements?.innerText ?? "" + this.innerHTML;
         this.gatherScripts(document.body, this._scripts);
         this._cm.addEventListener("change", (evt) => {
-            this.content = this._cm.content.trim();
+            this.content = this._cm.text.trim();
         });
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
         if (changes.content) {
-            if (!this._iframe || this.fullReload) {
-                this._iframeDiv.innerHTML = "";
-                this._iframe = document.createElement("iframe");
-                this._iframe.style.border = this.previewBorder;
-                this._iframe.width = `${this.width}`;
-                this._iframe.height = `${this.height}`;
-                this._iframeDiv.append(this._iframe);
-            }
+            this._iframeDiv.innerHTML = "";
+            this._iframe = document.createElement("iframe");
+            this._iframe.style.border = this.previewBorder;
+            this._iframe.width = `${this.width}`;
+            this._iframe.height = `${this.height}`;
+            this._iframeDiv.append(this._iframe);
             this._iframe.contentWindow?.document.open();
             this._iframe.contentWindow?.document.write(`\
 <head>
-${this._head}
+${this._vitepress ? '<script src="../.vitepress/dist/assets/index.js"></script>' :
+                    '<script src="/hpcc-js-wc/assets/index.min.js"></script>'}
+<style>
+        body {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body style="overflow:hidden">
 <div>
-${this._cm.content.trim()}
+${this._cm.text.trim()}
 </div>
-${this._scripts.join("\n")}
 </body>`);
             this._iframe.contentWindow?.document.close();
         }

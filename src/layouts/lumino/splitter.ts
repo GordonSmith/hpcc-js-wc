@@ -5,8 +5,9 @@ import { WidgetAdapter } from "./widgetAdapter";
 import { splitpanel, widget } from "./styles";
 
 const template = html<HPCCSplitterElement>`\
-<div ${ref("_div")}">
-</div>`;
+<div ${ref("_div")}>
+</div>
+<slot ${ref("_slot")}></slot>`;
 
 const styles = css`
 ${display("inline")} :host {
@@ -38,10 +39,23 @@ export class HPCCSplitterElement extends HPCCResizeElement {
     @attribute orientation: "horizontal" | "vertical" = "horizontal";
 
     protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
-    protected _div: HTMLDivElement;
+    _div: HTMLDivElement;
+    _slot: HTMLSlotElement;
 
     constructor() {
         super();
+    }
+
+    private _constructed = false;
+    construct() {
+        if (this._constructed) return;
+        const codeElements = this._slot.assignedElements();
+        this._constructed = codeElements.length > 0;
+        for (let i = codeElements.length - 1; i >= 0; --i) {
+            const e = codeElements[i] as HTMLElement;
+            const w = new WidgetAdapter(e);
+            this._splitPanel.insertWidget(0, w);
+        }
     }
 
     enter() {
@@ -49,16 +63,12 @@ export class HPCCSplitterElement extends HPCCResizeElement {
         MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeAttach);
         this._div.append(this._splitPanel.node);
         MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterAttach);
-        const codeElements = this.children;
-        for (let i = codeElements.length - 1; i >= 0; --i) {
-            const node = codeElements[i] as HTMLElement;
-            const w = new WidgetAdapter(node);
-            this._splitPanel.insertWidget(0, w);
-        }
+        this.construct();
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
+        this.construct();
         this._splitPanel.orientation = this.orientation;
         this._splitPanel.node.style.width = this.widthString;
         this._splitPanel.node.style.height = this.heightString;

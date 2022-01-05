@@ -38,7 +38,7 @@ export class HPCCTreemapElement extends HPCCSVGElement {
      *
      * @defaultValue undefined
      */
-    @property data: Node;
+    @property data: Node = { name: "XXX", children: [] };
 
     update(changes: ChangeMap) {
         super.update(changes);

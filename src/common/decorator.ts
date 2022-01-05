@@ -79,18 +79,15 @@ function changedHandler(target: HPCCElement, prop: string, isAttribute) {
         set: function (newVal) {
             const oldVal = this[innerID];
             this[innerID] = newVal;
-            this.$fire(prop, oldVal, newVal);
+            this._fire(prop, oldVal, newVal);
         },
-        get: function () { return this[`_${prop}`]; }
+        get: function () { return this[innerID]; }
     });
 }
 
-export interface AttributeConfiguration {
-    property: string;
+export interface DecoratorAttributeConfiguration {
     mode?: "string" | "boolean" | "number";
 }
-
-export declare type DecoratorAttributeConfiguration = Omit<AttributeConfiguration, "property">;
 
 export function attribute(config?: DecoratorAttributeConfiguration): (target: HPCCElement, property: string) => void;
 export function attribute(target: HPCCElement, prop: string): void;

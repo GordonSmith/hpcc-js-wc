@@ -22,8 +22,14 @@
             "name": "index.html",
             "request": "launch",
             "type": "pwa-msedge",
-            // "url": "file://${workspaceFolder}/index.html",
             "url": "http://localhost:3000/index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "file://index.html",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "file://${workspaceFolder}/index.html",
             "webRoot": "${workspaceFolder}"
         },
         {

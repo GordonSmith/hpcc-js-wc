@@ -2,7 +2,7 @@ import { HPCCResizeElement, attribute, customElement, css, ChangeMap, html, ref,
 import * as d3 from "d3";
 
 const template = html<HPCCZoomElement>`\
-<svg>
+<svg ${ref("_svg")}>
     <foreignObject ${ref("_content")} x="0" y="0" width="100%" height="100%" style="overflow:visible">
         <slot></slot>
     </foreignObject>
@@ -10,6 +10,8 @@ const template = html<HPCCZoomElement>`\
 
 const styles = css`
 `;
+
+console.log("qweqwe", template.directives.map((d: any) => d.id));
 
 @customElement("hpcc-zoom", { template, styles })
 export class HPCCZoomElement extends HPCCResizeElement {
@@ -68,6 +70,7 @@ export class HPCCZoomElement extends HPCCResizeElement {
 
     enter() {
         super.enter();
+        if (!this.isConnected) throw new Error("Hmmmmm");
         this.svg = d3.select(this.shadowRoot! as any).select("svg");
         this.content = this.svg.select("foreignObject");
         this.svg.call(this._zoom, d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));

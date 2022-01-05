@@ -22,6 +22,7 @@
     "compile": "tsc -p ./tsconfig.json",
     "compile-watch": "npm run compile -- -w",
     "syntax-watch": "npm run compile -- -w --noEmit",
+    "esbuild-watch": "esbuild  --sourcemap --bundle --outfile=docs/.vitepress/dist/assets/index.js --watch src/index.ts",
     "api-extractor": "api-extractor run --local --verbose",
     "api-extractor-watch": "nodemon --watch types \"run-s api-extractor\"",
     "api-documenter": "api-documenter markdown --input-folder ./temp --output-folder ./docs/api",
@@ -62,6 +63,7 @@
     "@observablehq/runtime": "^4.18.3",
     "d3": "^7.2.1",
     "d3-sankey": "^0.12.3",
+    "esbuild": "^0.14.10",
     "preact": "^10.6.4",
     "tslib": "^2.3.1"
   },

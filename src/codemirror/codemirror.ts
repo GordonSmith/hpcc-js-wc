@@ -46,15 +46,15 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
     /**  
    * Text to be displayed in the editor
    */
-    @property content: string = "";
-    private _content: string;
+    @property text: string = "";
+    private _text: string;
 
     protected _cmLight = [defaultHighlightStyle];
     protected _cmDark = [oneDarkTheme, oneDarkHighlightStyle];
     protected _cmJson = cmJson();
     protected _cmHtml = cmHtml();
 
-    protected _div: HTMLDivElement;
+    _div: HTMLDivElement;
     protected _view: EditorView;
 
     constructor() {
@@ -88,15 +88,15 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
         super.enter();
         this._view = new EditorView({
             state: EditorState.create({
-                doc: "",
+                doc: this.text,
                 extensions: this.extension()
             }),
             parent: this._div,
             dispatch: (tr) => {
                 this._view.update([tr]);
                 if (!tr.changes.empty) {
-                    this._content = this._view.state.doc.toString();
-                    this.$emit("change", this._content);
+                    this._text = this._view.state.doc.toString();
+                    this.$emit("change", this._text);
                 }
             }
         });
@@ -112,12 +112,12 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
                 }
             } as any);
         }
-        if (changes.content) {
+        if (changes.text) {
             this._view.dispatch({
                 changes: {
                     from: 0,
                     to: this._view.state.doc.length,
-                    insert: this.content
+                    insert: this.text
                 }
             });
         }

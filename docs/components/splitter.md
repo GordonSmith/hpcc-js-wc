@@ -3,7 +3,7 @@
 **tag**: `<hpcc-splitter>`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
+  <hpcc-preview previewBorder="0px" width="100%" height="400px">
     <hpcc-splitter orientation="horizontal" width="100%" height="400px">
       <div style="overflow:auto">
         <h1>HTML Ipsum Presents</h1>
@@ -20,7 +20,7 @@
 **tag**: `<hpcc-splitter orientation="vertical">`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
+  <hpcc-preview previewBorder="0px" width="100%" height="400px">
     <hpcc-splitter orientation="vertical" width="100%" height="400px">
       <div style="overflow:auto">
         <h1>HTML Ipsum Presents</h1>
@@ -37,7 +37,7 @@
 **tag**: `<hpcc-splitter> + <hpcc-splitter orientation="vertical"> combined`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
+  <hpcc-preview previewBorder="0px" width="100%" height="400px">
     <hpcc-splitter width="100%" height="400px">
       <div style="overflow:auto">
         <h1>HTML Ipsum Presents</h1>

@@ -83,7 +83,7 @@ export class HPCCSankeyElement extends HPCCSVGElement {
      *
      * @defaultValue []
      */
-    @property links: { source: string; target: string; value: number }[];
+    @property links: { source: string; target: string; value: number }[] = [];
 
     protected _nodesG: SVGGElement;
     protected _linksG: SVGGElement;

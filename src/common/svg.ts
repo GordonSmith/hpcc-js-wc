@@ -3,7 +3,7 @@ import { HPCCResizeElement } from "./resize";
 
 export class HPCCSVGElement extends HPCCResizeElement {
 
-    protected _svg: SVGSVGElement;
+    _svg: SVGSVGElement;
 
     constructor() {
         super();

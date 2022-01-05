@@ -9,12 +9,13 @@ export type HTMLColor = string;
 const defaultEventOptions = {
     bubbles: true,
     composed: true,
-    cancelable: true,
+    cancelable: true
 };
 
 export class HPCCElement extends HTMLElement {
 
     static get observedAttributes(): string[] {
+        console.log("AAA", this.name, classMeta(this.name).template?.directives.map((d: any) => d.id));
         return classMeta(this.name).observedAttributes;
     }
 
@@ -22,7 +23,7 @@ export class HPCCElement extends HTMLElement {
 
     private $dispath = new Dispatch<AttrChangedMessage>();
 
-    private $fire = (what: string, oldVal: any = false, newVal: any = true) => {
+    protected _fire = (what: string, oldVal: any = false, newVal: any = true) => {
         this.$dispath.post(new AttrChangedMessage(what, oldVal, newVal));
     };
 
@@ -40,10 +41,13 @@ export class HPCCElement extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot!.innerHTML = this.$meta.template?.html.trim() || "";
+        console.log(this.constructor.name, this.$meta.template?.directives.map((d: any) => d.id));
         for (const directive of this.$meta.template?.directives || []) {
             if (directive instanceof Ref) {
+                console.log("XXXX", directive.id);
                 const ref = this.shadowRoot!.getElementById(directive.id);
                 this[directive.id] = ref;
+                console.log("XXXX", directive.id, ref?.id);
                 ref?.removeAttribute("id");
             }
         }
@@ -73,8 +77,7 @@ export class HPCCElement extends HTMLElement {
             }
         });
         this.$meta.observedProperties.forEach(prop => {
-            const innerID = `_${prop}`;
-            retVal[prop] = { oldValue: undefined, newValue: this[innerID] };
+            retVal[prop] = { oldValue: undefined, newValue: this[prop] };
         });
         return retVal;
     }
@@ -116,7 +119,7 @@ export class HPCCElement extends HTMLElement {
         }
         if (this[innerID] !== newValue) {
             this[innerID] = newValue;
-            this.$fire(name, oldValue, newValue);
+            this._fire(name, oldValue, newValue);
         }
     }
 

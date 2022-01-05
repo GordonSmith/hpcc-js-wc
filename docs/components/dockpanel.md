@@ -3,7 +3,7 @@
 **tag**: `<hpcc-dockpanel>`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" width="100%" height="400px" fullReload>
+  <hpcc-preview previewBorder="0px" width="100%" height="400px">
     <hpcc-dockpanel width="100%" height="400px">
       <div id="one" data-label="AAAA" style="overflow:auto">
         <h1>AAAA HTML Ipsum Presents</h1>

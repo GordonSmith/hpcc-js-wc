@@ -10,6 +10,14 @@
 			}
 		},
 		{
+			"label": "esbuild-watch",
+			"type": "npm",
+			"script": "esbuild-watch",
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
 			"label": "syntax-watch",
 			"type": "npm",
 			"script": "syntax-watch",
@@ -24,6 +32,7 @@
 			"label": "build",
 			"dependsOn": [
 				"serve",
+				"esbuild-watch",
 				"syntax-watch"
 			],
 			"group": {

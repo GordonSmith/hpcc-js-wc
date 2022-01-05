@@ -6,7 +6,8 @@ if (import.meta.env.MODE === "development") {
 
 export default {
     ...DefaultTheme,
-    enhanceApp({ app }) {},
+    enhanceApp({ app }) {
+    },
     vueOptions: {
         template: {
             compilerOptions: {

@@ -8,7 +8,8 @@ import { isTrue } from "../../util";
 
 const template = html<HPCCDockPanelElement>`\
 <div ${ref("_div")}>
-</div>`;
+</div>
+<slot ${ref("_slot")}></slot>`;
 
 const styles = css`
 ${display("inline")} 
@@ -41,10 +42,34 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
 
     protected _dockPanel?: DockPanel;
 
-    protected _div: HTMLDivElement;
+    _div: HTMLDivElement;
+    protected _slot: HTMLSlotElement;
 
     constructor() {
         super();
+    }
+
+    private _constructed = false;
+    construct() {
+        if (this._constructed) return;
+        const codeElements = this._slot.assignedElements();
+        this._constructed = codeElements.length > 0;
+        const widgetIdx: { [id: string]: WidgetAdapter } = {};
+        for (let i = 0; i < codeElements.length; ++i) {
+            const e = codeElements[i] as HTMLElement;
+            const w = new WidgetAdapter(e);
+            widgetIdx[w.id] = w;
+            w.title.label = e.dataset.label || (e.id && `#${e.id}`) || `${e.tagName} ${i} `;
+            w.title.closable = isTrue(e.dataset.closable);
+            w.title.caption = e.dataset.caption || w.title.label;
+            w.title.className = e.dataset.className || "";
+            w.title.iconClass = e.dataset.iconClass || "";
+            w.title.iconLabel = e.dataset.iconLabel || "";
+            this._dockPanel!.addWidget(w, {
+                mode: e.dataset.mode as DockPanel.InsertMode,
+                ref: e.dataset.ref ? widgetIdx[e.dataset.ref] : undefined
+            });
+        }
     }
 
     enter() {
@@ -53,27 +78,12 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
         MessageLoop.sendMessage(this._dockPanel, Widget.Msg.BeforeAttach);
         this._div.append(this._dockPanel.node);
         MessageLoop.sendMessage(this._dockPanel, Widget.Msg.AfterAttach);
-        const widgetIdx: { [id: string]: WidgetAdapter } = {};
-        let i = 0;
-        while (this.children.length > 0) {
-            const node = this.children[0] as HTMLElement;
-            const w = new WidgetAdapter(node);
-            widgetIdx[w.id] = w;
-            w.title.label = node.dataset.label || (node.id && `#${node.id}`) || `${node.tagName} ${++i} `;
-            w.title.closable = isTrue(node.dataset.closable);
-            w.title.caption = node.dataset.caption || w.title.label;
-            w.title.className = node.dataset.className || "";
-            w.title.iconClass = node.dataset.iconClass || "";
-            w.title.iconLabel = node.dataset.iconLabel || "";
-            this._dockPanel.addWidget(w, {
-                mode: node.dataset.mode as DockPanel.InsertMode,
-                ref: node.dataset.ref ? widgetIdx[node.dataset.ref] : undefined
-            });
-        }
+        this.construct();
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
+        this.construct();
         this._dockPanel!.node.style.width = this.widthString;
         this._dockPanel!.node.style.height = this.heightString;
         this._dockPanel!.update();

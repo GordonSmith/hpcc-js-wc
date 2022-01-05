@@ -45,10 +45,10 @@ const parserOptions = {
 export default [
     {
         input: "dist/index.js",
-        treeshake: {
-            preset: "smallest",
-            moduleSideEffects: false,
-        },
+        // treeshake: {
+        //     preset: "smallest",
+        //     moduleSideEffects: false,
+        // },
         output: [
             {
                 file: pkg.browser,
@@ -59,10 +59,13 @@ export default [
             },
             {
                 file: pkg.jsdelivr,
-                format: "es",
+                format: "umd",
                 sourcemap: true,
-                plugins: [terser()],
-            },
+                plugins: [terser({
+                    keep_classnames: true
+                })],
+                name: pkg.name
+            }
         ],
         plugins: [
             alias({

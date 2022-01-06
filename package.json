@@ -97,7 +97,7 @@
     "rollup-plugin-transform-tagged-template": "^0.0.3",
     "standard-version": "^9.3.2",
     "typescript": "^4.5.4",
-    "vitepress": "file:../vitepress"
+    "vitepress": "^0.21.3"
   },
   "repository": {
     "type": "git",

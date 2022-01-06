@@ -1,6 +1,6 @@
 import { HPCCResizeElement, customElement, ChangeMap, css, display, html, ref } from "../../common";
 import { DockPanel, Widget } from "@lumino/widgets";
-import { MessageLoop } from "@lumino/messaging";
+import { IMessageHandler, Message, MessageLoop } from "@lumino/messaging";
 import { WidgetAdapter } from "./widgetAdapter";
 import * as luminoStyles from "./styles";
 import * as luminoTheme from "./theme";
@@ -57,7 +57,7 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
         const widgetIdx: { [id: string]: WidgetAdapter } = {};
         for (let i = 0; i < codeElements.length; ++i) {
             const e = codeElements[i] as HTMLElement;
-            const w = new WidgetAdapter(e);
+            const w = new WidgetAdapter(this, e);
             widgetIdx[w.id] = w;
             w.title.label = e.dataset.label || (e.id && `#${e.id}`) || `${e.tagName} ${i} `;
             w.title.closable = isTrue(e.dataset.closable);
@@ -75,6 +75,7 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
     enter() {
         super.enter();
         this._dockPanel = new DockPanel({ document: this.shadowRoot! });
+        MessageLoop.installMessageHook(this._dockPanel, this);
         MessageLoop.sendMessage(this._dockPanel, Widget.Msg.BeforeAttach);
         this._div.append(this._dockPanel.node);
         MessageLoop.sendMessage(this._dockPanel, Widget.Msg.AfterAttach);
@@ -96,4 +97,17 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
         delete this._dockPanel;
         super.exit();
     }
+
+    //  Phosphor Messaging  ---
+    messageHook(handler: IMessageHandler, msg: Message): boolean {
+        if (handler === this._dockPanel) {
+            switch (msg.type) {
+                case "layout-modified":
+                    this.$emit("layoutChanged", this);
+                    break;
+            }
+        }
+        return true;
+    }
+
 }

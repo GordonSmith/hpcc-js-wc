@@ -6,7 +6,7 @@ import { AttrChangedMessage, ChangeMap } from "./message";
 
 export type HTMLColor = string;
 
-const defaultEventOptions = {
+export const DefaultEventOptions = {
     bubbles: true,
     composed: true,
     cancelable: true
@@ -146,9 +146,10 @@ export class HPCCElement extends HTMLElement {
 
     //  Events  ---
     $emit(type: string, detail?: any, options?) {
+        const opts = { detail, ...DefaultEventOptions, ...options };
         if (this.isConnected) {
-            return this.dispatchEvent(new CustomEvent(type, Object.assign(Object.assign({ detail }, defaultEventOptions), options)));
+            return this.dispatchEvent(new CustomEvent(type, opts));
         }
-        return false;
+        return opts.cancelable ? true : false;
     }
 }

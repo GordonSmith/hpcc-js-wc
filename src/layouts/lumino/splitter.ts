@@ -59,7 +59,7 @@ export class HPCCSplitterElement extends HPCCResizeElement {
         this._constructed = codeElements.length > 0;
         for (let i = 0; i < codeElements.length; ++i) {
             const e = codeElements[i] as HTMLElement;
-            const w = new WidgetAdapter(e);
+            const w = new WidgetAdapter(this, e);
             this._splitPanel.addWidget(w);
         }
     }

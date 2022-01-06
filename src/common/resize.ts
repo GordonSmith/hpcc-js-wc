@@ -20,15 +20,21 @@ export class HPCCResizeElement extends HPCCElement implements EventListenerObjec
         return typeof this.height === "string" ? this.height : this.height + "px";
     }
 
-    @attribute innerWidth: number = 0;
+    @attribute parentWidth: number = 0;
 
-    @attribute innerHeight: number = 0;
+    @attribute patentHeight: number = 0;
+
+    @attribute thisWidth: number = 0;
+
+    @attribute thisHeight: number = 0;
 
     protected _computedStyle: CSSStyleDeclaration;
 
     handleEvent(): void {
-        this.innerWidth = this.parentElement!.clientWidth - parseFloat(this._computedStyle.paddingLeft) - parseFloat(this._computedStyle.paddingRight);
-        this.innerHeight = this.parentElement!.clientHeight - parseFloat(this._computedStyle.paddingTop) - parseFloat(this._computedStyle.paddingBottom);
+        this.parentWidth = this.parentElement!.clientWidth - parseFloat(this._computedStyle.paddingLeft) - parseFloat(this._computedStyle.paddingRight);
+        this.patentHeight = this.parentElement!.clientHeight - parseFloat(this._computedStyle.paddingTop) - parseFloat(this._computedStyle.paddingBottom);
+        this.thisWidth = this.clientWidth;
+        this.thisHeight = this.clientHeight;
     }
 
     protected observer = new ResizeObserver(() => {
@@ -44,9 +50,11 @@ export class HPCCResizeElement extends HPCCElement implements EventListenerObjec
         } else {
             this.observer.observe(this.parentElement!);
         }
+        this.observer.observe(this);
     }
 
     disconnectedCallback(): void {
+        this.observer.unobserve(this);
         if (this.parentElement === document.body) {
             window.removeEventListener("resize", this);
         } else {

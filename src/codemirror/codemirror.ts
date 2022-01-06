@@ -104,7 +104,6 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        console.log(changes);
         if (changes.type || changes.theme) {
             this._view.dispatch({
                 reconfigure: {

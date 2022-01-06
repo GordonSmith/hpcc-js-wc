@@ -15,7 +15,6 @@ const defaultEventOptions = {
 export class HPCCElement extends HTMLElement {
 
     static get observedAttributes(): string[] {
-        console.log("AAA", this.name, classMeta(this.name).template?.directives.map((d: any) => d.id));
         return classMeta(this.name).observedAttributes;
     }
 
@@ -41,13 +40,10 @@ export class HPCCElement extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot!.innerHTML = this.$meta.template?.html.trim() || "";
-        console.log(this.constructor.name, this.$meta.template?.directives.map((d: any) => d.id));
         for (const directive of this.$meta.template?.directives || []) {
             if (directive instanceof Ref) {
-                console.log("XXXX", directive.id);
                 const ref = this.shadowRoot!.getElementById(directive.id);
                 this[directive.id] = ref;
-                console.log("XXXX", directive.id, ref?.id);
                 ref?.removeAttribute("id");
             }
         }
@@ -134,12 +130,12 @@ export class HPCCElement extends HTMLElement {
 
     update(changes: ChangeMap) {
         for (const key in changes) {
-            if (this[key] != this.getAttribute(key)) {
+            if (this.$meta.observedAttributes.indexOf(key) >= 0 && this[key] != this.getAttribute(key)) {
                 this.setAttribute(key, this[key]);
             }
         }
         for (const key of this.$meta.observedAttributes) {
-            if (this[key] != this.getAttribute(key)) {
+            if (this.$meta.observedAttributes.indexOf(key) >= 0 && this[key] != this.getAttribute(key)) {
                 console.log("update error", key, this[key], this.getAttribute(key));
             }
         }

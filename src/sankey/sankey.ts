@@ -5,8 +5,8 @@ import { sankeyFunc } from "./sankeyFunc";
 const template = html<HPCCSankeyElement>`\
 <svg ${ref("_svg")}>
     <g ${ref("_nodesG")}></g>
-    <g ${ref("_linksG")} fill="none"></g>
-    <g ${ref("_textG")} font-family="sans-serif" font-size="10"></g>
+    <g ${ref("_linksG")} class="links"></g>
+    <g ${ref("_textG")}></g>
 </svg>`;
 
 const styles = css`

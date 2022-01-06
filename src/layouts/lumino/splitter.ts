@@ -35,12 +35,18 @@ export class HPCCSplitterElement extends HPCCResizeElement {
      * 
      * @defaultValue "horizontal"
      */
-
     @attribute orientation: "horizontal" | "vertical" = "horizontal";
 
-    protected _splitPanel = new SplitPanel({ orientation: "horizontal" });
-    _div: HTMLDivElement;
-    _slot: HTMLSlotElement;
+    /**
+     * The spacing between the panels in the splitter
+     * 
+     * @defaultValue 4
+     */
+    @attribute spacing: number = 4;
+
+    protected _splitPanel = new SplitPanel({ orientation: this.orientation, spacing: this.spacing });
+    protected _div: HTMLDivElement;
+    protected _slot: HTMLSlotElement;
 
     constructor() {
         super();
@@ -51,10 +57,10 @@ export class HPCCSplitterElement extends HPCCResizeElement {
         if (this._constructed) return;
         const codeElements = this._slot.assignedElements();
         this._constructed = codeElements.length > 0;
-        for (let i = codeElements.length - 1; i >= 0; --i) {
+        for (let i = 0; i < codeElements.length; ++i) {
             const e = codeElements[i] as HTMLElement;
             const w = new WidgetAdapter(e);
-            this._splitPanel.insertWidget(0, w);
+            this._splitPanel.addWidget(w);
         }
     }
 
@@ -70,6 +76,7 @@ export class HPCCSplitterElement extends HPCCResizeElement {
         super.update(changes);
         this.construct();
         this._splitPanel.orientation = this.orientation;
+        this._splitPanel.spacing = this.spacing;
         this._splitPanel.node.style.width = this.widthString;
         this._splitPanel.node.style.height = this.heightString;
         this._splitPanel.update();

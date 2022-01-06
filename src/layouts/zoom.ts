@@ -11,8 +11,6 @@ const template = html<HPCCZoomElement>`\
 const styles = css`
 `;
 
-console.log("qweqwe", template.directives.map((d: any) => d.id));
-
 @customElement("hpcc-zoom", { template, styles })
 export class HPCCZoomElement extends HPCCResizeElement {
     /**
@@ -78,7 +76,7 @@ export class HPCCZoomElement extends HPCCResizeElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        this.svg.attr("width", `${this.innerWidth}px`);
+        this.svg.attr("width", `${this.parentWidth}px`);
         this.svg.attr("height", this.heightString);
         this.svg.attr("viewbox", "[0, 0, 0, 0]");
         this.content
@@ -88,7 +86,7 @@ export class HPCCZoomElement extends HPCCResizeElement {
         this._zoom
             .extent([
                 [0, 0],
-                [this.innerWidth, this.innerHeight]
+                [this.parentWidth, this.patentHeight]
             ])
             .scaleExtent([this.scaleMin, this.scaleMax]);
         if (changes.x !== undefined || changes.y !== undefined || changes.scale !== undefined) {

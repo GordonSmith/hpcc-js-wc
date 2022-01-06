@@ -41,6 +41,11 @@ export class HPCCPreviewElement extends HPCCResizeElement {
      */
     @attribute headExt = "";
 
+    /**
+     * Content to be displayed in the preview iframe
+     * 
+     * @defaultValue ""
+     */
     @attribute content = "";
 
     protected _iframeDiv: HTMLDivElement;

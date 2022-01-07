@@ -240,6 +240,8 @@ export class HPCCPieElement extends HPCCD3Element {
 
     update(changes: ChangeMap) {
         super.update(changes);
+        this._slices.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);
+        this._labels.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);
         const context = this;
         this.updateD3Pie();
         this._palette = d3.scaleOrdinal([] as string[], d3.schemeTableau10);
@@ -381,14 +383,16 @@ export class HPCCPieElement extends HPCCD3Element {
         }
 
         function arcTween(outerRadiusDelta, delay) {
+            function tween(d: PieArcDatum) {
+                const i = d3.interpolate((d as any).outerRadius, outerRadius + outerRadiusDelta);
+                return function (t): string {
+                    (d as any).outerRadius = i(t);
+                    return context.d3Arc(d)!;
+                };
+            }
             return function (this: SVGPathElement, d) {
-                d3.select(this).transition().delay(delay).attrTween("d", function (d) {
-                    const i = d3.interpolate((d as any).outerRadius, outerRadius + outerRadiusDelta);
-                    return function (t) {
-                        (d as any).outerRadius = i(t);
-                        return context.d3Arc(d);
-                    };
-                } as any);
+                d3.select<SVGPathElement, PieArcDatum>(this).transition().delay(delay)
+                    .attrTween("d", tween);
             };
         }
     }

@@ -10,7 +10,7 @@ const template = html<HPCCCodemirrorElement>`\
 </div>`;
 
 const styles = `\
-${display("inline")}
+${display("inline-block")}
 
 :host {
 }
@@ -104,6 +104,7 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
+        this._view.dom.style.height = `${this.clientHeight}px`;
         if (changes.type || changes.theme) {
             this._view.dispatch({
                 reconfigure: {

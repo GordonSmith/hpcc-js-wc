@@ -10,7 +10,9 @@ const template = html<HPCCSplitterElement>`\
 <slot ${ref("_slot")}></slot>`;
 
 const styles = css`
-${display("inline")} :host {
+${display("inline-block")} 
+
+:host {
 }
 
 :host > div {
@@ -77,8 +79,8 @@ export class HPCCSplitterElement extends HPCCResizeElement {
         this.construct();
         this._splitPanel.orientation = this.orientation;
         this._splitPanel.spacing = this.spacing;
-        this._splitPanel.node.style.width = this.widthString;
-        this._splitPanel.node.style.height = this.heightString;
+        this._splitPanel.node.style.width = `${this.clientWidth}px`;
+        this._splitPanel.node.style.height = `${this.clientHeight}px`;
         this._splitPanel.update();
     }
 

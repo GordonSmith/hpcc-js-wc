@@ -1,4 +1,4 @@
-import { HPCCResizeElement, attribute, customElement, css, ChangeMap, html, ref, classMeta } from "../common";
+import { HPCCSVGElement, attribute, customElement, css, ChangeMap, html, ref, display } from "../common";
 import * as d3 from "d3";
 
 const template = html<HPCCZoomElement>`\
@@ -9,10 +9,11 @@ const template = html<HPCCZoomElement>`\
 </svg>`;
 
 const styles = css`
+${display("inline-block")} 
 `;
 
 @customElement("hpcc-zoom", { template, styles })
-export class HPCCZoomElement extends HPCCResizeElement {
+export class HPCCZoomElement extends HPCCSVGElement {
     /**
      * The minimum scale extent that can be applied to the content
      *
@@ -76,17 +77,17 @@ export class HPCCZoomElement extends HPCCResizeElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        this.svg.attr("width", `${this.parentWidth}px`);
-        this.svg.attr("height", this.heightString);
+        // this.svg.attr("width", `${this.parentWidth}px`);
+        // this.svg.attr("height", this.heightString);
         this.svg.attr("viewbox", "[0, 0, 0, 0]");
         this.content
-            .attr("width", `${this.width}`)
-            .attr("height", `${this.height}`)
+            .attr("width", `${this.clientWidth}`)
+            .attr("height", `${this.clientHeight}`)
             ;
         this._zoom
             .extent([
                 [0, 0],
-                [this.parentWidth, this.patentHeight]
+                [this.clientWidth, this.clientHeight]
             ])
             .scaleExtent([this.scaleMin, this.scaleMax]);
         if (changes.x !== undefined || changes.y !== undefined || changes.scale !== undefined) {

@@ -10,7 +10,7 @@ const template = html<HPCCSankeyElement>`\
 </svg>`;
 
 const styles = css`
-${display("inline")}
+${display("inline-block")}
 
 :host {
 }

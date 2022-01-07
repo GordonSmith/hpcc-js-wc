@@ -12,7 +12,7 @@ const template = html<HPCCDockPanelElement>`\
 <slot ${ref("_slot")}></slot>`;
 
 const styles = css`
-${display("inline")} 
+${display("inline-block")} 
 
 :host {
 }
@@ -85,8 +85,8 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
     update(changes: ChangeMap) {
         super.update(changes);
         this.construct();
-        this._dockPanel!.node.style.width = this.widthString;
-        this._dockPanel!.node.style.height = this.heightString;
+        this._dockPanel!.node.style.width = `${this.clientWidth}px`;
+        this._dockPanel!.node.style.height = `${this.clientHeight}px`;
         this._dockPanel!.update();
     }
 

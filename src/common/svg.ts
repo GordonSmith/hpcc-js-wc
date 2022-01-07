@@ -12,10 +12,13 @@ export class HPCCSVGElement extends HPCCResizeElement {
         }
     }
 
+    enter() {
+    }
+
     update(changes: ChangeMap) {
         super.update(changes);
-        this._svg.setAttribute("width", `${this.parentWidth}px`);
-        this._svg.setAttribute("height", this.heightString);
+        this._svg.setAttribute("width", `${this.clientWidth}px`);
+        this._svg.setAttribute("height", `${this.clientHeight}px`);
         this._svg.setAttribute("viewBox", `0 0 ${this._svg.clientWidth} ${this._svg.clientHeight}`);
     }
 }

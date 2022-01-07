@@ -3,6 +3,7 @@
 ## Visualizations
 
 * [CodeMirror Editor](./codemirror)
+* [Pie](./pie)
 * [Sankey](./sankey)
 * [Treemap](./treemap)
 

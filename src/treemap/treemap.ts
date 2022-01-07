@@ -8,7 +8,7 @@ const template = html<HPCCTreemapElement>`\
 </svg>`;
 
 const styles = css`
-${display("inline")}
+${display("inline-block")}
 
 :host {
 }

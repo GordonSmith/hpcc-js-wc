@@ -3,8 +3,9 @@
 **tag**: `<hpcc-codemirror>`
 
 <ClientOnly>
-  <hpcc-preview width="100%" height="404px">
-      <hpcc-codemirror mode="json" theme="light" width="100%" height="400px"></hpcc-codemirror>
+  <hpcc-preview style="width:100%;height:400px">
+      <hpcc-codemirror mode="json" theme="light" style="width:100%;height:100%">
+      </hpcc-codemirror>
       <script>
           document.querySelector('hpcc-codemirror').text = `\
     {
@@ -24,4 +25,3 @@ See [Getting Started](../guide/getting-started.md) for details on how to include
 ## `HPCCCodemirrorElement`
 
 ## Events
-

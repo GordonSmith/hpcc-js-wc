@@ -19,7 +19,10 @@ svg {
     font-size: 10;
 }
 
-g.links {
+polyline {
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
     fill: none;
 }
 `;
@@ -102,7 +105,13 @@ export class HPCCD3Element extends HPCCSVGElement {
     }
 
     textSize(_text: string | string[], fontName: string = "Verdana", fontSize: number = 12, bold: boolean = false): Readonly<TextSize> {
-        return { width: _text.length * fontSize / 2, height: fontSize };
+        if (Array.isArray(_text)) {
+            if (_text.length === 0) {
+                return { width: 0, height: fontSize };
+            }
+            return { width: d3.max(_text, d => d.length)! * fontSize, height: fontSize };
+        }
+        return { width: _text.length * fontSize, height: fontSize };
     }
 
     getOffsetPos(): Point {
@@ -369,7 +378,7 @@ export class HPCCPieElement extends HPCCD3Element {
                 const pos2 = [...pos];
                 pos[0] = labelRadius * (context.isLeftSide(midAngle(d)) ? 1 : -1);
                 pos[1] = context._labelPositions[i].top;
-                return `[${pos1}, ${pos2}, ${pos}]`;
+                return `${pos1}, ${pos2}, ${pos}`;
             });
 
         polyline.exit()

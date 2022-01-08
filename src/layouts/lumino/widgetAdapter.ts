@@ -4,13 +4,9 @@ import { HPCCElement } from "../../common";
 
 export class WidgetAdapter extends Widget {
 
-    constructor(protected _host: HPCCElement, node: Element) {
-        super({ node: node as HTMLElement });
+    constructor(protected _host: HPCCElement, node: HTMLElement) {
+        super({ node });
         this.addClass("hpcc-LuminoAdapter");
-    }
-
-    protected onResize(msg: Widget.ResizeMessage): void {
-        super.onResize(msg);
     }
 
     protected onCloseRequest(msg: Message): void {

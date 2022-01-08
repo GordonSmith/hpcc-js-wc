@@ -75,10 +75,8 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
     enter() {
         super.enter();
         this._dockPanel = new DockPanel({ document: this.shadowRoot! });
+        Widget.attach(this._dockPanel, this._div);
         MessageLoop.installMessageHook(this._dockPanel, this);
-        MessageLoop.sendMessage(this._dockPanel, Widget.Msg.BeforeAttach);
-        this._div.append(this._dockPanel.node);
-        MessageLoop.sendMessage(this._dockPanel, Widget.Msg.AfterAttach);
         this.construct();
     }
 
@@ -91,14 +89,12 @@ export class HPCCDockPanelElement extends HPCCResizeElement {
     }
 
     exit() {
-        MessageLoop.sendMessage(this._dockPanel!, Widget.Msg.BeforeDetach);
-        this._dockPanel!.node.parentNode?.removeChild(this._dockPanel!.node);
-        MessageLoop.sendMessage(this._dockPanel!, Widget.Msg.AfterDetach);
+        Widget.detach(this._dockPanel!);
         delete this._dockPanel;
         super.exit();
     }
 
-    //  Phosphor Messaging  ---
+    //  Lumino Messaging  ---
     messageHook(handler: IMessageHandler, msg: Message): boolean {
         if (handler === this._dockPanel) {
             switch (msg.type) {

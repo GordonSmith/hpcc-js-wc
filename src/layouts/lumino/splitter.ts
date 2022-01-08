@@ -68,9 +68,7 @@ export class HPCCSplitterElement extends HPCCResizeElement {
 
     enter() {
         super.enter();
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeAttach);
-        this._div.append(this._splitPanel.node);
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterAttach);
+        Widget.attach(this._splitPanel, this._div);
         this.construct();
     }
 
@@ -85,9 +83,7 @@ export class HPCCSplitterElement extends HPCCResizeElement {
     }
 
     exit() {
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.BeforeDetach);
-        this._splitPanel.node.parentNode?.removeChild(this._splitPanel.node);
-        MessageLoop.sendMessage(this._splitPanel, Widget.Msg.AfterDetach);
+        Widget.detach(this._splitPanel);
         super.exit();
     }
 }

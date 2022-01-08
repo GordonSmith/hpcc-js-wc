@@ -1,6 +1,6 @@
 import { Dispatch, IObserverHandle } from "@hpcc-js/util";
 import { isTrue } from "../util";
-import { classMeta } from "./decorator";
+import { classMeta, instanceMeta } from "./decorator";
 import { Ref } from "./html";
 import { AttrChangedMessage, ChangeMap } from "./message";
 
@@ -15,10 +15,10 @@ export const DefaultEventOptions = {
 export class HPCCElement extends HTMLElement {
 
     static get observedAttributes(): string[] {
-        return classMeta(this.name).observedAttributes;
+        return classMeta(this).observedAttributes;
     }
 
-    private $meta = classMeta(this.constructor.name);
+    private $meta = instanceMeta(this);
 
     private $dispath = new Dispatch<AttrChangedMessage>();
 

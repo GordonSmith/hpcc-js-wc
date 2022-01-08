@@ -1,6 +1,8 @@
 import { HPCCElement } from "./element";
 import { HTMLTemplate } from "./html";
 
+//  Web Component Meta Data  ---
+
 export interface Property {
     name: string;
     isAttribute: boolean;
@@ -15,10 +17,11 @@ export interface ClassMeta {
     observed: string[];
 }
 
-const _allMeta: { [className: string]: ClassMeta } = {};
-export function classMeta(className: string): ClassMeta {
-    if (!_allMeta[className]) {
-        _allMeta[className] = {
+const _allMeta = new WeakMap<CustomElementConstructor, ClassMeta>();
+function initMeta(target: CustomElementConstructor): ClassMeta {
+    let retVal: ClassMeta;
+    if (!_allMeta.has(target)) {
+        retVal = {
             template: { html: "", directives: [] },
             styles: "",
             properties: [],
@@ -26,9 +29,22 @@ export function classMeta(className: string): ClassMeta {
             observedProperties: [],
             observed: []
         };
+        _allMeta.set(target, retVal);
+    } else {
+        retVal = _allMeta.get(target)!;
     }
-    return _allMeta[className];
+    return retVal;
 }
+
+export function classMeta(target: CustomElementConstructor): Readonly<ClassMeta> {
+    return _allMeta.get(target)!;
+}
+
+export function instanceMeta(target: HPCCElement): Readonly<ClassMeta> {
+    return initMeta(Object.getPrototypeOf(target).constructor);
+}
+
+//  Web Component Decarators  ---
 
 export type CustomElementOption = { template?: HTMLTemplate, styles?: string };
 
@@ -37,15 +53,15 @@ export function customElement(name: string, opts?: CustomElementOption): (target
     const { template = { html: "", directives: [] }, styles = "" }: CustomElementOption = opts || {};
 
     function decorator(target: CustomElementConstructor): void {
-        const meta = classMeta(target.name);
+        const meta = initMeta(target);
 
         //  Gather inherited meta  ---
         let allProperties: Property[] = [];
 
         let self = target;
         while (true) {
-            allProperties = [...allProperties, ...classMeta(self.name).properties];
-            if (self?.name === HPCCElement.name) {
+            allProperties = allProperties.concat(initMeta(self).properties);
+            if (self === HPCCElement) {
                 break;
             }
             self = Object.getPrototypeOf(self);
@@ -69,7 +85,7 @@ export function customElement(name: string, opts?: CustomElementOption): (target
 }
 
 function changedHandler(target: HPCCElement, prop: string, isAttribute) {
-    const meta = classMeta(target.constructor.name);
+    const meta = initMeta(target.constructor as CustomElementConstructor);
     meta.properties.push({
         name: prop,
         isAttribute

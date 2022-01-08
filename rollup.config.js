@@ -61,9 +61,7 @@ export default [
                 file: pkg.jsdelivr,
                 format: "umd",
                 sourcemap: true,
-                plugins: [terser({
-                    keep_classnames: true
-                })],
+                plugins: [terser()],
                 name: pkg.name
             }
         ],

@@ -1,5 +1,7 @@
+//@ts-ignore
 import DefaultTheme from "vitepress/theme";
 
+//@ts-ignore
 if (import.meta.env.MODE === "development") {
     import("../../../src/index");
 }

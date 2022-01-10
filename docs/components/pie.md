@@ -29,5 +29,3 @@ See [Getting Started](../guide/getting-started.md) for details on how to include
 ## `HPCCPieElement`
 
 ## Events
-
-### `changed`

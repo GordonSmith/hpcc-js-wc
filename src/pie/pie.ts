@@ -1,6 +1,7 @@
 import { degreesToRadians, normalizeRadians } from "@hpcc-js/util";
 import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, HTMLColor, display, html, ref } from "../common";
 import * as d3 from "d3";
+import { SVGWidget } from "../legacy";
 
 const template = html<HPCCPieElement>`\
 <svg ${ref("_svg")}>
@@ -16,7 +17,12 @@ ${display("inline-block")}
 
 svg {
     font-family: sans-serif;
-    font-size: 10;
+    font-size: 12;
+}
+
+.arc path {
+    stroke: white;
+    stroke-width: 0.75px;
 }
 
 polyline {
@@ -27,127 +33,95 @@ polyline {
 }
 `;
 
-type Point = { x: number, y: number };
-type Rect = { x: number, y: number, width: number, height: number };
-type TextSize = { width: number; height: number; };
-
-const lerp = function (point: Point, that: Point, t: number): Point {
-    //  From https://github.com/thelonious/js-intersections
-    return {
-        x: point.x + (that.x - point.x) * t,
-        y: point.y + (that.y - point.y) * t
-    };
-};
-
-type CircleIntersection = { type: "Outside" | "Tangent" | "Inside" | "Intersection", points: Point[] };
-const intersectCircleLine = function (c: Point, r: number, a1: Point, a2: Point): CircleIntersection {
-    //  From https://github.com/thelonious/js-intersections
-    const result: CircleIntersection = { type: "Intersection", points: [] };
-    const a = (a2.x - a1.x) * (a2.x - a1.x) +
-        (a2.y - a1.y) * (a2.y - a1.y);
-    const b = 2 * ((a2.x - a1.x) * (a1.x - c.x) +
-        (a2.y - a1.y) * (a1.y - c.y));
-    const cc = c.x * c.x + c.y * c.y + a1.x * a1.x + a1.y * a1.y -
-        2 * (c.x * a1.x + c.y * a1.y) - r * r;
-    const deter = b * b - 4 * a * cc;
-
-    if (deter < 0) {
-        result.type = "Outside";
-    } else if (deter === 0) {
-        result.type = "Tangent";
-        // NOTE: should calculate this point
-    } else {
-        const e = Math.sqrt(deter);
-        const u1 = (-b + e) / (2 * a);
-        const u2 = (-b - e) / (2 * a);
-
-        if ((u1 < 0 || u1 > 1) && (u2 < 0 || u2 > 1)) {
-            if ((u1 < 0 && u2 < 0) || (u1 > 1 && u2 > 1)) {
-                result.type = "Outside";
-            } else {
-                result.type = "Inside";
-            }
-        } else {
-            result.type = "Intersection";
-
-            if (0 <= u1 && u1 <= 1)
-                result.points.push(lerp(a1, a2, u1));
-
-            if (0 <= u2 && u2 <= 1)
-                result.points.push(lerp(a1, a2, u2));
-        }
-    }
-
-    return result;
-};
-
-export class HPCCD3Element extends HPCCSVGElement {
-
-    _palette: d3.ScaleOrdinal<string, string, never>;
-
-    pos(_: Point): void;
-    pos(): Point;
-    pos(_?: Point): void | Point {
-        if (!arguments.length) return { x: this.clientWidth / 2, y: this.clientHeight / 2 };
-    }
-
-    cssTag(id: string): string {
-        return ("" + id).replace(/[^a-z0-9]/g, (s) => {
-            const c = s.charCodeAt(0);
-            if (c === 32) return "-";
-            if (c >= 65 && c <= 90) return "_" + s.toLowerCase();
-            return "_0x" + c.toString(16);
-        });
-    }
-
-    fillColor(row: any[], column?, value?, origRow?): string {
-        return this._palette(row[0]);
-    }
-
-    textSize(_text: string | string[], fontName: string = "Verdana", fontSize: number = 12, bold: boolean = false): Readonly<TextSize> {
-        if (Array.isArray(_text)) {
-            if (_text.length === 0) {
-                return { width: 0, height: fontSize };
-            }
-            return { width: d3.max(_text, d => d.length)! * fontSize, height: fontSize };
-        }
-        return { width: _text.length * fontSize, height: fontSize };
-    }
-
-    getOffsetPos(): Point {
-        const retVal = { x: 0, y: 0 };
-        return retVal;
-    }
-
-    intersectCircle(radius: number, pointA: Point, pointB: Point): Point | null {
-        const center = this.getOffsetPos();
-        const intersection = intersectCircleLine(center, radius, pointA, pointB);
-        if (intersection.points.length) {
-            return { x: intersection.points[0].x, y: intersection.points[0].y };
-        }
-        return null;
-    }
-}
-
 type Columns = string[];
 type Row = [string, number];
 type Data = Row[];
 type PieArcDatum = d3.PieArcDatum<Row>;
 
 @customElement("hpcc-pie", { template, styles })
-export class HPCCPieElement extends HPCCD3Element {
+export class HPCCPieElement extends HPCCSVGElement {
 
-    @attribute showLabels = true;
-    @attribute showSeriesValue = false;
+    /**
+     * Show labels for each slice
+     * 
+     * @defaultValue true
+     */
+    @attribute({ type: "boolean" }) showLabels = true;
+
+    /**
+     * Show value for each slice
+     * 
+     * @defaultValue false
+     */
+    @attribute({ type: "boolean" }) showSeriesValue = false;
+
+    /**
+     * Value format (when visible)
+     * 
+     * @defaultValue ",.0f"
+     * 
+     * @Remarks Internally the format string uses `d3.format` to format the value.  See
+     * https://github.com/d3/d3-format#locale_format for details.
+     */
     @attribute seriesValueFormat = ",.0f";
-    @attribute showSeriesPercentage = false;
-    @attribute seriesPercentageFormat = ",.0f";
-    @attribute innerRadius = 0;
-    @attribute minOuterRadius = 20;
-    @attribute startAngle = 0;
-    @attribute labelHeight = 12;
 
-    @property columns: Columns = [];
+    /**
+     * Show value as a percentage for each slice
+     * 
+     * @defaultValue false
+     */
+    @attribute({ type: "boolean" }) showSeriesPercentage = false;
+
+    /**
+     * Percentage format (when visible)
+     * 
+     * @defaultValue ",.0f"
+     * 
+     * @Remarks Internally the format string uses `d3.format` to format the percentage.  See
+     * https://github.com/d3/d3-format#locale_format for details.
+     */
+    @attribute seriesPercentageFormat = ",.0f";
+
+    /**
+     * Inner radius of the pie chart.  A larger value will make the pie chart appear as a donut chart.
+     * 
+     * @defaultValue 2
+     */
+    @attribute({ type: "number" }) innerRadius = 2;
+
+    /**
+     * The minimum outer radius.  In general the pie chart will expand to fill the available space.
+     * 
+     * @defaultValue 20
+     */
+    @attribute({ type: "number" }) minOuterRadius = 20;
+
+    /**
+     * The starting position for the first slice.  This is used to rotate the pie chart.
+     * 
+     * @defaultValue 0
+     */
+    @attribute({ type: "number" }) startAngle = 0;
+
+    /**
+     * Label height.  Used to position the labels.
+     * 
+     * @defaultValue 12
+     */
+    @attribute({ type: "number" }) labelHeight = 12;
+
+    /**
+     * "Column" labels for the data.  Used to describe the data content
+     * 
+     * @defaultValue ["Label", "Value"]
+     */
+    @property columns: Columns = ["Label", "Value"];
+
+    /**
+     * The data content for the pie chart.
+     * 
+     * @defaultValue []
+     */
     @property data: Data = [];
 
     protected _slicesG: SVGGElement;
@@ -157,9 +131,9 @@ export class HPCCPieElement extends HPCCD3Element {
 
     protected _totalValue: number;
 
-    d3Pie = d3.pie<Row>();
-    d3Arc = d3.arc<PieArcDatum>();
-    d3LabelArc = d3.arc<PieArcDatum>();
+    protected d3Pie = d3.pie<Row>();
+    protected d3Arc = d3.arc<PieArcDatum>();
+    protected d3LabelArc = d3.arc<PieArcDatum>();
 
     private _labelPositions;
     private _smallValueLabelHeight;
@@ -170,14 +144,12 @@ export class HPCCPieElement extends HPCCD3Element {
     private _seriesValueFormatter;
     private _seriesPercentageFormatter;
 
+    private _legacy = new SVGWidget(this);
+
     constructor() {
         super();
         this._slices = d3.select<SVGGElement, unknown>(this._slicesG);
         this._labels = d3.select<SVGGElement, unknown>(this._labelsG);
-    }
-
-    intersection(pointA, pointB) {
-        return this.intersectCircle(this.calcOuterRadius(), pointA, pointB);
     }
 
     calcInnerRadius() {
@@ -185,7 +157,7 @@ export class HPCCPieElement extends HPCCD3Element {
     }
 
     calcOuterRadius() {
-        const maxTextWidth = this.textSize(this.data.map(d => this.getLabelText({ data: d }, false)), "Verdana", 12).width;
+        const maxTextWidth = this._legacy.textSize(this.data.map(d => this.getLabelText({ data: d }, false)), "Verdana", 12).width;
         const horizontalLimit = this._svg.clientWidth - (this.showLabels ? maxTextWidth * 2 : 0) - 20;
         const verticalLimit = this._svg.clientHeight - 12 * 3 - (this.showLabels ? this._smallValueLabelHeight : 0);
         const outerRadius = Math.min(horizontalLimit, verticalLimit) / 2 - 2;
@@ -222,7 +194,7 @@ export class HPCCPieElement extends HPCCD3Element {
         let len;
         let label = d.data[0];
         if (typeof this._labelWidthLimit !== "undefined" && truncate) {
-            const labelWidth = this.textSize(label, "Verdana", this.labelHeight).width;
+            const labelWidth = this._legacy.textSize(label, "Verdana", this.labelHeight).width;
             if (this._labelWidthLimit < labelWidth) {
                 len = label.length * (this._labelWidthLimit / labelWidth) - 3;
                 label = len < label.length ? label.slice(0, len) + "..." : label;
@@ -253,7 +225,7 @@ export class HPCCPieElement extends HPCCD3Element {
         this._labels.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);
         const context = this;
         this.updateD3Pie();
-        this._palette = d3.scaleOrdinal([] as string[], d3.schemeTableau10);
+        this._legacy._palette = d3.scaleOrdinal([] as string[], d3.schemeTableau10);
         this._seriesValueFormatter = d3.format(this.seriesValueFormat);
         this._seriesPercentageFormatter = d3.format(this.seriesPercentageFormat);
 
@@ -278,7 +250,7 @@ export class HPCCPieElement extends HPCCD3Element {
 
         //  Enter  ---
         arc.enter().append("g")
-            .attr("class", (d, i) => "arc series series-" + this.cssTag(d.data[0]))
+            .attr("class", (d, i) => "arc series series-" + this._legacy.cssTag(d.data[0]))
             .attr("opacity", 0)
             // .call(this._selection.enter.bind(this._selection))
             .on("click", function (d) {
@@ -304,7 +276,7 @@ export class HPCCPieElement extends HPCCD3Element {
                 const element2 = d3.select(this);
                 element2.select<SVGPathElement>("path").transition()
                     .attr("d", d => context.d3Arc(d as PieArcDatum))
-                    .style("fill", context.fillColor(d.data, context.columns[1], d.data[1]))
+                    .style("fill", context._legacy.fillColor(d.data, context.columns[1], d.data[1]))
                     ;
             })
             ;
@@ -422,7 +394,7 @@ export class HPCCPieElement extends HPCCD3Element {
     }
 
     centerOnLabels() {
-        const gY = this.pos().y;
+        const gY = this._legacy.pos().y;
         const gY2 = gY * 2;
         const radius = this.calcOuterRadius();
         const top = Math.min(this._minLabelTop, -radius);
@@ -438,8 +410,8 @@ export class HPCCPieElement extends HPCCD3Element {
             yShift = absTop - gY + (this.labelHeight / 2);
             yShift += heightDiff / 2;
         }
-        const pos = this.pos();
-        this.pos({
+        const pos = this._legacy.pos();
+        this._legacy.pos({
             y: pos.y + yShift,
             x: pos.x
         });

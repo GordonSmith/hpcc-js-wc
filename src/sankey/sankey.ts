@@ -50,21 +50,21 @@ export class HPCCSankeyElement extends HPCCSVGElement {
      *
      * @defaultValue 1
      */
-    @attribute nodeStrokeWidth: number = 1; // width of stroke around node rects, in pixels
+    @attribute({ type: "number" }) nodeStrokeWidth: number = 1; // width of stroke around node rects, in pixels
 
     /**
      * Border opacity of the nodes
      *
      * @defaultValue 1
      */
-    @attribute nodeStrokeOpacity = 1; // opacity of stroke around node rects
+    @attribute({ type: "number" }) nodeStrokeOpacity = 1; // opacity of stroke around node rects
 
     /**
      * Link opacity
      *
      * @defaultValue 0.5
      */
-    @attribute linkStrokeOpacity = 0.5; // opacity of stroke around node rects
+    @attribute({ type: "number" }) linkStrokeOpacity = 0.5; // opacity of stroke around node rects
 
     /**
      * Link color of the links

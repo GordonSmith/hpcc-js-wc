@@ -19,35 +19,35 @@ export class HPCCZoomElement extends HPCCSVGElement {
      *
      * @defaultValue 0.5
      */
-    @attribute scaleMin = 0.1;
+    @attribute({ type: "number" }) scaleMin = 0.5;
 
     /**
      * The maximum scale extent that can be applied to the content
      *
      * @defaultValue 0.5
      */
-    @attribute scaleMax = 2;
+    @attribute({ type: "number" }) scaleMax = 1.5;
 
     /**
      * The current x-position of the content
      *
      * @defaultValue 0
      */
-    @attribute x = 0;
+    @attribute({ type: "number" }) x = 0;
 
     /**
      * The current y-position of the content
      *
      * @defaultValue 0
      */
-    @attribute y = 0;
+    @attribute({ type: "number" }) y = 0;
 
     /**
      * The current scale of the content
      *
      * @defaultValue 1
      */
-    @attribute scale = 1;
+    @attribute({ type: "number" }) scale = 1;
 
     protected svg: d3.Selection<SVGSVGElement, any, any, any>;
     _content: SVGGElement;
@@ -77,9 +77,7 @@ export class HPCCZoomElement extends HPCCSVGElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        // this.svg.attr("width", `${this.parentWidth}px`);
-        // this.svg.attr("height", this.heightString);
-        this.svg.attr("viewbox", "[0, 0, 0, 0]");
+        // this.svg.attr("viewBox", "0 0 0 0");
         this.content
             .attr("width", `${this.clientWidth}`)
             .attr("height", `${this.clientHeight}`)

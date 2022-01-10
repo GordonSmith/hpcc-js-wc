@@ -52,6 +52,44 @@ export class HPCCElement extends HTMLElement {
         this.shadowRoot!.insertBefore(this.$styles, this.shadowRoot!.firstChild);
     }
 
+    protected attrValue(qualifiedName: string, value: string | null) {
+        switch (this.$meta.observed[qualifiedName].type) {
+            case "boolean":
+                return !!value;
+            case "number":
+                const retVal = Number(value);
+                return isNaN(retVal) ? null : retVal;
+            case "string":
+            default:
+                return value;
+        }
+    }
+
+    attr(qualifiedName: string): boolean | number | string | null;
+    attr(qualifiedName: string, _: boolean | number | string | null): this;
+    attr(qualifiedName: string, _?: boolean | number | string | null): boolean | number | string | null | this {
+        if (_ === undefined) {
+            return this.attrValue(qualifiedName, this.getAttribute(qualifiedName));
+        } else {
+            switch (this.$meta.observed[qualifiedName].type) {
+                case "boolean":
+                    if (_ as boolean) {
+                        this.setAttribute(qualifiedName, "true");
+                    } else {
+                        this.removeAttribute(qualifiedName);
+                    }
+                    break;
+                case "number":
+                    this.setAttribute(qualifiedName, (_ as number).toString());
+                    break;
+                case "string":
+                default:
+                    this.setAttribute(qualifiedName, _ as string);
+            }
+        }
+        return this;
+    }
+
     private _initialized = false;
     private initalizeAttributes(): ChangeMap {
         if (this._initialized) return {};
@@ -61,16 +99,11 @@ export class HPCCElement extends HTMLElement {
             const innerID = `_${attr}`;
             const value = this[innerID];
             if (this.hasAttribute(attr)) {
-                if (typeof this[innerID] === "boolean") {
-                    this[innerID] = true;
-                } else {
-                    this[innerID] = this.getAttribute(attr);
-                }
-                retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
+                this[innerID] = this.attr(attr);
             } else {
-                this.setAttribute(attr, value);
-                retVal[attr] = { oldValue: undefined, newValue: value };
+                this.attr(attr, value);
             }
+            retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
         });
         this.$meta.observedProperties.forEach(prop => {
             retVal[prop] = { oldValue: undefined, newValue: this[prop] };
@@ -110,35 +143,38 @@ export class HPCCElement extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         const innerID = `_${name}`;
-        if (typeof this[innerID] === "boolean") {
-            newValue = isTrue(newValue);
-        }
-        if (this[innerID] !== newValue) {
-            this[innerID] = newValue;
-            this._fire(name, oldValue, newValue);
+        const coercedValue = this.attrValue(name, newValue);
+        if (this[innerID] !== coercedValue) {
+            const oldValue = this[innerID];
+            this[innerID] = coercedValue;
+            this._fire(name, oldValue, coercedValue);
         }
     }
 
     //  Lifecycle  ---
     enter() {
+        //  Debugging, remove for production  ---
         for (const key of this.$meta.observedAttributes) {
-            if (this[key] != this.getAttribute(key)) {
-                console.log("enter error", key, this[key], this.getAttribute(key));
+            if (this[key] !== this.attr(key)) {
+                console.log("enter sync error", key, this[key], this.attr(key));
             }
         }
+        //  Debugging, remove for production  ---
     }
 
     update(changes: ChangeMap) {
         for (const key in changes) {
-            if (this.$meta.observedAttributes.indexOf(key) >= 0 && this[key] != this.getAttribute(key)) {
-                this.setAttribute(key, this[key]);
+            if (this.$meta.observed[key]?.isAttribute && this[key] !== this.attr(key)) {
+                this.attr(key, this[key]);
             }
         }
+        //  Debugging, remove for production  ---
         for (const key of this.$meta.observedAttributes) {
-            if (this.$meta.observedAttributes.indexOf(key) >= 0 && this[key] != this.getAttribute(key)) {
-                console.log("update error", key, this[key], this.getAttribute(key));
+            if (this.$meta.observedAttributes.indexOf(key) >= 0 && this[key] !== this.attr(key)) {
+                console.log("update sync error", key, this[key], this.attr(key));
             }
         }
+        //  Debugging, remove for production  ---
     }
 
     exit() {

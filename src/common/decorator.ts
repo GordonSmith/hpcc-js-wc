@@ -3,10 +3,25 @@ import { HTMLTemplate } from "./html";
 
 //  Web Component Meta Data  ---
 
-export interface Property {
+export interface PropertyBase {
+    type: "string" | "boolean" | "number";
     name: string;
     isAttribute: boolean;
 }
+
+export interface StringProperty extends PropertyBase {
+    type: "string";
+}
+
+export interface NumberProperty extends PropertyBase {
+    type: "number";
+}
+
+export interface BooleanProperty extends PropertyBase {
+    type: "boolean";
+}
+
+export type Property = StringProperty | NumberProperty | BooleanProperty;
 
 export interface ClassMeta {
     template?: HTMLTemplate;
@@ -14,7 +29,7 @@ export interface ClassMeta {
     properties: Property[];
     observedAttributes: string[];
     observedProperties: string[];
-    observed: string[];
+    observed: { [id: string]: Property };
 }
 
 const _allMeta = new WeakMap<CustomElementConstructor, ClassMeta>();
@@ -27,7 +42,7 @@ function initMeta(target: CustomElementConstructor): ClassMeta {
             properties: [],
             observedAttributes: [],
             observedProperties: [],
-            observed: []
+            observed: {}
         };
         _allMeta.set(target, retVal);
     } else {
@@ -56,7 +71,7 @@ export function customElement(name: string, opts?: CustomElementOption): (target
         const meta = initMeta(target);
 
         //  Gather inherited meta  ---
-        let allProperties: Property[] = [];
+        let allProperties: PropertyBase[] = [];
 
         let self = target;
         while (true) {
@@ -76,7 +91,8 @@ export function customElement(name: string, opts?: CustomElementOption): (target
             .filter(prop => !prop.isAttribute)
             .map(prop => prop.name)
             ;
-        meta.observed = allProperties.map(prop => prop.name);
+        meta.observed = {};
+        allProperties.forEach(prop => meta.observed[prop.name] = prop);
         customElements?.define(name, target);
         return;
     }
@@ -84,57 +100,49 @@ export function customElement(name: string, opts?: CustomElementOption): (target
     return decorator;
 }
 
-function changedHandler(target: HPCCElement, prop: string, isAttribute) {
+function changedHandler(target: HPCCElement, opts: PropertyBase) {
     const meta = initMeta(target.constructor as CustomElementConstructor);
-    meta.properties.push({
-        name: prop,
-        isAttribute
-    });
-    const innerID = `_${prop}`;
-    Object.defineProperty(target, prop, {
+    meta.properties.push(opts);
+    const innerID = `_${opts.name}`;
+    Object.defineProperty(target, opts.name, {
         set: function (newVal) {
             const oldVal = this[innerID];
             this[innerID] = newVal;
-            this._fire(prop, oldVal, newVal);
+            this._fire(opts.name, oldVal, newVal);
         },
         get: function () { return this[innerID]; }
     });
 }
 
-export interface DecoratorAttributeConfiguration {
-    mode?: "string" | "boolean" | "number";
+export type OptionsEx = Omit<PropertyBase, "name" | "isAttribute">;
+function attrProp(isAttribute: boolean, configOrTarget?: OptionsEx | HPCCElement, prop?: string): void | ((target: HPCCElement, property: string) => void) {
+
+    const options: PropertyBase = {
+        name: prop ?? "",
+        type: "string",
+        isAttribute: isAttribute,
+        ...(prop === undefined ? configOrTarget as OptionsEx : {})
+    };
+
+    function decorator($target: HPCCElement, $prop: string): void {
+        changedHandler($target, { ...options, name: $prop });
+    }
+
+    if (prop === undefined) {
+        return decorator;
+    }
+
+    decorator(configOrTarget as HPCCElement, prop!);
 }
 
-export function attribute(config?: DecoratorAttributeConfiguration): (target: HPCCElement, property: string) => void;
+export function attribute(config?: OptionsEx): (target: HPCCElement, property: string) => void;
 export function attribute(target: HPCCElement, prop: string): void;
-export function attribute(configOrTarget?: DecoratorAttributeConfiguration | HPCCElement, prop?: string): void | ((target: HPCCElement, property: string) => void) {
-
-    function decorator($target: HPCCElement, $prop: string): void {
-        changedHandler($target, $prop, true);
-        return;
-    }
-
-    if (arguments.length > 1) {
-        decorator(configOrTarget as HPCCElement, prop!);
-        return;
-    }
-
-    return decorator;
+export function attribute(configOrTarget?: OptionsEx | HPCCElement, prop?: string): void | ((target: HPCCElement, property: string) => void) {
+    return attrProp(true, configOrTarget, prop);
 }
 
-export function property(config?: DecoratorAttributeConfiguration): (target: HPCCElement, property: string) => void;
+export function property(config?: OptionsEx): (target: HPCCElement, property: string) => void;
 export function property(target: HPCCElement, prop: string): void;
-export function property(configOrTarget?: DecoratorAttributeConfiguration | HPCCElement, prop?: string): void | ((target: HPCCElement, property: string) => void) {
-
-    function decorator($target: HPCCElement, $prop: string): void {
-        changedHandler($target, $prop, false);
-        return;
-    }
-
-    if (arguments.length > 1) {
-        decorator(configOrTarget as HPCCElement, prop!);
-        return;
-    }
-
-    return decorator;
+export function property(configOrTarget?: OptionsEx | HPCCElement, prop?: string): void | ((target: HPCCElement, property: string) => void) {
+    return attrProp(false, configOrTarget, prop);
 }

@@ -33,10 +33,10 @@ polyline {
 }
 `;
 
-type Columns = string[];
-type Row = [string, number];
-type Data = Row[];
-type PieArcDatum = d3.PieArcDatum<Row>;
+export type Columns = string[];
+export type Row = [string, number];
+export type Data = Row[];
+export type PieArcDatum = d3.PieArcDatum<Row>;
 
 @customElement("hpcc-pie", { template, styles })
 export class HPCCPieElement extends HPCCSVGElement {

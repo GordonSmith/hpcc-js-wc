@@ -6,12 +6,12 @@ function getGuideSidebar() {
         {
             text: "Introduction",
             children: [
-                { text: "Getting Started", link: "/guide/getting-started" }
+                { text: "Getting Started", link: "/README" }
             ]
         },
         {
             text: "Advanced",
-            children: [{ text: "API Reference", link: "/api/web-components" }]
+            children: [{ text: "API Reference", link: "/docs/api/web-components" }]
         }
     ];
 }
@@ -21,18 +21,18 @@ function getComponentsSidebar() {
         {
             text: "Visualizations",
             children: [
-                { text: "CodeMirror", link: "/components/codemirror" },
-                { text: "Pie", link: "/components/pie" },
-                { text: "Sankey", link: "/components/sankey" },
-                { text: "Treemap", link: "/components/treemap" },
+                { text: "CodeMirror", link: "/src/codemirror/codemirror" },
+                { text: "Pie", link: "/src/pie/pie" },
+                { text: "Sankey", link: "/src/sankey/sankey" },
+                { text: "Treemap", link: "/src/treemap/treemap" },
             ]
         },
         {
             text: "Layouts",
             children: [
-                { text: "Dock Panel", link: "/components/dockpanel" },
-                { text: "Splitter", link: "/components/splitter" },
-                { text: "Zoom", link: "/components/zoom" }
+                { text: "Dock Panel", link: "/src/layouts/lumino/dockpanel" },
+                { text: "Splitter", link: "/src/layouts/lumino/splitter" },
+                { text: "Zoom", link: "/src/layouts/zoom" }
             ]
         }
     ];
@@ -55,13 +55,13 @@ module.exports = {
         nav: [
             {
                 text: "Guide",
-                link: "/guide/getting-started",
-                activeMatch: "^/guide/"
+                link: "/README",
+                activeMatch: "^/README"
             },
             {
                 text: "Components",
-                link: "/components/",
-                activeMatch: "^/components/"
+                link: "/src/",
+                activeMatch: "^/src/"
             },
             {
                 text: "Release Notes",
@@ -70,8 +70,8 @@ module.exports = {
         ],
 
         sidebar: {
-            "/guide/": getGuideSidebar(),
-            "/components/": getComponentsSidebar()
+            "/README": getGuideSidebar(),
+            "/src": getComponentsSidebar()
         }
     },
 

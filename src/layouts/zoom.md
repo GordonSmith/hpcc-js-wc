@@ -23,7 +23,7 @@
 </ClientOnly>
 
 ::: tip
-See [Getting Started](../guide/getting-started.md) for details on how to include @hpcc-js/web-components in your application
+See [Getting Started](../../README) for details on how to include @hpcc-js/web-components in your application
 :::
 
 ## `HPCCZoomElement`

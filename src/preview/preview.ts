@@ -95,7 +95,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
             this._iframe.contentWindow?.document.open();
             this._iframe.contentWindow?.document.write(`\
 <head>
-${this._vitepress ? '<script src="../.vitepress/dist/assets/index.js"></script>' :
+${this._vitepress ? '<script src="/.vitepress/dist/assets/index.js"></script>' :
                     '<script src="/hpcc-js-wc/assets/index.min.js"></script>'}
 <style>
         body {

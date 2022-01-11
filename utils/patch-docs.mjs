@@ -37,8 +37,4 @@ function fromDir(startPath, filter) {
     }
 }
 
-fromDir("./docs/.vitepress/dist", ".html");
-
-copyFile("./README.md", "./docs/guide/getting-started.md", (err) => {
-    if (err) throw err;
-});
+fromDir("./.vitepress/dist", ".html");

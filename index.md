@@ -1,11 +1,11 @@
 ---
 home: true
-heroImage: /images/hpccsystems.png
+heroImage: /resources/hpccsystems.png
 heroAlt: HPCC Systems Logo
 heroText: Custom Web Components
 tagline: A Visualization Suite
 actionText: Get Started
-actionLink: /guide/getting-started
+actionLink: /README
 features:
   - title: Simplicity First
     details: Integrating Custom Web Components is as easy as adding a <html-tag>.

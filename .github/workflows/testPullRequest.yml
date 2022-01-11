@@ -17,5 +17,7 @@ jobs:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org"
           scope: "@hpcc-js"
+      - run: npm ci
+      - run: npm run build
         env:
           CI: true

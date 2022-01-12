@@ -45,13 +45,9 @@ const parserOptions = {
 export default [
     {
         input: "dist/index.js",
-        // treeshake: {
-        //     preset: "smallest",
-        //     moduleSideEffects: false,
-        // },
         output: [
             {
-                file: pkg.browser,
+                file: pkg.jsdelivr.split(".min").join(""),
                 format: "umd",
                 sourcemap: true,
                 plugins: [],
@@ -68,17 +64,15 @@ export default [
         plugins: [
             alias({
                 entries: [
-                    // { find: "crypto", replacement: "" },
-                    // { find: '@hpcc-js/util', replacement: '@hpcc-js/util/lib-es6/index.js' },
                 ]
             }),
             resolve(),
             commonJS(),
-            // transformTaggedTemplate({
-            //     tagsToProcess: ["css"],
-            //     transformer: transformCSSFragment,
-            //     parserOptions,
-            // }),
+            transformTaggedTemplate({
+                tagsToProcess: ["css"],
+                transformer: transformCSSFragment,
+                parserOptions,
+            }),
             transformTaggedTemplate({
                 tagsToProcess: ["html"],
                 transformer: transformHTMLFragment,

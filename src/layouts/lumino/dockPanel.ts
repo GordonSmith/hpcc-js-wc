@@ -2,8 +2,8 @@ import { HPCCResizeElement, customElement, ChangeMap, css, display, html, ref } 
 import { DockPanel, Widget } from "@lumino/widgets";
 import { IMessageHandler, Message, MessageLoop } from "@lumino/messaging";
 import { WidgetAdapter } from "./widgetAdapter";
-import * as luminoStyles from "./styles";
-import * as luminoTheme from "./theme";
+import { dockpanel, dragdrop, splitpanel, tabbar, tabpanel, widget } from "./styles";
+import { dockpanel as dockpanelTheme, tabbar as tabbarTheme } from "./theme";
 import { isTrue } from "../../util";
 
 const template = html<HPCCDockPanelElement>`\
@@ -14,21 +14,19 @@ const template = html<HPCCDockPanelElement>`\
 const styles = css`
 ${display("inline-block")} 
 
-:host {
+:host > slot {
+    visibility: hidden;
 }
 
-:host > div {
-}
+${dragdrop}
+${widget}
+${splitpanel}
+${tabbar}
+${tabpanel}
+${dockpanel}
 
-${luminoStyles.dragdrop}
-${luminoStyles.widget}
-${luminoStyles.dockpanel}
-${luminoStyles.splitpanel}
-${luminoStyles.tabbar}
-${luminoStyles.tabpanel}
-
-${luminoTheme.dockpanel}
-${luminoTheme.tabbar}
+${dockpanelTheme}
+${tabbarTheme}
 
 .hpcc-LuminoAdapter {
     padding: 8px;

@@ -1,6 +1,5 @@
 import { HPCCResizeElement, customElement, css, display, html, ref, ChangeMap, attribute } from "../../common";
 import { SplitPanel, Widget } from "@lumino/widgets";
-import { MessageLoop } from "@lumino/messaging";
 import { WidgetAdapter } from "./widgetAdapter";
 import { splitpanel, widget } from "./styles";
 
@@ -12,10 +11,8 @@ const template = html<HPCCSplitterElement>`\
 const styles = css`
 ${display("inline-block")} 
 
-:host {
-}
-
-:host > div {
+:host > slot {
+    visibility: hidden;
 }
 
 ${widget}

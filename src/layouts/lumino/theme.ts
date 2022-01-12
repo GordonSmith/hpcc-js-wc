@@ -33,14 +33,14 @@ export const accordionpanel = /*#__PURE__*/ css`
   .lm-AccordionPanel
     .lm-AccordionPanel-title.lm-mod-expanded
     .lm-AccordionPanel-titleCollapser:before {
-    content: '\f0d8';
+    content: '\\f0d8';
     font-family: FontAwesome;
   }
   
   .lm-AccordionPanel
     .lm-AccordionPanel-title
     .lm-AccordionPanel-titleCollapser:before {
-    content: '\f0d7';
+    content: '\\f0d7';
     font-family: FontAwesome;
     position: absolute;
     right: 10px;
@@ -85,7 +85,7 @@ export const commandpalette = /*#__PURE__*/ css`
 }
 
 .lm-CommandPalette-header:hover::before {
-  content: '\2026';
+  content: '\\2026';
   float: right;
   margin-right: 4px;
 }
@@ -305,11 +305,11 @@ export const menu = /*#__PURE__*/ css`
 }
 
 .lm-Menu-item.lm-mod-toggled > .lm-Menu-itemIcon::before {
-  content: '\f00c';
+  content: '\\f00c';
 }
 
 .lm-Menu-item[data-type='submenu'] > .lm-Menu-itemSubmenuIcon::before {
-  content: '\f0da';
+  content: '\\f0da';
 }
 `;
 
@@ -491,14 +491,12 @@ export const tabbar = /*#__PURE__*/ css`
 }
 
 .lm-TabBar-tab.lm-mod-closable > .lm-TabBar-tabCloseIcon:before {
-  // content: '\f00d';
-  // font-family: FontAwesome;
   content: 'x';
-  font-weight: bold
+  font-weight: bold;
 }
 
 .lm-TabBar .lm-TabBar-addButton:before {
-  content: '\f067';
+  content: '\\f067';
   font-family: FontAwesome;
 }
 
@@ -511,14 +509,3 @@ export const tabbar = /*#__PURE__*/ css`
   transform: translateX(-40%) translateY(-58%);
 }
 `;
-
-//   export const all = /*#__PURE__*/ css`
-// ${accordionpanel}
-// ${commandpalette}
-// ${datagrid}
-// ${dockpanel}
-// ${menu}
-// ${menubar}
-// ${scrollbar}
-// ${tabbar}
-// `;

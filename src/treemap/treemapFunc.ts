@@ -124,7 +124,7 @@ export function treemapFunc(
     const node = svg.selectAll("a")
         .data(leaves)
         .join("a", undefined,)
-        .attr("xlink:href", link == null ? null : (d, i) => link(d.data, d))
+        .attr("xlink:href", link == null ? null : d => link(d.data, d))
         .attr("target", link == null ? null : linkTarget)
         .attr("transform", d => `translate(${d.x0},${d.y0})`)
         ;

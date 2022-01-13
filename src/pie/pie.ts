@@ -1,5 +1,5 @@
 import { degreesToRadians, normalizeRadians } from "@hpcc-js/util";
-import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, HTMLColor, display, html, ref } from "../common";
+import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref } from "../common";
 import * as d3 from "d3";
 import { SVGWidget } from "../legacy";
 
@@ -250,16 +250,16 @@ export class HPCCPieElement extends HPCCSVGElement {
 
         //  Enter  ---
         arc.enter().append("g")
-            .attr("class", (d, i) => "arc series series-" + this._legacy.cssTag(d.data[0]))
+            .attr("class", d => "arc series series-" + this._legacy.cssTag(d.data[0]))
             .attr("opacity", 0)
             // .call(this._selection.enter.bind(this._selection))
-            .on("click", function (d) {
+            .on("click", function () {
                 // context.click(context.rowToObj(d.data), context.columns()[1], context._selection.selected(this));
             })
-            .on("dblclick", function (d) {
+            .on("dblclick", function () {
                 // context.dblclick(context.rowToObj(d.data), context.columns()[1], context._selection.selected(this));
             })
-            .each(function (d, i) {
+            .each(function () {
                 d3.select(this).append("path")
                     // .on("mouseout.tooltip", context.tooltip.hide)
                     // .on("mousemove.tooltip", context.tooltip.show)
@@ -297,7 +297,7 @@ export class HPCCPieElement extends HPCCSVGElement {
             // .on("mouseout.tooltip", context.tooltip.hide)
             // .on("mousemove.tooltip", context.tooltip.show)
             .attr("dy", ".5em")
-            .on("click", function (d) {
+            .on("click", function () {
                 // context._slices.selectAll("g").filter(function (d2) {
                 //     if (d.data === d2.data) {
                 //         context._selection.click(this);
@@ -305,7 +305,7 @@ export class HPCCPieElement extends HPCCSVGElement {
                 //     }
                 // });
             })
-            .on("dblclick", function (d) {
+            .on("dblclick", function () {
                 // context._slices.selectAll("g").filter(function (d2) {
                 //     if (d.data === d2.data) {
                 //         context.dblclick(context.rowToObj(d.data), context.columns()[1], context._selection.selected(this));
@@ -314,7 +314,7 @@ export class HPCCPieElement extends HPCCSVGElement {
             })
             .merge(text)
             .text(d => this.getLabelText(d, true))
-            .each(function (d, i) {
+            .each(function (d) {
                 const pos = context.d3LabelArc.centroid(d);
                 const mid_angle = midAngle(d);
                 pos[0] = labelRadius * (context.isLeftSide(mid_angle) ? 1 : -1);
@@ -371,7 +371,7 @@ export class HPCCPieElement extends HPCCSVGElement {
                     return context.d3Arc(d)!;
                 };
             }
-            return function (this: SVGPathElement, d) {
+            return function (this: SVGPathElement) {
                 d3.select<SVGPathElement, PieArcDatum>(this).transition().delay(delay)
                     .attrTween("d", tween);
             };
@@ -449,8 +449,8 @@ export class HPCCPieElement extends HPCCSVGElement {
         });
         this._minLabelTop = 0;
         this._maxLabelBottom = 0;
-        this._quadIdxArr.forEach((arr, quad) => {
-            this._quadIdxArr[quad].forEach((n, i) => {
+        this._quadIdxArr.forEach((_arr, quad) => {
+            this._quadIdxArr[quad].forEach(n => {
                 if (this._minLabelTop > this._labelPositions[n].top) {
                     this._minLabelTop = this._labelPositions[n].top;
                 }

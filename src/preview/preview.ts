@@ -78,7 +78,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         const codeElements = this.getElementsByTagName("code")[0];
         this._cm.text = codeElements?.innerText ?? "" + this.innerHTML;
         this.gatherScripts(document.body, this._scripts);
-        this._cm.addEventListener("change", (evt) => {
+        this._cm.addEventListener("change", () => {
             this.content = this._cm.text.trim();
         });
     }

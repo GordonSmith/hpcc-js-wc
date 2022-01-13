@@ -1,4 +1,3 @@
-import { attribute } from "./decorator";
 import { HPCCElement } from "./element";
 
 export class HPCCResizeElement extends HPCCElement {

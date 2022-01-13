@@ -13,38 +13,6 @@ const lerp = function (point: Point, that: Point, t: number): Point {
     };
 };
 
-type LineIntersection = { type: "Intersection" | "No Intersection" | "Coincident" | "Parallel", points: Point[] };
-const intersectLineLine = function (a1: Point, a2: Point, b1: Point, b2: Point): LineIntersection {
-    //  From https://github.com/thelonious/js-intersections
-    const result: LineIntersection = { type: "Parallel", points: [] };
-    const uaT = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x);
-    const ubT = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x);
-    const uB = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
-
-    if (uB !== 0) {
-        const ua = uaT / uB;
-        const ub = ubT / uB;
-
-        if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
-            result.type = "Intersection";
-            result.points.push({
-                x: a1.x + ua * (a2.x - a1.x),
-                y: a1.y + ua * (a2.y - a1.y)
-            });
-        } else {
-            result.type = "No Intersection";
-        }
-    } else {
-        if (uaT === 0 || ubT === 0) {
-            result.type = "Coincident";
-        } else {
-            result.type = "Parallel";
-        }
-    }
-
-    return result;
-};
-
 type CircleIntersection = { type: "Outside" | "Tangent" | "Inside" | "Intersection", points: Point[] };
 const intersectCircleLine = function (c: Point, r: number, a1: Point, a2: Point): CircleIntersection {
     //  From https://github.com/thelonious/js-intersections
@@ -97,7 +65,7 @@ export class SVGWidget extends Widget {
         this._boundingBox = null;
     }
 
-    fillColor(row: any[], column?, value?, origRow?): string {
+    fillColor(row: any[], _column?, _value?, _origRow?): string {
         return this._palette(row[0]);
     }
 

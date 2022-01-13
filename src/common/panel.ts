@@ -1,7 +1,7 @@
 import { css, display } from "./css";
-import { attribute, customElement } from "./decorator";
+import { customElement } from "./decorator";
 import { HPCCResizeElement } from "./resize";
-import { html, ref } from "./html";
+import { html } from "./html";
 import { ChangeMap } from "./message";
 
 const template = html<HPCCPanelElement>`\

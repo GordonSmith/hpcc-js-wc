@@ -1,5 +1,4 @@
-import * as  all from "@hpcc-js/web-components";
+import { HPCCZoomElement } from "@hpcc-js/web-components";
 
-all;
+HPCCZoomElement;
 
-console.log("Hello World!");

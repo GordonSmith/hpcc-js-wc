@@ -30,8 +30,9 @@ function getComponentsSidebar() {
         {
             text: "Layouts",
             children: [
-                { text: "Dock Panel", link: "/src/layouts/lumino/dockpanel" },
-                { text: "Splitter", link: "/src/layouts/lumino/splitter" },
+                { text: "Dock Panel", link: "/src/layouts/lumino/dockPanel" },
+                { text: "Split Panel", link: "/src/layouts/lumino/splitPanel" },
+                { text: "Tab Panel", link: "/src/layouts/lumino/tabPanel" },
                 { text: "Zoom", link: "/src/layouts/zoom" }
             ]
         }

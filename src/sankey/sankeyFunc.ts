@@ -3,7 +3,7 @@
 // https://observablehq.com/@d3/sankey-diagram
 
 import * as d3 from "d3";
-import { ScaleOrdinal, ValueFn } from "d3";
+import { ScaleOrdinal } from "d3";
 import * as d3Sankey from "d3-sankey";
 
 export interface Link {

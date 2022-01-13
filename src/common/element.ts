@@ -1,5 +1,4 @@
 import { Dispatch, IObserverHandle } from "@hpcc-js/util";
-import { isTrue } from "../util";
 import { classMeta, instanceMeta } from "./decorator";
 import { Ref } from "./html";
 import { AttrChangedMessage, ChangeMap } from "./message";
@@ -20,10 +19,10 @@ export class HPCCElement extends HTMLElement {
 
     private $meta = instanceMeta(this);
 
-    private $dispath = new Dispatch<AttrChangedMessage>();
+    private $dispatch = new Dispatch<AttrChangedMessage>();
 
     protected _fire = (what: string, oldVal: any = false, newVal: any = true) => {
-        this.$dispath.post(new AttrChangedMessage(what, oldVal, newVal));
+        this.$dispatch.post(new AttrChangedMessage(what, oldVal, newVal));
     };
 
     private $dispatchHandle: IObserverHandle;
@@ -69,7 +68,14 @@ export class HPCCElement extends HTMLElement {
     attr(qualifiedName: string, _: boolean | number | string | null): this;
     attr(qualifiedName: string, _?: boolean | number | string | null): boolean | number | string | null | this {
         if (_ === undefined) {
-            return this.attrValue(qualifiedName, this.getAttribute(qualifiedName));
+            switch (this.$meta.observed[qualifiedName].type) {
+                case "boolean":
+                    return this.attrValue(qualifiedName, this.hasAttribute(qualifiedName) ? "true" : "");
+                case "number":
+                case "string":
+                default:
+                    return this.attrValue(qualifiedName, this.getAttribute(qualifiedName));
+            }
         } else {
             switch (this.$meta.observed[qualifiedName].type) {
                 case "boolean":
@@ -115,8 +121,8 @@ export class HPCCElement extends HTMLElement {
         const changes = this.initalizeAttributes();
         this.enter();
         this.update(changes);
-        this.$dispath.flush();
-        this.$dispatchHandle = this.$dispath.attach((messages) => {
+        this.$dispatch.flush();
+        this.$dispatchHandle = this.$dispatch.attach((messages) => {
             if (this.isConnected) {
                 const changes: ChangeMap = {};
                 if (messages.length > 1) throw new Error("Conflation issue.");

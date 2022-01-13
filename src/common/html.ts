@@ -15,7 +15,7 @@ export interface HTMLTemplate {
     directives: Directive[];
 }
 
-export function html<T extends HPCCElement>(templateData: TemplateStringsArray, ...args: any[]): HTMLTemplate {
+export function html<_T extends HPCCElement>(templateData: TemplateStringsArray, ...args: any[]): HTMLTemplate {
     let html = templateData[0];
     const directives: Directive[] = [];
     for (let i = 0; i < args.length; ++i) {

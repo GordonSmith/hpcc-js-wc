@@ -4,6 +4,7 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     plugins: [
         "@typescript-eslint",
+        "unused-imports"
     ],
     extends: [
         "eslint:recommended",
@@ -91,6 +92,11 @@ module.exports = {
         ],
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-namespace": "off",
-        "@typescript-eslint/no-var-require": "off"
+        "@typescript-eslint/no-var-require": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+        ]
     }
 };

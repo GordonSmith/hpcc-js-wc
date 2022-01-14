@@ -47,7 +47,7 @@ module.exports = {
     base: "/hpcc-js-wc/",
 
     head: [
-        ['link', { rel: 'icon', type: 'image/x-icon', href: '/resources/favicon.ico' }],
+        ['link', { rel: 'icon', type: 'image/x-icon', href: '/hpcc-js-wc/resources/favicon.ico' }],
     ],
 
     themeConfig: {

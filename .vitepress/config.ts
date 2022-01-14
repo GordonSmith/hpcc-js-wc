@@ -46,6 +46,10 @@ module.exports = {
     description: "HPCC Systems Custom Web Components",
     base: "/hpcc-js-wc/",
 
+    head: [
+        ['link', { rel: 'icon', type: 'image/x-icon', href: '/resources/favicon.ico' }],
+    ],
+
     themeConfig: {
         repo: "GordonSmith/hpcc-js-wc",
         docsDir: "docs",

@@ -27,7 +27,7 @@
     "api-extractor-watch": "nodemon --watch types \"run-s api-extractor\"",
     "api-documenter": "api-documenter markdown --input-folder ./temp --output-folder ./docs/api",
     "copy-build": "copyfiles -u 1 \"./dist/index.umd.min.*\" ./.vitepress/dist/assets/",
-    "copy-images": "copyfiles -u 1 \"./resources/**/*.{png,jpg,gif}\" ./.vitepress/dist/resources/",
+    "copy-images": "copyfiles -u 1 \"./resources/**/*.{png,jpg,gif,ico}\" ./.vitepress/dist/resources/",
     "copy-res": "run-p copy-build copy-images",
     "bundle-dev": "rollup -c ./rollup.dev.config.js",
     "bundle-dev-watch": "npm run bundle-dev -- -w",

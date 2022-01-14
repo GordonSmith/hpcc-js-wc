@@ -1,6 +1,6 @@
 import { degreesToRadians, normalizeRadians } from "@hpcc-js/util";
-import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref } from "../common";
 import * as d3 from "d3";
+import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref } from "../common";
 import { SVGWidget } from "../legacy";
 
 const template = html<HPCCPieElement>`\

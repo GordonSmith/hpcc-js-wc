@@ -96,10 +96,10 @@ export class HPCCElement extends HTMLElement {
         return this;
     }
 
-    private _initialized = false;
+    private $_initialized = false;
     private initalizeAttributes(): ChangeMap {
-        if (this._initialized) return {};
-        this._initialized = true;
+        if (this.$_initialized) return {};
+        this.$_initialized = true;
         const retVal: ChangeMap = {};
         this.$meta.observedAttributes.forEach(attr => {
             const innerID = `_${attr}`;

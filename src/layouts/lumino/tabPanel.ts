@@ -26,8 +26,16 @@ ${tabbarTheme}
 .hpcc-LuminoAdapter {
     padding: 8px;
     border: 1px solid #c0c0c0;
+}
+
+:host-context([tabPlacement="top"]) .hpcc-LuminoAdapter  {
     border-top: none;
-}`;
+}
+
+:host-context([tabPlacement="bottom"]) .hpcc-LuminoAdapter  {
+    border-bottom: none;
+}
+`;
 
 @customElement("hpcc-tabpanel", { template, styles })
 export class HPCCTabPanelElement extends HPCCLuminoElement {

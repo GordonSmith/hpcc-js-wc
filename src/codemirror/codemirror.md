@@ -3,8 +3,8 @@
 **tag**: `<hpcc-codemirror>`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" style="width:100%;height:400px">
-      <hpcc-codemirror mode="json" theme="light" style="width:100%;height:100%">
+  <hpcc-preview previewBorder="0px" previewHeightRatio=0.5 style="width:100%;height:400px">
+      <hpcc-codemirror mode="json" theme="dark" style="width:100%;height:100%">
       </hpcc-codemirror>
       <script>
           document.querySelector('hpcc-codemirror').text = `\

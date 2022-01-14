@@ -46,6 +46,13 @@ export class HPCCPreviewElement extends HPCCResizeElement {
      */
     @attribute content = "";
 
+    /**
+     * Split ratio between the preview and the code editor
+     * 
+     * @defaultValue 1/3
+     */
+    @attribute previewHeightRatio = 2 / 3;
+
     protected _iframeDiv: HTMLDivElement;
     protected _iframe: HTMLIFrameElement;
     protected _cm: HPCCCodemirrorElement;
@@ -90,7 +97,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
             this._iframe = document.createElement("iframe");
             this._iframe.style.border = this.previewBorder;
             this._iframe.width = "100%";
-            this._iframe.height = `${this.clientHeight * 2 / 3}`;
+            this._iframe.height = `${this.clientHeight * this.previewHeightRatio}`;
             this._iframeDiv.append(this._iframe);
             this._iframe.contentWindow?.document.open();
             this._iframe.contentWindow?.document.write(`\
@@ -112,6 +119,6 @@ ${this._cm.text.trim()}
             this._iframe.contentWindow?.document.close();
         }
         this._cm.style.width = "100%";
-        this._cm.style.height = `${this.clientHeight / 3}px`;
+        this._cm.style.height = `${this.clientHeight * (1 - this.previewHeightRatio)}px`;
     }
 }

@@ -22,6 +22,7 @@ function getComponentsSidebar() {
             text: "Visualizations",
             children: [
                 { text: "CodeMirror", link: "/src/codemirror/codemirror" },
+                { text: "Gauge", link: "/src/gauge/gauge" },
                 { text: "Pie", link: "/src/pie/pie" },
                 { text: "Sankey", link: "/src/sankey/sankey" },
                 { text: "Treemap", link: "/src/treemap/treemap" },

@@ -144,17 +144,16 @@ export function treemapFunc(
     }
 
     if (L) {
-        // A unique identifier for clip paths (to avoid conflicts).
-        const uid = `O-${Math.random().toString(16).slice(2)}`;
+        const clipID = `O-${Math.random().toString(16).slice(2)}`;
 
         node.append("clipPath")
-            .attr("id", (d, i) => `${uid}-clip-${i}`)
+            .attr("id", (d, i) => `${clipID}-clip-${i}`)
             .append("rect")
             .attr("width", d => d.x1 - d.x0)
             .attr("height", d => d.y1 - d.y0);
 
         node.append("text")
-            .attr("clip-path", (d, i) => `url(${new URL(`#${uid}-clip-${i}`, location as any)})`)
+            .attr("clip-path", (d, i) => `url(${new URL(`#${clipID}-clip-${i}`, location as any)})`)
             .selectAll("tspan")
             .data((d, i) => `${L[i]}`.split(/\n/g))
             .join("tspan")

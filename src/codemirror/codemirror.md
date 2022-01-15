@@ -7,6 +7,7 @@
       <hpcc-codemirror mode="json" theme="dark" style="width:100%;height:100%">
       </hpcc-codemirror>
       <script>
+        customElements.whenDefined("hpcc-codemirror").then(() => {
           document.querySelector('hpcc-codemirror').text = `\
     {
       "aaa":123, 
@@ -14,6 +15,7 @@
       "c":3, 
       "d":true
     }`;
+        });
       </script>
   </hpcc-preview>
 </ClientOnly>

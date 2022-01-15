@@ -4,6 +4,7 @@
 
 * [CodeMirror Editor](./codemirror/codemirror)
 * [Gauge](./gauge/gauge)
+* [Observable JS](./observable/observable)
 * [Pie](./pie/pie)
 * [Sankey](./sankey/sankey)
 * [Treemap](./treemap/treemap)

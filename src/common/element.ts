@@ -51,6 +51,13 @@ export class HPCCElement extends HTMLElement {
         this.shadowRoot!.insertBefore(this.$styles, this.shadowRoot!.firstChild);
     }
 
+    querySelectorAll<K extends keyof HTMLElementTagNameMap>(selectors: K): NodeListOf<HTMLElementTagNameMap[K]>;
+    querySelectorAll<K extends keyof SVGElementTagNameMap>(selectors: K): NodeListOf<SVGElementTagNameMap[K]>;
+    querySelectorAll<E extends Element = Element>(selectors: string): NodeListOf<E>;
+    querySelectorAll(selectors) {
+        return this.shadowRoot?.querySelectorAll(selectors) ?? [];
+    }
+
     protected attrValue(qualifiedName: string, value: string | null) {
         switch (this.$meta.observed[qualifiedName].type) {
             case "boolean":

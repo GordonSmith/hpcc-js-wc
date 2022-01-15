@@ -10,14 +10,6 @@
 			}
 		},
 		{
-			"label": "esbuild-watch",
-			"type": "npm",
-			"script": "esbuild-watch",
-			"presentation": {
-				"group": "group-build"
-			}
-		},
-		{
 			"label": "syntax-watch",
 			"type": "npm",
 			"script": "syntax-watch",
@@ -29,11 +21,40 @@
 			}
 		},
 		{
+			"label": "esbuild-watch",
+			"type": "npm",
+			"script": "esbuild-watch",
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
+			"label": "compile-watch",
+			"type": "npm",
+			"script": "compile-watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
+			"label": "bundle-watch",
+			"type": "npm",
+			"script": "bundle-watch",
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
 			"label": "build",
 			"dependsOn": [
 				"serve",
+				"syntax-watch",
 				"esbuild-watch",
-				"syntax-watch"
+				//				"compile-watch",
+				//				"bundle-watch",
 			],
 			"group": {
 				"kind": "build",

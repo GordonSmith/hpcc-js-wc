@@ -59,6 +59,20 @@ export default [
                 sourcemap: true,
                 plugins: [terser()],
                 name: pkg.name
+            },
+            {
+                file: pkg.jsdelivr.split(".min").join("").split(".umd").join(".esm"),
+                format: "es",
+                sourcemap: true,
+                plugins: [],
+                name: pkg.name
+            },
+            {
+                file: pkg.jsdelivr.split(".umd").join(".esm"),
+                format: "es",
+                sourcemap: true,
+                plugins: [terser()],
+                name: pkg.name
             }
         ],
         plugins: [

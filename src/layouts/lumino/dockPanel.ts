@@ -44,6 +44,10 @@ export class HPCCDockPanelElement extends HPCCLuminoElement {
 
     constructor() {
         super();
+        this._dockPanel = new DockPanel({ document: this.shadowRoot! });
+        Widget.attach(this._dockPanel, this._div);
+        MessageLoop.installMessageHook(this._dockPanel, this);
+        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     addWidget(w: WidgetAdapter, e: HTMLElement, ref?: Widget): void {
@@ -55,15 +59,10 @@ export class HPCCDockPanelElement extends HPCCLuminoElement {
 
     enter() {
         super.enter();
-        this._dockPanel = new DockPanel({ document: this.shadowRoot! });
-        Widget.attach(this._dockPanel, this._div);
-        MessageLoop.installMessageHook(this._dockPanel, this);
-        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     update(changes: ChangeMap) {
         super.update(changes);
-        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
         this._dockPanel!.node.style.width = `${this.clientWidth}px`;
         this._dockPanel!.node.style.height = `${this.clientHeight}px`;
         this._dockPanel!.update();

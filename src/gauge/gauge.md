@@ -4,7 +4,7 @@
 
 <ClientOnly>
   <hpcc-preview previewBorder="0px" previewHeightRatio=0.33 style="width:100%;height:400px">
-    <hpcc-splitPanel style="width:100%;height:100%">
+    <hpcc-splitpanel style="width:100%;height:100%">
       <hpcc-gauge showTick title="G-01" titleDescription="Gauge 01" style="width:100%;min-width:48px;height:100%">
       </hpcc-gauge>
       <hpcc-gauge title="G-02" style="width:100%;min-width:48px;height:100%">
@@ -13,12 +13,15 @@
       </hpcc-gauge>
       <hpcc-gauge title="G-04" style="width:100%;min-width:48px;height:100%">
       </hpcc-gauge>
-    </hpcc-splitPanel>
+    </hpcc-splitpanel>
     <script>
-      for (const gauge of document.querySelectorAll("hpcc-gauge")) {
-        gauge.value = Math.random();
-        gauge.tickValue = Math.random();
-      }
+        customElements.whenDefined("hpcc-splitpanel").then(() => {
+          const splitPanel = document.querySelector("hpcc-splitpanel");
+          for (const gauge of splitPanel.querySelectorAll("hpcc-gauge")) {
+              gauge.value = Math.random();
+              gauge.tickValue = Math.random();
+          }
+        });
     </script>
   </hpcc-preview>
 </ClientOnly>

@@ -46,14 +46,14 @@ export class HPCCPieElement extends HPCCSVGElement {
      * 
      * @defaultValue true
      */
-    @attribute({ type: "boolean" }) showLabels = true;
+    @attribute({ type: "boolean" }) show_labels = true;
 
     /**
      * Show value for each slice
      * 
      * @defaultValue false
      */
-    @attribute({ type: "boolean" }) showSeriesValue = false;
+    @attribute({ type: "boolean" }) show_series_value = false;
 
     /**
      * Value format (when visible)
@@ -63,14 +63,14 @@ export class HPCCPieElement extends HPCCSVGElement {
      * @Remarks Internally the format string uses `d3.format` to format the value.  See
      * https://github.com/d3/d3-format#locale_format for details.
      */
-    @attribute seriesValueFormat = ",.0f";
+    @attribute series_value_format = ",.0f";
 
     /**
      * Show value as a percentage for each slice
      * 
      * @defaultValue false
      */
-    @attribute({ type: "boolean" }) showSeriesPercentage = false;
+    @attribute({ type: "boolean" }) show_series_percentage = false;
 
     /**
      * Percentage format (when visible)
@@ -80,35 +80,35 @@ export class HPCCPieElement extends HPCCSVGElement {
      * @Remarks Internally the format string uses `d3.format` to format the percentage.  See
      * https://github.com/d3/d3-format#locale_format for details.
      */
-    @attribute seriesPercentageFormat = ",.0f";
+    @attribute series_percentage_format = ",.0f";
 
     /**
      * Inner radius of the pie chart.  A larger value will make the pie chart appear as a donut chart.
      * 
      * @defaultValue 2
      */
-    @attribute({ type: "number" }) innerRadius = 2;
+    @attribute({ type: "number" }) inner_radius = 2;
 
     /**
      * The minimum outer radius.  In general the pie chart will expand to fill the available space.
      * 
      * @defaultValue 20
      */
-    @attribute({ type: "number" }) minOuterRadius = 20;
+    @attribute({ type: "number" }) min_outer_radius = 20;
 
     /**
      * The starting position for the first slice.  This is used to rotate the pie chart.
      * 
      * @defaultValue 0
      */
-    @attribute({ type: "number" }) startAngle = 0;
+    @attribute({ type: "number" }) start_angle = 0;
 
     /**
      * Label height.  Used to position the labels.
      * 
      * @defaultValue 12
      */
-    @attribute({ type: "number" }) labelHeight = 12;
+    @attribute({ type: "number" }) label_height = 12;
 
     /**
      * "Column" labels for the data.  Used to describe the data content
@@ -153,21 +153,21 @@ export class HPCCPieElement extends HPCCSVGElement {
     }
 
     calcInnerRadius() {
-        return this.innerRadius !== undefined ? this.calcOuterRadius() * this.innerRadius / 100 : 0;
+        return this.inner_radius !== undefined ? this.calcOuterRadius() * this.inner_radius / 100 : 0;
     }
 
     calcOuterRadius() {
         const maxTextWidth = this._legacy.textSize(this.data.map(d => this.getLabelText({ data: d }, false)), "Verdana", 12).width;
-        const horizontalLimit = this._svg.clientWidth - (this.showLabels ? maxTextWidth * 2 : 0) - 20;
-        const verticalLimit = this._svg.clientHeight - 12 * 3 - (this.showLabels ? this._smallValueLabelHeight : 0);
+        const horizontalLimit = this._svg.clientWidth - (this.show_labels ? maxTextWidth * 2 : 0) - 20;
+        const verticalLimit = this._svg.clientHeight - 12 * 3 - (this.show_labels ? this._smallValueLabelHeight : 0);
         const outerRadius = Math.min(horizontalLimit, verticalLimit) / 2 - 2;
-        if ((horizontalLimit / 2) - 2 < this.minOuterRadius) {
-            this._labelWidthLimit = maxTextWidth - (this.minOuterRadius - ((horizontalLimit / 2) - 2));
+        if ((horizontalLimit / 2) - 2 < this.min_outer_radius) {
+            this._labelWidthLimit = maxTextWidth - (this.min_outer_radius - ((horizontalLimit / 2) - 2));
         } else {
             this._labelWidthLimit = maxTextWidth;
         }
-        if (outerRadius < this.minOuterRadius) {
-            return this.minOuterRadius;
+        if (outerRadius < this.min_outer_radius) {
+            return this.min_outer_radius;
         }
         return outerRadius;
     }
@@ -181,7 +181,7 @@ export class HPCCPieElement extends HPCCSVGElement {
                 smallCount++;
             }
         });
-        return this.labelHeight * smallCount;
+        return this.label_height * smallCount;
     }
 
     calcTotalValue(): number {
@@ -194,16 +194,16 @@ export class HPCCPieElement extends HPCCSVGElement {
         let len;
         let label = d.data[0];
         if (typeof this._labelWidthLimit !== "undefined" && truncate) {
-            const labelWidth = this._legacy.textSize(label, "Verdana", this.labelHeight).width;
+            const labelWidth = this._legacy.textSize(label, "Verdana", this.label_height).width;
             if (this._labelWidthLimit < labelWidth) {
                 len = label.length * (this._labelWidthLimit / labelWidth) - 3;
                 label = len < label.length ? label.slice(0, len) + "..." : label;
             }
         }
-        if (this.showSeriesValue) {
+        if (this.show_series_value) {
             label += ` : ${this._seriesValueFormatter(d.data[1])}`;
         }
-        if (this.showSeriesPercentage) {
+        if (this.show_series_percentage) {
             let sum = this._totalValue;
             const dm: any = {};//this.dataMeta();
             if (typeof dm.sum !== "undefined") {
@@ -226,8 +226,8 @@ export class HPCCPieElement extends HPCCSVGElement {
         const context = this;
         this.updateD3Pie();
         this._legacy._palette = d3.scaleOrdinal([] as string[], d3.schemeTableau10);
-        this._seriesValueFormatter = d3.format(this.seriesValueFormat);
-        this._seriesPercentageFormatter = d3.format(this.seriesPercentageFormat);
+        this._seriesValueFormatter = d3.format(this.series_value_format);
+        this._seriesPercentageFormatter = d3.format(this.series_percentage_format);
 
         this._smallValueLabelHeight = this.calcSmallValueLabelHeight();
         this._totalValue = this.calcTotalValue();
@@ -291,7 +291,7 @@ export class HPCCPieElement extends HPCCSVGElement {
             .innerRadius(labelRadius)
             .outerRadius(labelRadius)
             ;
-        const text = this._labels.selectAll<SVGTextElement, PieArcDatum>("text").data(this.showLabels ? this.d3Pie(data) : [], d => d.data[0]);
+        const text = this._labels.selectAll<SVGTextElement, PieArcDatum>("text").data(this.show_labels ? this.d3Pie(data) : [], d => d.data[0]);
 
         const mergedText = text.enter().append("text")
             // .on("mouseout.tooltip", context.tooltip.hide)
@@ -320,13 +320,13 @@ export class HPCCPieElement extends HPCCSVGElement {
                 pos[0] = labelRadius * (context.isLeftSide(mid_angle) ? 1 : -1);
                 context._labelPositions.push({
                     top: pos[1],
-                    bottom: pos[1] + context.labelHeight
+                    bottom: pos[1] + context.label_height
                 });
             });
-        if (this.showLabels) {
+        if (this.show_labels) {
             this.adjustForOverlap();
             mergedText.transition()
-                .style("font-size", this.labelHeight + "px")
+                .style("font-size", this.label_height + "px")
                 .attr("transform", (d, i) => {
                     const pos = context.d3LabelArc.centroid(d);
                     pos[0] = labelRadius * (context.isLeftSide(midAngle(d)) ? 1 : -1);
@@ -339,7 +339,7 @@ export class HPCCPieElement extends HPCCSVGElement {
         text.exit()
             .remove();
 
-        const polyline = this._labels.selectAll<SVGPolylineElement, PieArcDatum>("polyline").data(this.showLabels ? this.d3Pie(data) : [], d => this.getLabelText(d, true));
+        const polyline = this._labels.selectAll<SVGPolylineElement, PieArcDatum>("polyline").data(this.show_labels ? this.d3Pie(data) : [], d => this.getLabelText(d, true));
 
         polyline.enter()
             .append("polyline")
@@ -356,7 +356,7 @@ export class HPCCPieElement extends HPCCSVGElement {
         polyline.exit()
             .remove();
 
-        if (this.showLabels) {
+        if (this.show_labels) {
             this.centerOnLabels();
         }
         function midAngle(d) {
@@ -404,10 +404,10 @@ export class HPCCPieElement extends HPCCSVGElement {
         const absTop = Math.abs(this._minLabelTop);
         let yShift = 0;
         if (bottom > gY) {
-            yShift = gY - bottom + (this.labelHeight / 2);
+            yShift = gY - bottom + (this.label_height / 2);
             yShift -= heightDiff / 2;
         } else if (top < 0 && absTop > gY) {
-            yShift = absTop - gY + (this.labelHeight / 2);
+            yShift = absTop - gY + (this.label_height / 2);
             yShift += heightDiff / 2;
         }
         const pos = this._legacy.pos();
@@ -418,7 +418,7 @@ export class HPCCPieElement extends HPCCSVGElement {
     }
 
     adjustForOverlap() {
-        const labelHeight = this.labelHeight;
+        const labelHeight = this.label_height;
         this._quadIdxArr.forEach((arr, quad) => {
             this._quadIdxArr[quad].sort((a, b) => {
                 if (quad === 1 || quad === 2) {
@@ -466,7 +466,7 @@ export class HPCCPieElement extends HPCCSVGElement {
     }
 
     updateD3Pie() {
-        const startAngle = normalizeRadians(degreesToRadians(this.startAngle));
+        const startAngle = normalizeRadians(degreesToRadians(this.start_angle));
         this.d3Pie
             .padAngle(0.0025)
             .startAngle(startAngle)

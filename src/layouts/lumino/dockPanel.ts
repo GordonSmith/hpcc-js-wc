@@ -38,7 +38,7 @@ ${tabbarTheme}
 @customElement("hpcc-dockpanel", { template, styles })
 export class HPCCDockPanelElement extends HPCCLuminoElement {
 
-    protected _div: HTMLDivElement;
+    _div: HTMLDivElement;
     protected _dockPanel: DockPanel = new DockPanel({ document: this.shadowRoot! });
 
     constructor() {

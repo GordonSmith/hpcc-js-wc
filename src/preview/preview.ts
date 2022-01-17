@@ -30,14 +30,14 @@ export class HPCCPreviewElement extends HPCCResizeElement {
      *
      * @defaultValue "1px solid #ccc"
     */
-    @attribute previewBorder = "1px solid #ccc";
+    @attribute preview_border = "1px solid #ccc";
 
     /**
      * Force full reload of iframe, on each change.
      * 
      * @defaultValue ""
      */
-    @attribute headExt = "";
+    @attribute head_ext = "";
 
     /**
      * Content to be displayed in the preview iframe
@@ -51,7 +51,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
      * 
      * @defaultValue 1/3
      */
-    @attribute previewHeightRatio = 2 / 3;
+    @attribute preview_height_ratio = 2 / 3;
 
     protected _iframeDiv: HTMLDivElement;
     protected _iframe: HTMLIFrameElement;
@@ -95,9 +95,9 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         if (changes.content) {
             this._iframeDiv.innerHTML = "";
             this._iframe = document.createElement("iframe");
-            this._iframe.style.border = this.previewBorder;
+            this._iframe.style.border = this.preview_border;
             this._iframe.width = "100%";
-            this._iframe.height = `${this.clientHeight * this.previewHeightRatio}`;
+            this._iframe.height = `${this.clientHeight * this.preview_height_ratio}`;
             this._iframeDiv.append(this._iframe);
             this._iframe.contentWindow?.document.open();
             this._iframe.contentWindow?.document.write(`\
@@ -122,6 +122,6 @@ ${this._cm.text.trim()}
             this._iframe.contentWindow?.document.close();
         }
         this._cm.style.width = "100%";
-        this._cm.style.height = `${this.clientHeight * (1 - this.previewHeightRatio)}px`;
+        this._cm.style.height = `${this.clientHeight * (1 - this.preview_height_ratio)}px`;
     }
 }

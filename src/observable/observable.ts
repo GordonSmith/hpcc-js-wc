@@ -5,7 +5,7 @@ import { ChangeMap, HPCCResizeElement, css, customElement, display, html, ref, a
 const template = html<HPCCObservableElement>`\
 <div ${ref("_div")}>
 </div>
-<slot ${ref("_slot")} style="display:none"></slot>
+<slot ${ref("_slot")}></slot>
 `;
 
 const styles = css`
@@ -14,6 +14,10 @@ ${display("inline-block")}
 :host  {
     width:100%;
     overflow-y: auto;
+}
+
+:host > slot {
+    display: none;
 }
 
 `;

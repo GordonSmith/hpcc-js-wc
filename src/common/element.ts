@@ -41,8 +41,8 @@ export class HPCCElement extends HTMLElement {
         this.shadowRoot!.innerHTML = this.$meta.template?.html.trim() || "";
         for (const directive of this.$meta.template?.directives || []) {
             if (directive instanceof Ref) {
-                const ref = this.shadowRoot!.getElementById(directive.id);
-                this[directive.id] = ref;
+                const ref = this.shadowRoot!.getElementById(String(directive.propertyName));
+                this[directive.propertyName] = ref;
                 ref?.removeAttribute("id");
             }
         }

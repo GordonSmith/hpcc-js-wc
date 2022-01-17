@@ -100,7 +100,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
      * 
      * @defaultValue ""
      */
-    @attribute titleDescription: string = "";
+    @attribute title_description: string = "";
 
     /**
      * Main value of the gauge, expects value from 0 to 1
@@ -114,28 +114,28 @@ export class HPCCGaugeElement extends HPCCSVGElement {
      * 
      * @defaultValue ""
      */
-    @attribute valueDescription: string = "";
+    @attribute value_description: string = "";
 
     /**
      * Show "tick" indicator on the gauge
      * 
      * @defaultValue false
      */
-    @attribute({ type: "boolean" }) showTick: boolean = false;
+    @attribute({ type: "boolean" }) show_tick: boolean = false;
 
     /**
      * Tick value of the gauge, expects value from 0 to 1
      * 
      * @defaultValue 0
      */
-    @attribute({ type: "number" }) tickValue: number = 0;
+    @attribute({ type: "number" }) tick_value: number = 0;
 
     /**
      * Description to display when mouse is over the tick indicators
      * 
      * @defaultValue ""
      */
-    @attribute tickValueDescription: string = "";
+    @attribute tick_value_description: string = "";
 
     /**
      * Tooltip to display when mouse is over the gauge
@@ -149,28 +149,28 @@ export class HPCCGaugeElement extends HPCCSVGElement {
      * 
      * @defaultValue ["green", "green", "green", "green", "green", "green", "green", "green", "orange", "red", "red"]
      */
-    @property colorRange: HTMLColor[] = ["green", "green", "green", "green", "green", "green", "green", "green", "orange", "red", "red"];
+    @property color_range: HTMLColor[] = ["green", "green", "green", "green", "green", "green", "green", "green", "orange", "red", "red"];
 
     /**
      * This array augments the mapping of the value to the fill colorRange
      * 
      * @defaultValue [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
      */
-    @property colorDomain: number[] = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+    @property color_domain: number[] = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
     /**
      * Color of the empty portion of the gauge
      * 
      * @defaultValue "lightgray"
      */
-    @attribute emptyColor: string = "lightgrey";
+    @attribute empty_color: string = "lightgrey";
 
     /**
      * Color of the tick indicator
      * 
      * @defaultValue "black"
      */
-    @attribute tickColor: HTMLColor = "black";
+    @attribute tick_color: HTMLColor = "black";
 
     constructor() {
         super();
@@ -271,7 +271,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
             .style("fill", "green")
             .on("mousemove", (d: d3.DefaultArcObject) => {
                 const [x, y] = this._d3Arc.centroid(d);
-                this.tip({ x, y, label: this.valueDescription });
+                this.tip({ x, y, label: this.value_description });
             })
             .on("mouseout", () => {
                 this.tip({});
@@ -284,7 +284,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
             .style("fill", "black")
             .on("mousemove", (d: d3.DefaultArcObject) => {
                 const [x, y] = this._d3Arc.centroid(d);
-                this.tip({ x, y, label: this.tickValueDescription });
+                this.tip({ x, y, label: this.tick_value_description });
             })
             .on("mouseout", () => {
                 this.tip({});
@@ -301,7 +301,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
                 .attr("d", "M  0 0 l -3 -3 l 6 0 z")
                 .on("mousemove", () => {
                     const [x, y] = context._d3Arc.centroid(context._meanArc.datum() as any);
-                    context.tip({ x, y, label: context.tickValueDescription });
+                    context.tip({ x, y, label: context.tick_value_description });
                 })
                 .on("mouseout", () => {
                     context.tip({});
@@ -314,7 +314,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
             .attr("dy", ".66em")
             .style("fill", "green")
             .on("mousemove", () => {
-                this.tip({ x: 0, y: 0, label: this.valueDescription });
+                this.tip({ x: 0, y: 0, label: this.value_description });
             })
             .on("mouseout", () => {
                 this.tip({});
@@ -323,7 +323,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
         this._bottomText = element.append("text")
             .attr("dy", ".66em")
             .on("mousemove", () => {
-                this.tip({ x: 0, y: 0, label: this.titleDescription });
+                this.tip({ x: 0, y: 0, label: this.title_description });
             })
             .on("mouseout", () => {
                 this.tip({});
@@ -342,8 +342,8 @@ export class HPCCGaugeElement extends HPCCSVGElement {
         element.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);
 
         this._colorScale
-            .domain(this.colorDomain)
-            .range(this.colorRange)
+            .domain(this.color_domain)
+            .range(this.color_range)
             ;
 
         element
@@ -359,7 +359,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
             ;
 
         const val = this.value;
-        const tickVal = this.tickValue;
+        const tickVal = this.tick_value;
 
         this._usageArc
             .style("fill", this._colorScale(val))
@@ -369,33 +369,33 @@ export class HPCCGaugeElement extends HPCCSVGElement {
             ;
 
         this._freeArc
-            .style("fill", this.emptyColor)
+            .style("fill", this.empty_color)
             .transition()
             .duration(750)
             .attrTween("d", arcTween(value2Angle(val), value2Angle(1), this._d3Arc))
             ;
 
         this._meanArc
-            .style("fill", this.tickColor)
-            .style("visibility", this.showTick ? "visible" : "hidden")
+            .style("fill", this.tick_color)
+            .style("visibility", this.show_tick ? "visible" : "hidden")
             .transition()
             .duration(750)
             .attrTween("d", arcTween(value2Angle(tickVal - 0.001), value2Angle(tickVal + 0.001), this._d3Arc))
             ;
 
         this._indInner
-            .style("fill", this.tickColor)
-            .style("stroke", this.tickColor)
-            .style("visibility", this.showTick ? "visible" : "hidden")
+            .style("fill", this.tick_color)
+            .style("stroke", this.tick_color)
+            .style("visibility", this.show_tick ? "visible" : "hidden")
             .transition()
             .duration(750)
             .attrTween("transform", indicatorTween(value2Angle(tickVal), innerRadius, true))
             ;
 
         this._indOuter
-            .style("fill", this.tickColor)
-            .style("stroke", this.tickColor)
-            .style("visibility", this.showTick ? "visible" : "hidden")
+            .style("fill", this.tick_color)
+            .style("stroke", this.tick_color)
+            .style("visibility", this.show_tick ? "visible" : "hidden")
             .transition()
             .duration(750)
             .attrTween("transform", indicatorTween(value2Angle(tickVal), outerRadius))

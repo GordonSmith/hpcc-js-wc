@@ -28,11 +28,11 @@ ${tabbarTheme}
     border: 1px solid #c0c0c0;
 }
 
-:host-context([tabPlacement="top"]) .hpcc-LuminoAdapter  {
+:host-context([tab_placement="top"]) .hpcc-LuminoAdapter  {
     border-top: none;
 }
 
-:host-context([tabPlacement="bottom"]) .hpcc-LuminoAdapter  {
+:host-context([tab_placement="bottom"]) .hpcc-LuminoAdapter  {
     border-bottom: none;
 }
 `;
@@ -45,25 +45,25 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
      * 
      * @defaultValue false
      */
-    @attribute({ type: "boolean" }) tabsMovable: boolean = false;
+    @attribute({ type: "boolean" }) tabs_movable: boolean = false;
 
     /**
      *  Whether the button to add new tabs is enabled
      * 
      * @defaultValue false
      */
-    @attribute({ type: "boolean" }) addButtonEnabled: boolean = false;
+    @attribute({ type: "boolean" }) add_button_enabled: boolean = false;
 
     /**
      *  The placement of the tab bar relative to the content 
      * 
      * @defaultValue "top"
      */
-    @attribute tabPlacement: "top" | "left" | "right" | "bottom" = "top";
+    @attribute tab_placement: "top" | "left" | "right" | "bottom" = "top";
 
     protected _div: HTMLDivElement;
     protected _slot: HTMLSlotElement;
-    protected _tabPanel: TabPanel = new TabPanel({ document: this.shadowRoot!, tabsMovable: this.tabsMovable, addButtonEnabled: this.addButtonEnabled, tabPlacement: this.tabPlacement });
+    protected _tabPanel: TabPanel = new TabPanel({ document: this.shadowRoot!, tabsMovable: this.tabs_movable, addButtonEnabled: this.add_button_enabled, tabPlacement: this.tab_placement });
 
     constructor() {
         super();
@@ -81,9 +81,9 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        this._tabPanel.tabsMovable = this.tabsMovable;
-        this._tabPanel.addButtonEnabled = this.addButtonEnabled;
-        this._tabPanel.tabPlacement = this.tabPlacement;
+        this._tabPanel.tabsMovable = this.tabs_movable;
+        this._tabPanel.addButtonEnabled = this.add_button_enabled;
+        this._tabPanel.tabPlacement = this.tab_placement;
         this._tabPanel.node.style.width = `${this.clientWidth}px`;
         this._tabPanel.node.style.height = `${this.clientHeight}px`;
         this._tabPanel.update();

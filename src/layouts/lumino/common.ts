@@ -22,7 +22,7 @@ export class HPCCLuminoElement extends HPCCResizeElement {
             slot.style.cssText = e.style.cssText;
             slot.style.display = "inline-block";
             const w = new WidgetAdapter(this, slot);
-            widgetIdx[w.id] = w;
+            widgetIdx[e.id] = w;
             w.title.label = e.dataset.label || (e.id && `#${e.id}`) || `${e.tagName} ${i} `;
             w.title.closable = isTrue(e.dataset.closable);
             w.title.caption = e.dataset.caption || w.title.label;

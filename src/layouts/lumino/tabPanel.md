@@ -3,7 +3,7 @@
 **tag**: `<hpcc-tabpanel>`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" style="width:100%;height:600px">
+  <hpcc-preview preview_border="0px" style="width:100%;height:600px">
     <hpcc-tabpanel style="width:100%;height:100%">
       <div data-label="AAA" style="overflow:auto;min-width:48px">
         <h1>AAA Ipsum Presents</h1>
@@ -42,7 +42,7 @@ _The tabbed panel will display this text as the tab label_
 **tag**:  `<hpcc-tabpanel tabsMovable>`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" style="width:100%;height:600px">
+  <hpcc-preview preview_border="0px" style="width:100%;height:600px">
     <hpcc-tabpanel tabsMovable style="width:100%;height:100%">
       <div data-label="AAA" style="overflow:auto;min-width:48px">
         <h1>AAA Ipsum Presents</h1>

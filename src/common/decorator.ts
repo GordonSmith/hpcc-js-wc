@@ -101,6 +101,9 @@ export function customElement(name: string, opts?: CustomElementOption): (target
 }
 
 function changedHandler(target: HPCCElement, opts: PropertyBase) {
+    if (opts.name !== opts.name.toLowerCase()) {
+        throw new Error(`Attributes must be lowercase: ${target.constructor.name}.${opts.name}`);
+    }
     const meta = initMeta(target.constructor as CustomElementConstructor);
     meta.properties.push(opts);
     const innerID = `_${opts.name}`;

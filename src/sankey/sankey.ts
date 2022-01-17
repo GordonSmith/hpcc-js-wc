@@ -36,35 +36,35 @@ export class HPCCSankeyElement extends HPCCSVGElement {
      *
      * @defaultValue justify
      */
-    @attribute nodeAlign: "justify" | "left" | "right" = "justify"; // stroke around node rects
+    @attribute node_align: "justify" | "left" | "right" = "justify"; // stroke around node rects
 
     /**
      * Border color of the nodes.  Value can be any valid CSS color string or "currentColor"
      *
      * @defaultValue "currentColor"
      */
-    @attribute nodeStroke: HTMLColor = "currentColor"; // stroke around node rects
+    @attribute node_stroke: HTMLColor = "currentColor"; // stroke around node rects
 
     /**
      * Border width the nodes
      *
      * @defaultValue 1
      */
-    @attribute({ type: "number" }) nodeStrokeWidth: number = 1; // width of stroke around node rects, in pixels
+    @attribute({ type: "number" }) node_stroke_width: number = 1; // width of stroke around node rects, in pixels
 
     /**
      * Border opacity of the nodes
      *
      * @defaultValue 1
      */
-    @attribute({ type: "number" }) nodeStrokeOpacity = 1; // opacity of stroke around node rects
+    @attribute({ type: "number" }) node_stroke_opacity = 1; // opacity of stroke around node rects
 
     /**
      * Link opacity
      *
      * @defaultValue 0.5
      */
-    @attribute({ type: "number" }) linkStrokeOpacity = 0.5; // opacity of stroke around node rects
+    @attribute({ type: "number" }) link_stroke_opacity = 0.5; // opacity of stroke around node rects
 
     /**
      * Link color of the links
@@ -76,7 +76,7 @@ export class HPCCSankeyElement extends HPCCSVGElement {
      *
      * @defaultValue source-target
      */
-    @attribute linkColor: "source" | "target" | "source-target" | HTMLColor = "source-target"; // stroke around node rects
+    @attribute link_color: "source" | "target" | "source-target" | HTMLColor = "source-target"; // stroke around node rects
 
     /**
      * Links to be displayed
@@ -95,10 +95,10 @@ export class HPCCSankeyElement extends HPCCSVGElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
-        this._nodesG.setAttribute("stroke", this.nodeStroke);
-        this._nodesG.setAttribute("stroke-width", `${this.nodeStrokeWidth}`);
-        this._nodesG.setAttribute("stroke-opacity", `${this.nodeStrokeOpacity}`);
-        this._linksG.setAttribute("stroke-opacity", `${this.linkStrokeOpacity}`);
+        this._nodesG.setAttribute("stroke", this.node_stroke);
+        this._nodesG.setAttribute("stroke-width", `${this.node_stroke_width}`);
+        this._nodesG.setAttribute("stroke-opacity", `${this.node_stroke_opacity}`);
+        this._linksG.setAttribute("stroke-opacity", `${this.link_stroke_opacity}`);
 
         const links = typeof this.links === "string" ? JSON.parse(this.links) : this.links;
         if (links?.length) {
@@ -111,8 +111,8 @@ export class HPCCSankeyElement extends HPCCSVGElement {
                 { nodes: undefined, links },
                 {
                     nodeGroup: (d) => d.id.split(/\W/)[0], // take first word for color
-                    nodeAlign: this.nodeAlign,
-                    linkColor: this.linkColor, // e.g., "source" or "target"; set by input above
+                    nodeAlign: this.node_align,
+                    linkColor: this.link_color, // e.g., "source" or "target"; set by input above
                     format: (
                         (f) => (d) =>
                             `${f(d)} TWh`

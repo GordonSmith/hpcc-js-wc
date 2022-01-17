@@ -19,14 +19,14 @@ export class HPCCZoomElement extends HPCCSVGElement {
      *
      * @defaultValue 0.5
      */
-    @attribute({ type: "number" }) scaleMin = 0.5;
+    @attribute({ type: "number" }) scale_min = 0.5;
 
     /**
      * The maximum scale extent that can be applied to the content
      *
      * @defaultValue 0.5
      */
-    @attribute({ type: "number" }) scaleMax = 1.5;
+    @attribute({ type: "number" }) scale_max = 1.5;
 
     /**
      * The current x-position of the content
@@ -87,7 +87,7 @@ export class HPCCZoomElement extends HPCCSVGElement {
                 [0, 0],
                 [this.clientWidth, this.clientHeight]
             ])
-            .scaleExtent([this.scaleMin, this.scaleMax]);
+            .scaleExtent([this.scale_min, this.scale_max]);
         if (changes.x !== undefined || changes.y !== undefined || changes.scale !== undefined) {
             this.content.attr("transform", d3.zoomIdentity.translate(this.x, this.y).scale(this.scale).toString());
             this.$emit("zoom");

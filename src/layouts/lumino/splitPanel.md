@@ -3,7 +3,7 @@
 **tag**: `<hpcc-splitpanel>`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" style="width:100%;height:600px">
+  <hpcc-preview preview_border="0px" style="width:100%;height:600px">
     <hpcc-splitpanel orientation="horizontal" style="width:100%;height:100%">
       <div style="overflow:auto;min-width:48px">
         <h1>AAA Ipsum Presents</h1>
@@ -36,7 +36,7 @@ _Emitted whenever the content is panned or zoomed_
 **tag**:  `<hpcc-splitpanel orientation="vertical">`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" style="width:100%;height:600px">
+  <hpcc-preview preview_border="0px" style="width:100%;height:600px">
     <hpcc-splitpanel orientation="vertical" style="width:100%;height:100%">
       <div style="overflow:auto;min-height:48px">
         <h1>HTML Ipsum Presents</h1>
@@ -55,7 +55,7 @@ _Emitted whenever the content is panned or zoomed_
 **tag:**  `<hpcc-splitpanel>` and `<hpcc-splitpanel orientation="vertical">`
 
 <ClientOnly>
-  <hpcc-preview previewBorder="0px" style="width:100%;height:600px">
+  <hpcc-preview preview_border="0px" style="width:100%;height:600px">
     <hpcc-splitpanel orientation="horizontal" style="width:100%;height:100%">
       <div style="overflow:auto;min-width:48px">
         <h1>HTML Ipsum Presents</h1>

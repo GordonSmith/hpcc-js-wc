@@ -12,8 +12,7 @@
     </hpcc-splitpanel>
     <script>
       customElements.whenDefined("hpcc-splitpanel").then(() => {
-        const splitPanel = document.querySelector("hpcc-splitpanel");
-        for (const pie of splitPanel.querySelectorAll("hpcc-pie")) {
+        for (const pie of document.querySelectorAll("hpcc-pie")) {
           pie.columns = ["Subject", "Score"];
           pie.data = [
             ["Math", 88],

@@ -3,6 +3,8 @@ import { Widget } from "@lumino/widgets";
 import { WidgetAdapter } from "./widgetAdapter";
 import { isTrue } from "../../util";
 
+let hpccSlotID = 0;
+
 export class HPCCLuminoElement extends HPCCResizeElement {
     protected _slot: HTMLSlotElement;
 
@@ -14,7 +16,12 @@ export class HPCCLuminoElement extends HPCCResizeElement {
         const widgetIdx: { [id: string]: WidgetAdapter } = {};
         for (let i = 0; i < codeElements.length; ++i) {
             const e = codeElements[i] as HTMLElement;
-            const w = new WidgetAdapter(this, e);
+            e.setAttribute("slot", `slot_${++hpccSlotID}`);
+            const slot = document.createElement("slot");
+            slot.setAttribute("name", `slot_${hpccSlotID}`);
+            slot.style.cssText = e.style.cssText;
+            slot.style.display = "inline-block";
+            const w = new WidgetAdapter(this, slot);
             widgetIdx[w.id] = w;
             w.title.label = e.dataset.label || (e.id && `#${e.id}`) || `${e.tagName} ${i} `;
             w.title.closable = isTrue(e.dataset.closable);
@@ -23,6 +30,12 @@ export class HPCCLuminoElement extends HPCCResizeElement {
             w.title.iconClass = e.dataset.iconClass || "";
             w.title.iconLabel = e.dataset.iconLabel || "";
             addWidget(w, e, e.dataset.ref ? widgetIdx[e.dataset.ref] : undefined);
+        }
+    }
+
+    destruct() {
+        for (let i = 0; i < this.childElementCount; ++i) {
+            this.children[i].setAttribute("slot", "");
         }
     }
 }

@@ -16,8 +16,7 @@
     </hpcc-splitpanel>
     <script>
         customElements.whenDefined("hpcc-splitpanel").then(() => {
-          const splitPanel = document.querySelector("hpcc-splitpanel");
-          for (const gauge of splitPanel.querySelectorAll("hpcc-gauge")) {
+          for (const gauge of document.querySelectorAll("hpcc-gauge")) {
               gauge.value = Math.random();
               gauge.tickValue = Math.random();
           }

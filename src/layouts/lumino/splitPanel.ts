@@ -12,10 +12,6 @@ const template = html<HPCCSplitPanelElement>`\
 const styles = css`
 ${display("inline-block")} 
 
-:host > slot {
-    visibility: hidden;
-}
-
 ${widget}
 ${splitpanel}
 
@@ -44,15 +40,12 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
      */
     @attribute({ type: "number" }) spacing: number = 4;
 
-    protected _splitPanel: SplitPanel;
     protected _div: HTMLDivElement;
     protected _slot: HTMLSlotElement;
+    protected _splitPanel: SplitPanel = new SplitPanel({ orientation: this.orientation, spacing: this.spacing });
 
     constructor() {
         super();
-        this._splitPanel = new SplitPanel({ orientation: this.orientation, spacing: this.spacing });
-        Widget.attach(this._splitPanel, this._div);
-        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     addWidget(w: WidgetAdapter, _e: HTMLElement, _ref?: Widget): void {
@@ -61,6 +54,8 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
 
     enter() {
         super.enter();
+        Widget.attach(this._splitPanel, this._div);
+        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     update(changes: ChangeMap) {
@@ -73,6 +68,7 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
     }
 
     exit() {
+        this.destruct();
         Widget.detach(this._splitPanel);
         super.exit();
     }

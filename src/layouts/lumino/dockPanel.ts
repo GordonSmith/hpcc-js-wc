@@ -38,16 +38,11 @@ ${tabbarTheme}
 @customElement("hpcc-dockpanel", { template, styles })
 export class HPCCDockPanelElement extends HPCCLuminoElement {
 
-    protected _dockPanel?: DockPanel;
-
-    _div: HTMLDivElement;
+    protected _div: HTMLDivElement;
+    protected _dockPanel: DockPanel = new DockPanel({ document: this.shadowRoot! });
 
     constructor() {
         super();
-        this._dockPanel = new DockPanel({ document: this.shadowRoot! });
-        Widget.attach(this._dockPanel, this._div);
-        MessageLoop.installMessageHook(this._dockPanel, this);
-        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     addWidget(w: WidgetAdapter, e: HTMLElement, ref?: Widget): void {
@@ -59,6 +54,9 @@ export class HPCCDockPanelElement extends HPCCLuminoElement {
 
     enter() {
         super.enter();
+        Widget.attach(this._dockPanel, this._div);
+        MessageLoop.installMessageHook(this._dockPanel, this);
+        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     update(changes: ChangeMap) {
@@ -69,8 +67,8 @@ export class HPCCDockPanelElement extends HPCCLuminoElement {
     }
 
     exit() {
-        Widget.detach(this._dockPanel!);
-        delete this._dockPanel;
+        this.destruct();
+        Widget.detach(this._dockPanel);
         super.exit();
     }
 

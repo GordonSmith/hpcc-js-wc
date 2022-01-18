@@ -14,7 +14,6 @@ export const DefaultEventOptions = {
 export class HPCCElement extends HTMLElement {
 
     static get observedAttributes(): string[] {
-        console.log(this.name, classMeta(this).observedAttributes);
         return classMeta(this).observedAttributes;
     }
 
@@ -38,7 +37,11 @@ export class HPCCElement extends HTMLElement {
 
     constructor() {
         super();
-        Object.keys(this.$meta.observed).forEach(prop => this._upgradeProperty(prop));
+
+        //  Gather user values set prior to "upgrade"  ---
+        Object.keys(this.$meta.observed).forEach(prop => this.$upgradeProperty(prop));
+
+        //  Initialize shadow DOM  ---
         this.attachShadow({ mode: "open" });
         this.shadowRoot!.innerHTML = this.$meta.template?.html.trim() || "";
         for (const directive of this.$meta.template?.directives || []) {
@@ -51,6 +54,16 @@ export class HPCCElement extends HTMLElement {
         this.$styles = document.createElement("style");
         this.$styles.innerHTML = this.$meta.styles.trim();
         this.shadowRoot!.insertBefore(this.$styles, this.shadowRoot!.firstChild);
+    }
+
+    private $upgradeProperty(prop) {
+        const userValueID = `__${prop}`;
+        if (this.hasOwnProperty(prop)) {
+            this[userValueID] = this[prop];
+            delete this[prop];
+        } else if (this.hasAttribute(prop)) {
+            this[userValueID] = this.getAttribute(prop);
+        }
     }
 
     protected attrValue(qualifiedName: string, value: string | null) {
@@ -102,29 +115,29 @@ export class HPCCElement extends HTMLElement {
     private initalizeAttributes(): ChangeMap {
         if (this.$_initialized) return {};
         this.$_initialized = true;
+
         const retVal: ChangeMap = {};
         this.$meta.observedAttributes.forEach(attr => {
-            const innerInnerID = `__${attr}`;
+            const userValueID = `__${attr}`;
             const innerID = `_${attr}`;
             const value = this[innerID];
-            if (this[innerInnerID] !== undefined) {
-                this[innerID] = this[innerInnerID];
-                delete this[innerInnerID];
-            } else if (this.hasAttribute(attr)) {
-                this[innerID] = this.attr(attr);
+            if (this[userValueID] !== undefined) {
+                this[innerID] = this[userValueID];
+                delete this[userValueID];
             } else {
                 this.attr(attr, value);
             }
             retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
         });
+
         this.$meta.observedProperties.forEach(prop => {
-            const innerInnerID = `__${prop}`;
+            const userValueID = `__${prop}`;
             const innerID = `_${prop}`;
-            if (this[innerInnerID] !== undefined) {
-                this[innerID] = this[innerInnerID];
-                delete this[innerInnerID];
+            if (this[userValueID] !== undefined) {
+                this[innerID] = this[userValueID];
+                delete this[userValueID];
             }
-            retVal[prop] = { oldValue: undefined, newValue: this[prop] };
+            retVal[prop] = { oldValue: undefined, newValue: this[innerID] };
         });
         return retVal;
     }
@@ -149,15 +162,6 @@ export class HPCCElement extends HTMLElement {
                 }
             }
         });
-    }
-
-    private _upgradeProperty(prop) {
-        const innerInnerID = `__${prop}`;
-        if (this.hasOwnProperty(prop)) {
-            this[innerInnerID] = this[prop];
-            delete this[prop];
-            console.log(prop, this[innerInnerID]);
-        }
     }
 
     disconnectedCallback() {

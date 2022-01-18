@@ -337,9 +337,12 @@ export class HPCCGaugeElement extends HPCCSVGElement {
 
     update(changes: ChangeMap) {
         super.update(changes);
+        const width = this.clientWidth;
+        const height = this.clientHeight;
+        if (isNaN(width) || width <= 0 || isNaN(height) || height <= 0) return;
 
         const element = d3.select(this._element);
-        element.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);
+        element.attr("transform", `translate(${width / 2}, ${height / 2})`);
 
         this._colorScale
             .domain(this.color_domain)
@@ -418,9 +421,9 @@ export class HPCCGaugeElement extends HPCCSVGElement {
 
         const point2 = pointOnArc(value2Angle(1), outerRadius);
         point2.y += 5;
-        const width = this.calcWidth() - 20;
-        const height = this.calcWidth() / 2 - point2.y - 5;
-        this.updateText(this._bottomText, -width / 2, point2.y, width, height);
+        const textW = this.calcWidth() - 20;
+        const textH = this.calcWidth() / 2 - point2.y - 5;
+        this.updateText(this._bottomText, -textW / 2, point2.y, textW, textH);
 
         this._mainTooltip.text(this.tooltip);
     }

@@ -15,12 +15,10 @@
       </hpcc-gauge>
     </hpcc-splitpanel>
     <script>
-        customElements.whenDefined("hpcc-splitpanel").then(() => {
-          for (const gauge of document.querySelectorAll("hpcc-gauge")) {
-              gauge.value = Math.random();
-              gauge.tick_value = Math.random();
-          }
-        });
+        for (const gauge of document.querySelectorAll("hpcc-gauge")) {
+            gauge.value = Math.random();
+            gauge.tick_value = Math.random();
+        }
     </script>
   </hpcc-preview>
 </ClientOnly>

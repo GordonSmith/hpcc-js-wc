@@ -8,11 +8,3 @@ export * from "./preview";
 export * from "./sankey";
 export * from "./treemap";
 export * from "./util";
-
-function itemReady(item: string): Promise<CustomElementConstructor> {
-    return customElements.whenDefined(item);
-}
-
-export async function ready(...args: string[]) {
-    return Promise.all(args.map(itemReady));
-}

@@ -63,20 +63,23 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
 
     protected _div: HTMLDivElement;
     protected _slot: HTMLSlotElement;
-    protected _tabPanel: TabPanel = new TabPanel({ document: this.shadowRoot!, tabsMovable: this.tabs_movable, addButtonEnabled: this.add_button_enabled, tabPlacement: this.tab_placement });
+    protected _tabPanel: TabPanel;
 
     constructor() {
         super();
     }
 
+    createPanel(): void {
+        this._tabPanel = new TabPanel({ document: this.shadowRoot!, tabsMovable: this.tabs_movable, addButtonEnabled: this.add_button_enabled, tabPlacement: this.tab_placement });
+    }
+
     addWidget(w: WidgetAdapter, _e: HTMLElement, _ref?: Widget): void {
-        this._tabPanel?.addWidget(w);
+        this._tabPanel.addWidget(w);
     }
 
     enter() {
         super.enter();
         Widget.attach(this._tabPanel, this._div);
-        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     update(changes: ChangeMap) {
@@ -90,7 +93,6 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
     }
 
     exit() {
-        this.destruct();
         Widget.detach(this._tabPanel);
         super.exit();
     }

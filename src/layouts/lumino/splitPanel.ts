@@ -42,20 +42,23 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
 
     protected _div: HTMLDivElement;
     protected _slot: HTMLSlotElement;
-    protected _splitPanel: SplitPanel = new SplitPanel({ orientation: this.orientation, spacing: this.spacing });
+    protected _splitPanel: SplitPanel;
 
     constructor() {
         super();
     }
 
+    createPanel(): void {
+        this._splitPanel = new SplitPanel({ orientation: this.orientation, spacing: this.spacing });
+    }
+
     addWidget(w: WidgetAdapter, _e: HTMLElement, _ref?: Widget): void {
-        this._splitPanel?.addWidget(w);
+        this._splitPanel.addWidget(w);
     }
 
     enter() {
         super.enter();
         Widget.attach(this._splitPanel, this._div);
-        this.construct((w: WidgetAdapter, e: HTMLElement, ref?: Widget) => this.addWidget(w, e, ref));
     }
 
     update(changes: ChangeMap) {
@@ -68,7 +71,6 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
     }
 
     exit() {
-        this.destruct();
         Widget.detach(this._splitPanel);
         super.exit();
     }

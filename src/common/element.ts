@@ -14,6 +14,7 @@ export const DefaultEventOptions = {
 export class HPCCElement extends HTMLElement {
 
     static get observedAttributes(): string[] {
+        console.log(this.name, classMeta(this).observedAttributes);
         return classMeta(this).observedAttributes;
     }
 
@@ -37,6 +38,7 @@ export class HPCCElement extends HTMLElement {
 
     constructor() {
         super();
+        Object.keys(this.$meta.observed).forEach(prop => this._upgradeProperty(prop));
         this.attachShadow({ mode: "open" });
         this.shadowRoot!.innerHTML = this.$meta.template?.html.trim() || "";
         for (const directive of this.$meta.template?.directives || []) {
@@ -102,9 +104,13 @@ export class HPCCElement extends HTMLElement {
         this.$_initialized = true;
         const retVal: ChangeMap = {};
         this.$meta.observedAttributes.forEach(attr => {
+            const innerInnerID = `__${attr}`;
             const innerID = `_${attr}`;
             const value = this[innerID];
-            if (this.hasAttribute(attr)) {
+            if (this[innerInnerID] !== undefined) {
+                this[innerID] = this[innerInnerID];
+                delete this[innerInnerID];
+            } else if (this.hasAttribute(attr)) {
                 this[innerID] = this.attr(attr);
             } else {
                 this.attr(attr, value);
@@ -112,6 +118,12 @@ export class HPCCElement extends HTMLElement {
             retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
         });
         this.$meta.observedProperties.forEach(prop => {
+            const innerInnerID = `__${prop}`;
+            const innerID = `_${prop}`;
+            if (this[innerInnerID] !== undefined) {
+                this[innerID] = this[innerInnerID];
+                delete this[innerInnerID];
+            }
             retVal[prop] = { oldValue: undefined, newValue: this[prop] };
         });
         return retVal;
@@ -137,6 +149,15 @@ export class HPCCElement extends HTMLElement {
                 }
             }
         });
+    }
+
+    private _upgradeProperty(prop) {
+        const innerInnerID = `__${prop}`;
+        if (this.hasOwnProperty(prop)) {
+            this[innerInnerID] = this[prop];
+            delete this[prop];
+            console.log(prop, this[innerInnerID]);
+        }
     }
 
     disconnectedCallback() {

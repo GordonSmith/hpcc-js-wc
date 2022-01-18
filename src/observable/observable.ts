@@ -43,12 +43,17 @@ export class HPCCObservableElement extends HPCCResizeElement {
 
     constructor() {
         super();
+        this.construct();
+        this._slot.addEventListener("slotchange", () => this.construct());
+    }
+
+    private construct() {
+        const text = this._slot.assignedNodes().map(n => n.textContent).join("\n");
+        this.content = text;
     }
 
     enter() {
         super.enter();
-        const text = this._slot.assignedNodes().map(n => n.textContent).join("\n");
-        this.content = text;
     }
 
     update(changes: ChangeMap) {

@@ -11,21 +11,19 @@
       </hpcc-pie>
     </hpcc-splitpanel>
     <script>
-      customElements.whenDefined("hpcc-splitpanel").then(() => {
-        for (const pie of document.querySelectorAll("hpcc-pie")) {
-          pie.columns = ["Subject", "Score"];
-          pie.data = [
-            ["Math", 88],
-            ["English", 72],
-            ["Science", 60],
-            ["History", 50],
-            ["Geography", 40],
-            ["Biology", 30],
-            ["Physics", 20],
-            ["Chemistry", 10]
-          ];
-        }
-      });
+      for (const pie of document.querySelectorAll("hpcc-pie")) {
+        pie.columns = ["Subject", "Score"];
+        pie.data = [
+          ["Math", 88],
+          ["English", 72],
+          ["Science", 60],
+          ["History", 50],
+          ["Geography", 40],
+          ["Biology", 30],
+          ["Physics", 20],
+          ["Chemistry", 10]
+        ];
+      }
     </script>
   </hpcc-preview>
 </ClientOnly>
@@ -53,28 +51,26 @@ See [Getting Started](../../README) for details on how to include @hpcc-js/web-c
       </hpcc-pie>
     </hpcc-splitpanel>
     <script>
-      customElements.whenDefined("hpcc-pie").then(() => {
+      for (const pie of document.querySelectorAll("hpcc-pie")) {
+        pie.columns = ["Subject", "Score"];
+        pie.data = [
+          ["Math", 88],
+          ["English", 72],
+          ["Science", 60],
+          ["History", 50],
+          ["Geography", 40],
+          ["Biology", 30],
+          ["Physics", 20],
+          ["Chemistry", 10]
+        ];
+      }
+      let i = 0;
+      setInterval(()=>{
         for (const pie of document.querySelectorAll("hpcc-pie")) {
-          pie.columns = ["Subject", "Score"];
-          pie.data = [
-            ["Math", 88],
-            ["English", 72],
-            ["Science", 60],
-            ["History", 50],
-            ["Geography", 40],
-            ["Biology", 30],
-            ["Physics", 20],
-            ["Chemistry", 10]
-          ];
+          pie.setAttribute("start_angle", i);
+          ++i;
         }
-        let i = 0;
-        setInterval(()=>{
-          for (const pie of document.querySelectorAll("hpcc-pie")) {
-            pie.setAttribute("start_angle", i);
-            ++i;
-          }
-        }, 150)
-      });
+      }, 150)
     </script>
   </hpcc-preview>
 </ClientOnly>

@@ -33,14 +33,13 @@ See [Getting Started](../../README) for details on how to include @hpcc-js/web-c
 <ClientOnly>
   <hpcc-preview style="width:100%;height:800px">
     <hpcc-observable mode="markdown" style="width:100%;height:100%">
-      # Confirmed Cases v Deaths (${my_country}) - ${lastDate.toLocaleDateString("en-US", {dateStyle: "medium"})}
+      # Liquid Fun
 
       ```
-      chart;
+      canvas;
 
       //  Dependencies
-      my_country = "Ireland";
-      import { chart, lastDate } with { my_country as overrideLocation } from "@gordonsmith/irish-confirmed-cases-v-deaths";
+      import { canvas } from "@mbostock/liquidfun";
       ```
     </hpcc-observable>
   </hpcc-preview>

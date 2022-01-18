@@ -51,6 +51,16 @@ function initMeta(target: CustomElementConstructor): ClassMeta {
     return retVal;
 }
 
+export function whenDefined(component?: string): Promise<CustomElementConstructor[]> {
+    return component ?
+        customElements.whenDefined(component).then(c => [c]) :
+        Promise.all(components().map(customElements.whenDefined));
+}
+
+export function components(): Readonly<string[]> {
+    return Object.keys(_allMeta);
+}
+
 export function classMeta(target: CustomElementConstructor): Readonly<ClassMeta> {
     return _allMeta.get(target)!;
 }

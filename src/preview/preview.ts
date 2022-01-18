@@ -102,22 +102,33 @@ export class HPCCPreviewElement extends HPCCResizeElement {
             this._iframe.contentWindow?.document.open();
             this._iframe.contentWindow?.document.write(`\
 <head>
+
 ${this._vitepress ? `\
     <script type="module" src="/dist/index.esm.js"></script>
 ` : `\
     <script type="module" src="/hpcc-js-wc/assets/index.esm.min.js"></script>
 `}
+
 <style>
-        body {
-            margin: 0;
-        }
-    </style>
+body {
+    margin: 0;
+}
+</style>
+
 </head>
 
 <body style="overflow:hidden">
-<div>
+
+<div id="preview" style="visibility:hidden">
 ${this._cm.text.trim()}
 </div>
+
+<script type="module">
+    customElements.whenDefined("hpcc-preview").then(() => {
+        document.getElementById("preview").style.visibility = "visible";
+    });  
+</script>
+
 </body>`);
             this._iframe.contentWindow?.document.close();
         }

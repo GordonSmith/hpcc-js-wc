@@ -1,5 +1,5 @@
 import { join } from "path";
-import { copyFile, existsSync, readdirSync, lstatSync, readFile, writeFile } from "fs";
+import { existsSync, readdirSync, lstatSync, readFile, writeFile } from "fs";
 
 function patch(filename) {
     readFile(filename, function (err, data) {

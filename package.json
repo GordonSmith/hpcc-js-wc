@@ -19,7 +19,7 @@
     "compile-watch": "npm run compile -- -w",
     "syntax": "npm run compile -- --noEmit",
     "syntax-watch": "npm run syntax -- -w",
-    "esbuild": "esbuild --bundle --sourcemap --outfile=dist/index.esm.js src/index.ts",
+    "esbuild": "esbuild --bundle --global-name=hpccJs.webComponents --sourcemap --outfile=dist/index.esm.js src/index.ts",
     "esbuild-watch": "npm run esbuild -- --watch",
     "esbuild-min": "esbuild --bundle --minify --sourcemap --outfile=.vitepress/dist/assets/index.js src/index.ts",
     "esbuild-min-watch": "npm run esbuild-min -- --watch",

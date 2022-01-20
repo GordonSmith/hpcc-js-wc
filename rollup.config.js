@@ -75,6 +75,12 @@ export default [
                 name: pkg.name
             }
         ],
+        treeshake: {
+            moduleSideEffects: (id, external) => {
+                if (id.indexOf(".css") >= 0) return true;
+                return false;
+            }
+        },
         plugins: [
             alias({
                 entries: [

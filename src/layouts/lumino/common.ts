@@ -1,7 +1,6 @@
-import { HPCCResizeElement } from "../../common";
+import { isTrue, HPCCResizeElement } from "../../common";
 import { Widget } from "@lumino/widgets";
 import { WidgetAdapter } from "./widgetAdapter";
-import { isTrue } from "../../util";
 
 let hpccSlotID = 0;
 

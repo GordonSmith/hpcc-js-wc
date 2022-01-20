@@ -38,9 +38,9 @@ See [Getting Started](../../README) for details on how to include @hpcc-js/web-c
 
 ## More Examples
 
-### Start Angle 
+### Start Angle
 
-**tag**:  `<hpcc-pie start_angle=${i}>`
+**tag**: `<hpcc-pie start_angle=${i}>`
 
 <ClientOnly>
   <hpcc-preview preview_border="0px" style="width:100%;height:400px">
@@ -51,7 +51,8 @@ See [Getting Started](../../README) for details on how to include @hpcc-js/web-c
       </hpcc-pie>
     </hpcc-splitpanel>
     <script>
-      for (const pie of document.querySelectorAll("hpcc-pie")) {
+      const pies = document.querySelectorAll("hpcc-pie");
+      for (const pie of pies) {
         pie.columns = ["Subject", "Score"];
         pie.data = [
           ["Math", 88],
@@ -66,12 +67,14 @@ See [Getting Started](../../README) for details on how to include @hpcc-js/web-c
       }
       let i = 0;
       setInterval(()=>{
-        for (const pie of document.querySelectorAll("hpcc-pie")) {
-          pie.setAttribute("start_angle", i);
-          ++i;
+        let j = 0;
+        for (const pie of pies) {
+          pie.setAttribute("start_angle", j % 2 === 0 ? i :-i);
+          ++j;
         }
+        i += 3;
       }, 150)
     </script>
+
   </hpcc-preview>
 </ClientOnly>
-

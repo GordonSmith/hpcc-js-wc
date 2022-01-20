@@ -4,5 +4,6 @@ export * from "./element";
 export * from "./html";
 export * from "./message";
 export * from "./panel";
+export * from "./predicates";
 export * from "./resize";
 export * from "./svg";

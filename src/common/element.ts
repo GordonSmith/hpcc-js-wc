@@ -39,7 +39,7 @@ export class HPCCElement extends HTMLElement {
         super();
 
         //  Gather user values set prior to "upgrade"  ---
-        Object.keys(this.$meta.observed).forEach(prop => this.$upgradeProperty(prop));
+        this.$upgradeProperties();
 
         //  Initialize shadow DOM  ---
         this.attachShadow({ mode: "open" });
@@ -56,14 +56,14 @@ export class HPCCElement extends HTMLElement {
         this.shadowRoot!.insertBefore(this.$styles, this.shadowRoot!.firstChild);
     }
 
-    private $upgradeProperty(prop) {
-        const userValueID = `__${prop}`;
-        if (this.hasOwnProperty(prop)) {
-            this[userValueID] = this[prop];
-            delete this[prop];
-        } else if (this.hasAttribute(prop)) {
-            this[userValueID] = this.getAttribute(prop);
-        }
+    private $upgradeProperties() {
+        Object.keys(this.$meta.observed).forEach(prop=> {
+            const userValueID = `__${prop}`;
+            if (this.hasOwnProperty(prop)) {
+                this[userValueID] = this[prop];
+                delete this[prop];
+            }
+        });
     }
 
     protected attrValue(qualifiedName: string, value: string | null) {
@@ -120,13 +120,11 @@ export class HPCCElement extends HTMLElement {
         this.$meta.observedAttributes.forEach(attr => {
             const userValueID = `__${attr}`;
             const innerID = `_${attr}`;
-            const value = this[innerID];
             if (this[userValueID] !== undefined) {
                 this[innerID] = this[userValueID];
                 delete this[userValueID];
-            } else {
-                this.attr(attr, value);
             }
+            this.attr(attr, this[innerID]);
             retVal[attr] = { oldValue: undefined, newValue: this[innerID] };
         });
 
@@ -193,15 +191,10 @@ export class HPCCElement extends HTMLElement {
         //  Debugging, remove for production  ---
     }
 
-    update(changes: ChangeMap) {
-        for (const key in changes) {
-            if (this.$meta.observed[key]?.isAttribute && this[key] !== this.attr(key)) {
-                this.attr(key, this[key]);
-            }
-        }
+    update(_changes: ChangeMap) {
         //  Debugging, remove for production  ---
         for (const key of this.$meta.observedAttributes) {
-            if (this.$meta.observedAttributes.indexOf(key) >= 0 && this[key] !== this.attr(key)) {
+            if (this[key] !== this.attr(key)) {
                 console.log("update sync error", key, this[key], this.attr(key));
             }
         }

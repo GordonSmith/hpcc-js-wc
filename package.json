@@ -75,7 +75,7 @@
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/lang-html": "^0.19.4",
     "@codemirror/lang-json": "^0.19.1",
-    "@microsoft/api-documenter": "^7.14.1",
+    "@microsoft/api-documenter": "^7.14.2",
     "@microsoft/api-extractor": "^7.19.4",
     "@microsoft/api-extractor-model": "^7.15.3",
     "@rollup/plugin-alias": "^3.1.9",
@@ -115,7 +115,7 @@
     "@types/d3-timer": "^3.0.0",
     "@types/d3-transition": "^3.0.1",
     "@types/d3-zoom": "^3.0.1",
-    "@types/mocha": "^9.0.0",
+    "@types/mocha": "^9.1.0",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "chai": "^4.3.4",
@@ -132,7 +132,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-transform-tagged-template": "^0.0.3",
     "standard-version": "^9.3.2",
-    "typescript": "^4.5.4",
+    "typescript": "^4.5.5",
     "vitepress": "^0.21.6"
   },
   "repository": {

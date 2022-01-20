@@ -112,8 +112,10 @@ function changedHandler(target: HPCCElement, opts: PropertyBase) {
             const oldVal = this[innerID];
             this[innerID] = newVal;
             this._fire(opts.name, oldVal, newVal);
-            if(opts.isAttribute) {
-                this.attr(opts.name, newVal);
+            if (opts.isAttribute) {
+                if (this.isConnected){
+                  this.attr(opts.name, newVal);
+                }
             }
         },
         get: function () { return this[innerID]; }

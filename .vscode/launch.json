@@ -12,18 +12,18 @@
             "webRoot": "${workspaceFolder}"
         },
         {
-            "name": "examples/iife",
-            "request": "launch",
+            "name": "vite-index",
             "type": "pwa-msedge",
-            "url": "file://${workspaceFolder}/examples/iife/index.html",
+            "request": "launch",
+            "url": "http://localhost:3000/index.html",
             "webRoot": "${workspaceFolder}"
         },
         {
-            "name": "index.html",
-            "request": "launch",
+            "name": "vite-test",
             "type": "pwa-msedge",
-            "url": "http://localhost:3000/index.html",
-            "webRoot": "${workspaceFolder}"
+            "request": "launch",
+            "url": "http://localhost:3000/test.html",
+            "webRoot": "${workspaceRoot}"
         },
         {
             "name": "file://index.html",
@@ -33,13 +33,11 @@
             "webRoot": "${workspaceFolder}"
         },
         {
-            "name": "utils/test",
-            "program": "${workspaceFolder}/utils/test.js",
+            "name": "examples/iife",
             "request": "launch",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "pwa-node"
+            "type": "pwa-msedge",
+            "url": "file://${workspaceFolder}/examples/iife/index.html",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

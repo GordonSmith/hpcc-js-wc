@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "outDir": "./dist",
-    "module": "ES6",
+    "module": "ESNext",
     "declaration": true,
     "declarationDir": "./types",
     "sourceMap": true,

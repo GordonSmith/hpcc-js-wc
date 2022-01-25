@@ -57,7 +57,7 @@ export class HPCCElement extends HTMLElement {
     }
 
     private $upgradeProperties() {
-        Object.keys(this.$meta.observed).forEach(prop=> {
+        Object.keys(this.$meta.observed).forEach(prop => {
             const userValueID = `__${prop}`;
             if (this.hasOwnProperty(prop)) {
                 this[userValueID] = this[prop];
@@ -66,7 +66,7 @@ export class HPCCElement extends HTMLElement {
         });
     }
 
-    protected attrValue(qualifiedName: string, value: string | null) {
+    protected coercedValue(qualifiedName: string, value: string | null) {
         switch (this.$meta.observed[qualifiedName].type) {
             case "boolean":
                 return !!value;
@@ -85,11 +85,11 @@ export class HPCCElement extends HTMLElement {
         if (_ === undefined) {
             switch (this.$meta.observed[qualifiedName].type) {
                 case "boolean":
-                    return this.attrValue(qualifiedName, this.hasAttribute(qualifiedName) ? "true" : "");
+                    return this.coercedValue(qualifiedName, this.hasAttribute(qualifiedName) ? "true" : "");
                 case "number":
                 case "string":
                 default:
-                    return this.attrValue(qualifiedName, this.getAttribute(qualifiedName));
+                    return this.coercedValue(qualifiedName, this.getAttribute(qualifiedName));
             }
         } else {
             switch (this.$meta.observed[qualifiedName].type) {
@@ -170,9 +170,9 @@ export class HPCCElement extends HTMLElement {
     adoptedCallback() {
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name, _oldValue, newValue) {
         const innerID = `_${name}`;
-        const coercedValue = this.attrValue(name, newValue);
+        const coercedValue = this.coercedValue(name, newValue);
         if (this[innerID] !== coercedValue) {
             const oldValue = this[innerID];
             this[innerID] = coercedValue;

@@ -3,8 +3,10 @@ import { HTMLTemplate } from "./html";
 
 //  Web Component Meta Data  ---
 
+export type PropertyType = "string" | "boolean" | "number";
+
 export interface PropertyBase {
-    type: "string" | "boolean" | "number";
+    type: PropertyType;
     name: string;
     isAttribute: boolean;
 }
@@ -113,8 +115,8 @@ function changedHandler(target: HPCCElement, opts: PropertyBase) {
             this[innerID] = newVal;
             this._fire(opts.name, oldVal, newVal);
             if (opts.isAttribute) {
-                if (this.isConnected){
-                  this.attr(opts.name, newVal);
+                if (this.isConnected) {
+                    this.attr(opts.name, newVal);
                 }
             }
         },

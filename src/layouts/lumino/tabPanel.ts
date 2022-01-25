@@ -83,6 +83,7 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
     }
 
     update(changes: ChangeMap) {
+        console.log(changes);
         super.update(changes);
         this._tabPanel.tabsMovable = this.tabs_movable;
         this._tabPanel.addButtonEnabled = this.add_button_enabled;

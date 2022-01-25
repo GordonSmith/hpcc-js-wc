@@ -48,6 +48,14 @@
 			}
 		},
 		{
+			"label": "serve-vite",
+			"type": "npm",
+			"script": "serve-vite",
+			"presentation": {
+				"group": "group-build"
+			}
+		},
+		{
 			"label": "build",
 			"dependsOn": [
 				"serve",

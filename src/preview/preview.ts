@@ -104,9 +104,9 @@ export class HPCCPreviewElement extends HPCCResizeElement {
 <head>
 
 ${this._vitepress ? `\
-    <script type="module" src="/dist/index.esm.js"></script>
+    <script type="module" src="/src/index.ts"></script>
 ` : `\
-    <script type="module" src="/hpcc-js-wc/assets/index.esm.min.js"></script>
+    <script src="/hpcc-js-wc/assets/index.umd.min.js"></script>
 `}
 
 <style>

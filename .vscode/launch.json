@@ -5,32 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "docs",
-            "request": "launch",
-            "type": "pwa-msedge",
-            "url": "http://localhost:3000/hpcc-js-wc/",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
             "name": "vite-index",
             "type": "pwa-msedge",
             "request": "launch",
             "url": "http://localhost:3000/index.html",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceRoot}",
+            "preLaunchTask": "serve-vite",
+            "postDebugTask": "Terminate All Tasks"
+        },
+        {
+            "name": "vitepress-docs",
+            "type": "pwa-msedge",
+            "request": "launch",
+            "url": "http://localhost:3000/hpcc-js-wc/",
+            "webRoot": "${workspaceRoot}",
+            "preLaunchTask": "serve-docs",
+            "postDebugTask": "Terminate All Tasks"
         },
         {
             "name": "vite-test",
             "type": "pwa-msedge",
             "request": "launch",
             "url": "http://localhost:3000/test.html",
-            "webRoot": "${workspaceRoot}"
-        },
-        {
-            "name": "file://index.html",
-            "request": "launch",
-            "type": "pwa-msedge",
-            "url": "file://${workspaceFolder}/index.html",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceRoot}",
+            "preLaunchTask": "serve-vite",
+            "postDebugTask": "Terminate All Tasks"
         },
         {
             "name": "examples/iife",

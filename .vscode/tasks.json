@@ -7,7 +7,8 @@
 			"script": "serve",
 			"presentation": {
 				"group": "group-build"
-			}
+			},
+			"isBackground": true
 		},
 		{
 			"label": "syntax-watch",
@@ -18,7 +19,8 @@
 			],
 			"presentation": {
 				"group": "group-build"
-			}
+			},
+			"isBackground": true
 		},
 		{
 			"label": "esbuild-watch",
@@ -26,7 +28,8 @@
 			"script": "esbuild-watch",
 			"presentation": {
 				"group": "group-build"
-			}
+			},
+			"isBackground": true
 		},
 		{
 			"label": "compile-watch",
@@ -48,27 +51,87 @@
 			}
 		},
 		{
+			"label": "serve-docs",
+			"type": "npm",
+			"script": "serve-docs",
+			"problemMatcher": {
+				"owner": "node",
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}"
+				],
+				"pattern": {
+					//  TODO - not accurate
+					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^vitepress",
+					"endsPattern": "^  > Network"
+				}
+			},
+			"presentation": {
+				"group": "group-build"
+			},
+			"isBackground": true
+		},
+		{
 			"label": "serve-vite",
 			"type": "npm",
 			"script": "serve-vite",
+			"problemMatcher": {
+				"owner": "node",
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}"
+				],
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^  vite",
+					"endsPattern": "^  ready in "
+				}
+			},
 			"presentation": {
 				"group": "group-build"
-			}
+			},
+			"isBackground": true
+		},
+		{
+			"label": "Terminate All Tasks",
+			"command": "echo ${input:terminate}",
+			"type": "shell",
+			"problemMatcher": []
 		},
 		{
 			"label": "build",
-			"dependsOn": [
-				"serve",
-				"syntax-watch",
-				"esbuild-watch",
-				//				"compile-watch",
-				//				"bundle-watch",
-			],
+			"dependsOn": [],
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
-			"problemMatcher": []
+			"problemMatcher": [],
+			"isBackground": true
+		}
+	],
+	"inputs": [
+		{
+			"id": "terminate",
+			"type": "command",
+			"command": "workbench.action.tasks.terminate",
+			"args": "terminateAll"
 		}
 	]
 }

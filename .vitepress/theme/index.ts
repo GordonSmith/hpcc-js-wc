@@ -3,7 +3,7 @@ import DefaultTheme from "vitepress/theme";
 
 //@ts-ignore
 if (import.meta.env.MODE === "development") {
-    import("../../dist/index.esm");
+    import("../../src/index");
 }
 
 export default {

@@ -90,7 +90,7 @@ export class HPCCPreviewElement extends HPCCResizeElement {
         });
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         if (changes.content) {
             this._iframeDiv.innerHTML = "";

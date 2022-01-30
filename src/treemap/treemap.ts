@@ -40,7 +40,7 @@ export class HPCCTreemapElement extends HPCCSVGElement {
      */
     @property data: Node = { name: "root", children: [] };
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         const data = typeof this.data === "string" ? JSON.parse(this.data) : this.data;
         if (data) {

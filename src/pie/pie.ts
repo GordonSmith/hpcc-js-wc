@@ -219,7 +219,7 @@ export class HPCCPieElement extends HPCCSVGElement {
         super.enter();
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         this._slices.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);
         this._labels.attr("transform", `translate(${this.clientWidth / 2}, ${this.clientHeight / 2})`);

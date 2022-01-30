@@ -62,7 +62,7 @@ export class HPCCDockPanelElement extends HPCCLuminoElement {
         MessageLoop.installMessageHook(this._dockPanel, this);
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         this._dockPanel!.node.style.width = `${this.clientWidth}px`;
         this._dockPanel!.node.style.height = `${this.clientHeight}px`;

@@ -20,21 +20,61 @@ ${display("inline-block")}
     display: none;
 }
 
+:host > div.hide-values .observablehq--inspect {
+    display: none;
+}
+
+:host > div .observablehq--error > .observablehq--inspect {
+    display: none;
+}
+
+:host > div.show-errors .observablehq--error > .observablehq--inspect {
+    display: block;
+}
+
 `;
 
 @customElement("hpcc-observable", { template, styles })
 export class HPCCObservableElement extends HPCCResizeElement {
 
-    @attribute mode: "markdown" | "observablescript" = "observablescript";
+    /**
+     * Default mode, Observable script with embedded Markdown, or Markdown with 
+     * embedded Observable script
+     * 
+     * @typeParam observablescript - Observable script with embedded Markdown
+     * @typeParam markdown - Markdown with embedded Observable script
+     * 
+     * @defaultValue observablescript
+     */
+    @attribute mode: "observablescript" | "markdown" = "observablescript";
 
+    /**
+     * Show or hide intermediate values (values which typically are not `viewof` values)
+     * 
+     * @defaultValue false
+     */
+    @attribute({ type: "boolean" }) show_values = false;
+
+    /**
+     * Show or hide errors, enable to assist with non functioning scripts
+     * 
+     * @defaultValue false
+     */
+    @attribute({ type: "boolean" }) show_errors = false;
+
+    /**
+     * Plugins expose JavaScript functions to the Observable script 
+     * 
+     * @defaultValue {}
+     */
     @property plugins: { [key: string]: object } = {};
 
-    @property content: string = "";
+    @property _content: string = "";
 
     private _watcher: IObserverHandle;
 
     private _errors: OJSRuntimeError[] = [];
-    private errors(): OJSRuntimeError[] {
+    protected errors(): OJSRuntimeError[] {
         return this._errors;
     }
 
@@ -49,17 +89,20 @@ export class HPCCObservableElement extends HPCCResizeElement {
 
     private construct() {
         const text = this._slot.assignedNodes().map(n => n.textContent).join("\n");
-        this.content = text;
+        this._content = text;
     }
 
     enter() {
         super.enter();
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
 
-        if (changes.content) {
+        this._div?.classList.toggle("hide-values", !this.show_values);
+        this._div?.classList.toggle("show-errors", this.show_errors);
+
+        if (changes._content) {
             this._div.innerHTML = "";
 
             const context = this;
@@ -81,7 +124,7 @@ export class HPCCObservableElement extends HPCCResizeElement {
                 runtimeUpdated();
             });
 
-            runtime.evaluate("", this.content, ".")
+            runtime.evaluate("", this._content, ".")
                 .catch((e: OJSSyntaxError) => {
                     this._errors = [new OJSRuntimeError("error", e.start, e.end, e.message)];
                     this.runtimeUpdated();

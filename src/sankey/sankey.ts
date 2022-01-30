@@ -93,7 +93,7 @@ export class HPCCSankeyElement extends HPCCSVGElement {
         super();
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         this._nodesG.setAttribute("stroke", this.node_stroke);
         this._nodesG.setAttribute("stroke-width", `${this.node_stroke_width}`);

@@ -82,7 +82,7 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
         Widget.attach(this._tabPanel, this._div);
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         console.log(changes);
         super.update(changes);
         this._tabPanel.tabsMovable = this.tabs_movable;

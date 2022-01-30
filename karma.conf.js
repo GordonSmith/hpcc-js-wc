@@ -25,12 +25,14 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
+      "**/*.js": ["sourcemap"],
+      "./tmp/index.test.esm.js": ["coverage"],
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ["dots"],
+    reporters: ["dots", "coverage"],
 
     // web server port
     port: 9876,
@@ -56,5 +58,9 @@ module.exports = function (config) {
     // Concurrency level
     // how many browser instances should be started simultaneously
     concurrency: Infinity,
+
+    coverageReporter: {
+      type: "html",
+    }
   });
 };

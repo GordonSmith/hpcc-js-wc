@@ -43,7 +43,7 @@ export class HPCCTestLoad extends HPCCResizeElement {
         super.enter();
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
     }
 }

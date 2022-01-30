@@ -61,7 +61,7 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
         Widget.attach(this._splitPanel, this._div);
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         this._splitPanel.orientation = this.orientation;
         this._splitPanel.spacing = this.spacing;

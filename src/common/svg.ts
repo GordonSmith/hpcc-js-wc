@@ -15,7 +15,7 @@ export class HPCCSVGElement extends HPCCResizeElement {
     enter() {
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         if ("resize" in changes) {
             this._svg.setAttribute("width", `${this.clientWidth}px`);

@@ -75,7 +75,7 @@ export class HPCCZoomElement extends HPCCSVGElement {
         this.svg.call(this._zoom, d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         // this.svg.attr("viewBox", "0 0 0 0");
         this.content

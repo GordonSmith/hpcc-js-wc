@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "vite-index",
+            "name": "index.html (vite)",
             "type": "pwa-msedge",
             "request": "launch",
             "url": "http://localhost:3000/index.html",
@@ -14,7 +14,7 @@
             "postDebugTask": "Terminate All Tasks"
         },
         {
-            "name": "vitepress-docs",
+            "name": "index.md (vitepress dev)",
             "type": "pwa-msedge",
             "request": "launch",
             "url": "http://localhost:3000/hpcc-js-wc/",
@@ -23,7 +23,7 @@
             "postDebugTask": "Terminate All Tasks"
         },
         {
-            "name": "vite-test",
+            "name": "test (vite)",
             "type": "pwa-msedge",
             "request": "launch",
             "url": "http://localhost:3000/test.html",

@@ -106,6 +106,23 @@ describe("element", function () {
             expect(testLoad.getAttribute("user_prop_setattr")).to.equal("user_prop_setattr");
             expect(testLoad.getAttribute("user_prop_as_property")).to.be.null;
         });
+
+        it("set-attributes", async function () {
+            testLoad.setAttribute("undefined_attr", "aaa");
+            testLoad.setAttribute("default_attr", "aaa");
+            testLoad.setAttribute("user_attr", "aaa");// Check conflation
+            testLoad.setAttribute("user_attr", "bbb");// Check conflation
+            testLoad.setAttribute("user_attr", "ccc");// Check conflation
+            testLoad.setAttribute("user_attr", "aaa");// Check conflation
+            testLoad.setAttribute("user_attr_setattr", "aaa");
+            testLoad.setAttribute("user_attr_as_property", "aaa");
+            expect(testLoad.getAttribute("undefined_attr")).to.equal("aaa");
+            expect(testLoad.getAttribute("default_attr")).to.equal("aaa");
+            expect(testLoad.getAttribute("user_attr")).to.equal("aaa");
+            expect(testLoad.getAttribute("user_attr_setattr")).to.equal("aaa");
+            expect(testLoad.getAttribute("user_attr_as_property")).to.equal("aaa");
+        });
+
     });
 
     describe("destroy", function () {

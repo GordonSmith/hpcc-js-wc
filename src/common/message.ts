@@ -1,12 +1,13 @@
 import { Message } from "@hpcc-js/util";
+import { HPCCElement } from ".";
 
-export interface Change {
-    oldValue: any;
-    newValue: any;
+export interface Change<T> {
+    oldValue: T;
+    newValue: T;
 }
 
-export interface ChangeMap {
-    [what: string]: Change;
+export type ChangeMap<T extends HPCCElement> = {
+    [what in keyof T]+?: Change<T[what]>;
 }
 
 export class AttrChangedMessage extends Message {
@@ -15,7 +16,7 @@ export class AttrChangedMessage extends Message {
         return true;
     }
 
-    changes: ChangeMap = {};
+    changes: ChangeMap<any> = {};
 
     constructor(what: string, oldValue: any, newValue: any) {
         super();
@@ -27,7 +28,7 @@ export class AttrChangedMessage extends Message {
             const thisChange = this.changes[what];
             const otherChange = other.changes[what];
             if (thisChange) {
-                this.changes[what].newValue = otherChange.newValue;
+                this.changes[what]!.newValue = otherChange?.newValue;
             } else {
                 this.changes[what] = otherChange;
             }

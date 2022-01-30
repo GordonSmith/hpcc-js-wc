@@ -335,7 +335,7 @@ export class HPCCGaugeElement extends HPCCSVGElement {
             ;
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         const width = this.clientWidth;
         const height = this.clientHeight;

@@ -112,11 +112,11 @@ export class HPCCElement extends HTMLElement {
     }
 
     private $_initialized = false;
-    private initalizeAttributes(): ChangeMap {
+    private initalizeAttributes(): ChangeMap<this> {
         if (this.$_initialized) return {};
         this.$_initialized = true;
 
-        const retVal: ChangeMap = {};
+        const retVal: ChangeMap<this> = {};
         this.$meta.observedAttributes.forEach(attr => {
             const userValueID = `__${attr}`;
             const innerID = `_${attr}`;
@@ -147,11 +147,11 @@ export class HPCCElement extends HTMLElement {
         this.$dispatch.flush();
         this.$dispatchHandle = this.$dispatch.attach((messages) => {
             if (this.isConnected) {
-                const changes: ChangeMap = {};
+                const changes: ChangeMap<this> = {};
                 if (messages.length > 1) throw new Error("Conflation issue.");
                 for (const what in messages[0].changes) {
                     const change = messages[0].changes[what];
-                    if (change.oldValue !== change.newValue) {
+                    if (change?.oldValue !== change?.newValue) {
                         changes[what] = change;
                     }
                 }
@@ -191,7 +191,7 @@ export class HPCCElement extends HTMLElement {
         //  Debugging, remove for production  ---
     }
 
-    update(_changes: ChangeMap) {
+    update(_changes: ChangeMap<this>) {
         //  Debugging, remove for production  ---
         for (const key of this.$meta.observedAttributes) {
             if (this[key] !== this.attr(key)) {

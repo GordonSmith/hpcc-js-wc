@@ -102,10 +102,10 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
         });
     }
 
-    update(changes: ChangeMap) {
+    update(changes: ChangeMap<this>) {
         super.update(changes);
         this._view.dom.style.height = `${this.clientHeight}px`;
-        if (changes.type || changes.theme) {
+        if (changes.mode || changes.theme) {
             this._view.dispatch({
                 reconfigure: {
                     full: this.extension(),

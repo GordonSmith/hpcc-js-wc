@@ -8,8 +8,10 @@ This is currently a POC repository and has not been released to the npmjs reposi
 
 * [CodeMirror Editor](./codemirror/codemirror)
 * [Gauge](./gauge/gauge)
+* [Half Pie](./pie/halfpie)
 * [Observable JS](./observable/observable)
 * [Pie](./pie/pie)
+* [Quarter Pie](./pie/quarterpie)
 * [Sankey](./sankey/sankey)
 * [Treemap](./treemap/treemap)
 

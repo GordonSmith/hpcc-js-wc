@@ -9,12 +9,7 @@ const template = html<HPCCPieElement>`\
     <g ${ref("_labelsG")}></g>
 </svg>`;
 
-const styles = css`
-${display("inline-block")}
-
-:host {
-}
-
+export const pieCommonStyles = `\
 svg {
     font-family: sans-serif;
     font-size: 12;
@@ -30,7 +25,12 @@ polyline {
     stroke: black;
     stroke-width: 2px;
     fill: none;
-}
+}`;
+
+const styles = css`
+${display("inline-block")}
+
+${pieCommonStyles}
 `;
 
 export type Columns = string[];
@@ -104,7 +104,14 @@ export class HPCCPieElement extends HPCCSVGElement {
     @attribute({ type: "number" }) start_angle = 0;
 
     /**
-     * Label height.  Used to position the labels.
+     * Name of label font family
+     * 
+     * @defaultValue "Verdana"
+     */
+    @attribute font_name = "Verdana";
+
+    /**
+     * Label pixel height.  Used to position the labels.
      * 
      * @defaultValue 12
      */
@@ -144,7 +151,7 @@ export class HPCCPieElement extends HPCCSVGElement {
     private _seriesValueFormatter;
     private _seriesPercentageFormatter;
 
-    private _legacy = new SVGWidget(this);
+    protected _legacy = new SVGWidget(this);
 
     constructor() {
         super();
@@ -157,7 +164,7 @@ export class HPCCPieElement extends HPCCSVGElement {
     }
 
     calcOuterRadius() {
-        const maxTextWidth = this._legacy.textSize(this.data.map(d => this.getLabelText({ data: d }, false)), "Verdana", 12).width;
+        const maxTextWidth = this._legacy.textSize(this.data.map(d => this.getLabelText({ data: d }, false)), this.font_name, this.label_height).width;
         const horizontalLimit = this._svg.clientWidth - (this.show_labels ? maxTextWidth * 2 : 0) - 20;
         const verticalLimit = this._svg.clientHeight - 12 * 3 - (this.show_labels ? this._smallValueLabelHeight : 0);
         const outerRadius = Math.min(horizontalLimit, verticalLimit) / 2 - 2;
@@ -194,7 +201,7 @@ export class HPCCPieElement extends HPCCSVGElement {
         let len;
         let label = d.data[0];
         if (typeof this._labelWidthLimit !== "undefined" && truncate) {
-            const labelWidth = this._legacy.textSize(label, "Verdana", this.label_height).width;
+            const labelWidth = this._legacy.textSize(label, this.font_name, this.label_height).width;
             if (this._labelWidthLimit < labelWidth) {
                 len = label.length * (this._labelWidthLimit / labelWidth) - 3;
                 label = len < label.length ? label.slice(0, len) + "..." : label;

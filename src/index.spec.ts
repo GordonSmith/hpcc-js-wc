@@ -1,1 +1,1 @@
-import "./common/index.spec";
+import "../packages/core/src/index.spec";

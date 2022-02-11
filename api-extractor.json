@@ -56,7 +56,17 @@
    * This would direct API Extractor to embed those types directly in the .d.ts rollup, as if they had been
    * local files for library1.
    */
-  "bundledPackages": [],
+  "bundledPackages": [
+    "@hpcc-js/wc-editor",
+    "@hpcc-js/wc-gauge",
+    "@hpcc-js/wc-layout",
+    "@hpcc-js/wc-legacy",
+    "@hpcc-js/wc-observable",
+    "@hpcc-js/wc-pie",
+    "@hpcc-js/wc-preview",
+    "@hpcc-js/wc-sankey",
+    "@hpcc-js/wc-treemap"
+  ],
   /**
    * Determines how the TypeScript compiler engine will be invoked by API Extractor.
    */

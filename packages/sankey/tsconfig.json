@@ -1,8 +1,8 @@
 {
-  "extends": "./packages/tsconfig.settings.json",
+  "extends": "../tsconfig.settings.json",
   "compilerOptions": {
     "outDir": "./dist/esm",
-    "declarationDir": "./types"
+    "declarationDir": "./dist/types"
   },
   "include": [
     "./src/index.ts"

@@ -1,5 +1,6 @@
 import { ApiClass, ApiItem, ApiModel, ApiProperty } from "@microsoft/api-extractor-model";
 import { IndentedWriter, writeApiItem } from "./mdWriter";
+import path from 'path';
 
 function getGuideSidebar() {
     return [
@@ -21,23 +22,23 @@ function getComponentsSidebar() {
         {
             text: "Visualizations",
             children: [
-                { text: "CodeMirror", link: "/src/codemirror/codemirror" },
-                { text: "Gauge", link: "/src/gauge/gauge" },
-                { text: "Half Pie", link: "/src/pie/halfpie" },
-                { text: "Observable JS", link: "/src/observable/observable" },
-                { text: "Pie", link: "/src/pie/pie" },
-                { text: "Quarter Pie", link: "/src/pie/quarterpie" },
-                { text: "Sankey", link: "/src/sankey/sankey" },
-                { text: "Treemap", link: "/src/treemap/treemap" },
+                { text: "CodeMirror", link: "/packages/editor/src/codemirror" },
+                { text: "Gauge", link: "/packages/gauge/src/gauge" },
+                { text: "Half Pie", link: "/packages/pie/src/halfpie" },
+                { text: "Observable JS", link: "/packages/observable/src/observable" },
+                { text: "Pie", link: "/packages/pie/src/pie" },
+                { text: "Quarter Pie", link: "/packages/pie/src/quarterpie" },
+                { text: "Sankey", link: "/packages/sankey/src/sankey" },
+                { text: "Treemap", link: "/packages/treemap/src/treemap" },
             ]
         },
         {
             text: "Layouts",
             children: [
-                { text: "Dock Panel", link: "/src/layouts/lumino/dockPanel" },
-                { text: "Split Panel", link: "/src/layouts/lumino/splitPanel" },
-                { text: "Tab Panel", link: "/src/layouts/lumino/tabPanel" },
-                { text: "Zoom", link: "/src/layouts/zoom" }
+                { text: "Dock Panel", link: "/packages/layout/src/lumino/dockPanel" },
+                { text: "Split Panel", link: "/packages/layout/src/lumino/splitPanel" },
+                { text: "Tab Panel", link: "/packages/layout/src/lumino/tabPanel" },
+                { text: "Zoom", link: "/packages/layout/src/zoom" }
             ]
         }
     ];
@@ -69,8 +70,8 @@ module.exports = {
             },
             {
                 text: "Components",
-                link: "/src/",
-                activeMatch: "^/src/"
+                link: "/packages/",
+                activeMatch: "^/packages/"
             },
             {
                 text: "Release Notes",
@@ -80,7 +81,7 @@ module.exports = {
 
         sidebar: {
             "/README": getGuideSidebar(),
-            "/src": getComponentsSidebar()
+            "/packages": getComponentsSidebar()
         }
     },
 
@@ -93,7 +94,6 @@ module.exports = {
         },
         resolve: {
             alias: {
-                crypto: "",
             },
         },
         plugins: [

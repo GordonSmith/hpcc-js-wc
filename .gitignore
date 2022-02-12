@@ -3,6 +3,8 @@ types/
 node_modules/
 temp/
 tmp/
+.env
+.turbo
 /coverage
 /.vitepress/cache
 /docs/api

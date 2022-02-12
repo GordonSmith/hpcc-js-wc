@@ -1,6 +1,6 @@
 {
   "name": "@hpcc-js/wc-editor",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "sideEffects": false,
   "main": "dist/esm/index.js",
@@ -18,7 +18,7 @@
     "bundle": "rollup -c ../rollup.config.js"
   },
   "dependencies": {
-    "@hpcc-js/wc-core": "^1.0.0",
+    "@hpcc-js/wc-core": "0.0.0",
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/lang-html": "^0.19.4",
     "@codemirror/lang-json": "^0.19.1",

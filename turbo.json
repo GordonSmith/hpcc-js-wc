@@ -1,0 +1,21 @@
+{
+    "$schema": "https://turborepo.org/schema.json",
+    "baseBranch": "upstream/trunk",
+    "pipeline": {
+        "clean": {
+            "dependsOn": [
+                "^clean"
+            ]
+        },
+        "compile": {
+            "dependsOn": [
+                "^compile"
+            ]
+        },
+        "bundle": {
+            "dependsOn": [
+                "^bundle"
+            ]
+        }
+    }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@hpcc-js/wc-core",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "sideEffects": false,
   "main": "dist/esm/index.js",

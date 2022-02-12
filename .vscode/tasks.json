@@ -54,27 +54,28 @@
 			"label": "serve-docs",
 			"type": "npm",
 			"script": "serve-docs",
-			"problemMatcher": {
-				"owner": "node",
-				"fileLocation": [
-					"relative",
-					"${workspaceFolder}"
-				],
-				"pattern": {
-					//  TODO - not accurate
-					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-					"file": 1,
-					"line": 2,
-					"column": 3,
-					"severity": 4,
-					"message": 5
-				},
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "^vitepress",
-					"endsPattern": "^  > Network"
+			"problemMatcher": [
+				"$tsc-watch",
+				{
+					"owner": "node",
+					"fileLocation": [
+						"relative",
+						"${workspaceFolder}"
+					],
+					"pattern": {
+						"regexp": "_____",
+						"message": 1,
+						"file": 2,
+						"line": 3,
+						"column": 4
+					},
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "^vitepress",
+						"endsPattern": "^  > Network"
+					}
 				}
-			},
+			],
 			"presentation": {
 				"group": "group-build"
 			},

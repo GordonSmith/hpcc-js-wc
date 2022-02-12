@@ -1,6 +1,6 @@
 {
   "name": "@hpcc-js/wc-sankey",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "sideEffects": false,
   "main": "dist/esm/index.js",
@@ -18,7 +18,7 @@
     "bundle": "rollup -c ../rollup.config.js"
   },
   "dependencies": {
-    "@hpcc-js/wc-core": "^1.0.0",
+    "@hpcc-js/wc-core": "0.0.0",
     "d3": "^7.3.0",
     "d3-sankey": "^0.12.3",
     "tslib": "^2.3.1"

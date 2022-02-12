@@ -1,6 +1,14 @@
 # (Sat Feb 12 2022)
 
-#### 🐛 Bug Fix
+:tada: This release contains work from new contributors! :tada:
+
+Thanks for all your work!
+
+:heart: Gordon Smith ([@GordonSmith](https://github.com/GordonSmith))
+
+:heart: Jaman Brundage ([@jbrundage](https://github.com/jbrundage))
+
+#### 🚀 Enhancement
 
 - feat: Add halfpie and quarterpie [#6](https://github.com/GordonSmith/hpcc-js-wc/pull/6) ([@jbrundage](https://github.com/jbrundage))
 
@@ -52,10 +60,3 @@
 
 ---
 
-# Changelog
-
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
-### 0.0.0
-
-Initial commit

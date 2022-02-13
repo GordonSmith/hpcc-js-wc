@@ -18,7 +18,8 @@
   "scripts": {
     "clean": "rimraf build dist lib* types temp tmp *.tsbuildinfo",
     "compile": "tsc -p ./tsconfig.json",
-    "bundle": "rollup -c ../rollup.config.js"
+    "bundle": "rollup -c ../rollup.config.js",
+    "update": "npx npm-check-updates -u"
   },
   "repository": {
     "type": "git",

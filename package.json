@@ -19,8 +19,10 @@
   ],
   "scripts": {
     "clean-root": "rimraf build coverage dist lib* types temp tmp *.tsbuildinfo .vitepress/dist .vitepress/cache docs/api",
+    "clean-root-npm": "rimraf package-lock.json node_modules",
     "clean-workspaces": "turbo run clean",
     "clean": "run-p clean-workspaces clean-root",
+    "clean-full": "run-s clean clean-root-npm",
     "compile-root": "tsc -p ./tsconfig.json",
     "compile-workspaces": "turbo run compile",
     "compile": "run-s compile-workspaces compile-root",
@@ -62,7 +64,9 @@
     "test-karma": "run-s esbuild-test karma",
     "test": "run-p lint test-karma",
     "tag": "run-s standard-version git-push",
-    "update": "npx npm-check-updates -u"
+    "update-root": "npx npm-check-updates -u",
+    "update-workspaces": "turbo run update",
+    "update": "run-p update-workspaces update-root"
   },
   "engines": {
     "node": ">=16.0.0"

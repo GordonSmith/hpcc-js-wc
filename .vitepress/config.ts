@@ -20,9 +20,21 @@ function getGuideSidebar() {
 function getComponentsSidebar() {
     return [
         {
-            text: "Visualizations",
+            text: "Editors",
             children: [
                 { text: "CodeMirror", link: "/packages/editor/src/codemirror" },
+            ]
+        }, {
+            text: "Layouts",
+            children: [
+                { text: "Dock Panel", link: "/packages/layout/src/lumino/dockPanel" },
+                { text: "Drag and Zoom", link: "/packages/layout/src/zoom" },
+                { text: "Split Panel", link: "/packages/layout/src/lumino/splitPanel" },
+                { text: "Tab Panel", link: "/packages/layout/src/lumino/tabPanel" },
+            ]
+        }, {
+            text: "Visualizations",
+            children: [
                 { text: "Gauge", link: "/packages/gauge/src/gauge" },
                 { text: "Half Pie", link: "/packages/pie/src/halfpie" },
                 { text: "Observable JS", link: "/packages/observable/src/observable" },
@@ -31,16 +43,8 @@ function getComponentsSidebar() {
                 { text: "Sankey", link: "/packages/sankey/src/sankey" },
                 { text: "Treemap", link: "/packages/treemap/src/treemap" },
             ]
-        },
-        {
-            text: "Layouts",
-            children: [
-                { text: "Dock Panel", link: "/packages/layout/src/lumino/dockPanel" },
-                { text: "Split Panel", link: "/packages/layout/src/lumino/splitPanel" },
-                { text: "Tab Panel", link: "/packages/layout/src/lumino/tabPanel" },
-                { text: "Zoom", link: "/packages/layout/src/zoom" }
-            ]
         }
+
     ];
 }
 
@@ -56,7 +60,7 @@ module.exports = {
 
     themeConfig: {
         repo: "GordonSmith/hpcc-js-wc",
-        docsDir: "docs",
+        docsDir: "",
         docsBranch: "trunk",
         editLinks: true,
         editLinkText: "Edit this page on GitHub",

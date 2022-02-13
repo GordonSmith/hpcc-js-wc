@@ -79,3 +79,11 @@ _Emitted whenever the content is panned or zoomed_
   </hpcc-preview>
 </ClientOnly>
 
+## Credits
+
+### Lumino
+
+_Lumino is a set of JavaScript packages, written in TypeScript, that provide a rich toolkit of widgets, layouts, events, and data structures. These enable developers to construct extensible high-performance desktop-like web applications, such as JupyterLab. Lumino was formerly known as PhosphorJS._
+
+* [Home Page](https://lumino.readthedocs.io/en/latest/)
+* [GitHub](https://github.com/jupyterlab/lumino)

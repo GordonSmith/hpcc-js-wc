@@ -16,6 +16,11 @@
             "dependsOn": [
                 "^bundle"
             ]
+        },
+        "update": {
+            "dependsOn": [
+                "^update"
+            ]
         }
     }
 }

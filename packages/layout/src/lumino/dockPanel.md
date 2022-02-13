@@ -103,3 +103,12 @@ _The tooltip text for the tabbed item_
 **Type:** `string`
 
 **Default Value:** `"`
+
+## Credits
+
+### Lumino
+
+_Lumino is a set of JavaScript packages, written in TypeScript, that provide a rich toolkit of widgets, layouts, events, and data structures. These enable developers to construct extensible high-performance desktop-like web applications, such as JupyterLab. Lumino was formerly known as PhosphorJS._
+
+* [Home Page](https://lumino.readthedocs.io/en/latest/)
+* [GitHub](https://github.com/jupyterlab/lumino)

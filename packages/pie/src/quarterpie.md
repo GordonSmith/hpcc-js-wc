@@ -33,3 +33,12 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
 ## `HPCCQuarterPieElement`
 
 ## Events
+
+## Credits
+
+### d3
+
+_D3 (or D3.js) is a JavaScript library for visualizing data using web standards. D3 helps you bring data to life using SVG, Canvas and HTML. D3 combines powerful visualization and interaction techniques with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers and the freedom to design the right visual interface for your data._
+
+* [Home Page](https://d3js.org/)
+* [GitHub](https://github.com/d3/d3)

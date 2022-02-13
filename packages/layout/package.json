@@ -15,13 +15,15 @@
   "scripts": {
     "clean": "rimraf build dist lib* types temp tmp *.tsbuildinfo",
     "compile": "tsc -p ./tsconfig.json",
-    "bundle": "rollup -c ../rollup.config.js"
+    "bundle": "rollup -c ../rollup.config.js",
+    "update": "npx npm-check-updates -u"
   },
   "dependencies": {
     "@hpcc-js/wc-core": "0.0.0",
     "@lumino/dragdrop": "^1.14.0",
     "@lumino/messaging": "^1.10.1",
     "@lumino/widgets": "^1.31.1",
+    "d3": "^7.3.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {},

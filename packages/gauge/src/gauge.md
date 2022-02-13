@@ -34,3 +34,20 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
 ## `HPCCGaugeElement`
 
 ## Events
+
+## Credits
+
+### d3
+
+_D3 (or D3.js) is a JavaScript library for visualizing data using web standards. D3 helps you bring data to life using SVG, Canvas and HTML. D3 combines powerful visualization and interaction techniques with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers and the freedom to design the right visual interface for your data._
+
+* [Home Page](https://d3js.org/)
+* [GitHub](https://github.com/d3/d3)
+
+### d3-svg-annotation
+
+_Annotations establish context, and direct our users to insights and anomalies. So why are annotations so few and far between in visualizations on the web? Because implementing them is difficult._
+
+* [Home Page](https://d3-annotation.susielu.com/)
+* [GitHub](https://github.com/susielu/d3-annotation)
+

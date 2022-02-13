@@ -15,11 +15,12 @@
   "scripts": {
     "clean": "rimraf build dist lib* types temp tmp *.tsbuildinfo",
     "compile": "tsc -p ./tsconfig.json",
-    "bundle": "rollup -c ../rollup.config.js"
+    "bundle": "rollup -c ../rollup.config.js",
+    "update": "npx npm-check-updates -u"
   },
   "dependencies": {
     "@hpcc-js/wc-core": "0.0.0",
-    "@hpcc-js/observable-md": "~2.47.0",
+    "@hpcc-js/observable-md": "~2.50.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {},

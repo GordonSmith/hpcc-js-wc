@@ -29,3 +29,14 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
 ## `HPCCCodemirrorElement`
 
 ## Events
+
+## Credits
+
+### CodeMirror
+
+_CodeMirror 6 is a rewrite of the CodeMirror code editor. It greatly improves the library's accessibility and touchscreen support, provides better content analysis and a modern programming interface. The new system matches the existing code in features and performance. It is not API-compatible with the old code._
+
+* [Home Page](https://codemirror.net/6/)
+* [GitHub](https://github.com/codemirror/codemirror.next/)
+
+

@@ -13,17 +13,6 @@ function transformHTMLFragment(data) {
     return data.replace(/\s{2,}/g, " "); // Collapse all sequences to 1 space
 }
 
-// function transformCSSFragment(data) {
-//     if (/\/\*(?![\s\S]*\*\/)[\s\S]*/g.test(data)) {
-//         throw new Error("Unterminated comment found in CSS tagged template literal");
-//     }
-
-//     return data.replace(
-//         /(?:\s*\/\*(?:[\s\S])+?\*\/\s*)|(?:;)\s+(?=\})|\s+(?=\{)|(?<=:)\s+|\s*([{};,])\s*/g,
-//         "$1"
-//     );
-// }
-
 function transformCSSFragment(data) {
     const newlines = /\n/g;
     const separators = /\s*([{};])\s*/g;

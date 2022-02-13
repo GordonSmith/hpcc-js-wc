@@ -37,3 +37,12 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
 ### `changed`
 
 _Emitted whenever the content is panned or zoomed_
+
+## Credits
+
+### d3-zoom
+
+_Panning and zooming are popular interaction techniques which let the user focus on a region of interest by restricting the view. It is easy to learn due to direct manipulation: click-and-drag to pan (translate), spin the wheel to zoom (scale), or use touch. Panning and zooming are widely used in web-based mapping, but can also be used with visualizations such as time-series and scatterplots._
+
+* [Home Page](https://observablehq.com/collection/@d3/d3-zoom)
+* [GitHub](https://github.com/d3/d3-zoom)

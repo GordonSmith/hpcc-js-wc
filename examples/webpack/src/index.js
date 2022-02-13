@@ -1,4 +1,4 @@
-import { HPCCZoomElement } from "@hpcc-js/web-components";
+import { HPCCZoomElement } from "@hpcc-js/wc-layout";
 
 HPCCZoomElement;
 

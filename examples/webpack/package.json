@@ -11,7 +11,7 @@
     "update": "npx npm-check-updates -u"
   },
   "dependencies": {
-    "@hpcc-js/web-components": "file:../.."
+    "@hpcc-js/layout": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",

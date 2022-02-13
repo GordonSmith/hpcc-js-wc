@@ -48,3 +48,32 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
     </hpcc-observable>
   </hpcc-preview>
 </ClientOnly>
+
+## Credits
+
+### @observablehq/runtime
+
+_The Observable runtime lets you run Observable notebooks as true reactive programs in any JavaScript environment: on your personal website, integrated into your web application or interactive dashboard. Take your notebook to any distant shore the web platform reaches._
+
+* [Home Page](https://observablehq.com/@observablehq/how-observable-runs)
+* [GitHub](https://github.com/observablehq/runtime)
+
+### @observablehq/parser
+
+_Parser for Observable flavour of JavaScript._
+
+* [GitHub](https://github.com/observablehq/parser)
+
+### @observablehq/stdlib
+
+_The Observable standard library._
+
+* [Home Page](https://observablehq.com/@observablehq/standard-library)
+* [GitHub](https://github.com/observablehq/stdlib)
+
+### @observablehq/inspector
+
+_This library implements the default value renderer for Observable programs. When used with the Observable runtime as observers, inspectors can insert elements into the DOM and render interactive displays for arbitrary values._
+
+* [GitHub](https://github.com/observablehq/inspector)
+

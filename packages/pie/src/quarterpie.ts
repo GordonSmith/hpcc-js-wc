@@ -1,4 +1,4 @@
-import { attribute, css, ChangeMap, customElement, display, html, ref } from "@hpcc-js/wc-core";
+import { attribute, css, ChangeMap, customElement, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { HPCCPieElement, pieCommonStyles } from "./pie";
 import * as d3 from "d3";
 
@@ -76,5 +76,12 @@ export class HPCCQuarterPieElement extends HPCCPieElement {
             .endAngle(endAngle)
             ;
     }
+}
 
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-quarterpie"]: WebComponent<HPCCQuarterPieElement>;
+        }
+    }
 }

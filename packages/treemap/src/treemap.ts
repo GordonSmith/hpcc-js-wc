@@ -1,4 +1,4 @@
-import { HPCCSVGElement, attribute, property, ChangeMap, customElement, css, display, html, ref } from "@hpcc-js/wc-core";
+import { HPCCSVGElement, attribute, property, ChangeMap, customElement, css, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { treemapFunc, Node, Leaf, Mode } from "./treemapFunc";
 
 export type { Node, Mode, Leaf };
@@ -54,6 +54,14 @@ export class HPCCTreemapElement extends HPCCSVGElement {
                 width: this._svg.clientWidth,
                 height: this._svg.clientHeight
             });
+        }
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-treemap"]: WebComponent<HPCCTreemapElement>;
         }
     }
 }

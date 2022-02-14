@@ -1,4 +1,4 @@
-import { HPCCResizeElement, attribute, property, ChangeMap, customElement, display, html, ref } from "@hpcc-js/wc-core";
+import { HPCCResizeElement, attribute, property, ChangeMap, customElement, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
 import { html as cmHtml } from "@codemirror/lang-html";
 import { json as cmJson } from "@codemirror/lang-json";
@@ -126,5 +126,13 @@ export class HPCCCodemirrorElement extends HPCCResizeElement {
     exit() {
         this._view.destroy();
         super.exit();
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-codemirror"]: WebComponent<HPCCCodemirrorElement, "change">;
+        }
     }
 }

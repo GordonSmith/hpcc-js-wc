@@ -1,4 +1,4 @@
-import { HPCCResizeElement, attribute, ChangeMap, customElement, css, display, html, ref } from "@hpcc-js/wc-core";
+import { HPCCResizeElement, attribute, ChangeMap, customElement, css, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { HPCCCodemirrorElement } from "@hpcc-js/wc-editor";
 
 const template = html<HPCCPreviewElement>`\
@@ -134,5 +134,13 @@ ${this._cm.text.trim()}
         }
         this._cm.style.width = "100%";
         this._cm.style.height = `${this.clientHeight * (1 - this.preview_height_ratio)}px`;
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-preview"]: WebComponent<HPCCPreviewElement>;
+        }
     }
 }

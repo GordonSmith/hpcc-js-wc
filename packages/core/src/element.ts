@@ -13,6 +13,10 @@ export const DefaultEventOptions = {
 
 export class HPCCElement extends HTMLElement {
 
+    static register() {
+        //  Do nothing - calling this will ensure WebPack / RollupJS won't "Tree Shake" it out of the final bundle  ---
+    }
+
     static get observedAttributes(): string[] {
         return classMeta(this).observedAttributes;
     }

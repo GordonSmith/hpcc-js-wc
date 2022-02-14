@@ -1,4 +1,4 @@
-import { customElement, css, display, html, ref, ChangeMap, attribute } from "@hpcc-js/wc-core";
+import { customElement, css, display, html, ref, ChangeMap, attribute, WebComponent } from "@hpcc-js/wc-core";
 import { SplitPanel, Widget } from "@lumino/widgets";
 import { HPCCLuminoElement } from "./common";
 import { WidgetAdapter } from "./widgetAdapter";
@@ -73,5 +73,13 @@ export class HPCCSplitPanelElement extends HPCCLuminoElement {
     exit() {
         Widget.detach(this._splitPanel);
         super.exit();
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-splitpanel"]: WebComponent<HPCCSplitPanelElement, "layoutChanged">;
+        }
     }
 }

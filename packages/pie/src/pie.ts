@@ -1,4 +1,4 @@
-import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref } from "@hpcc-js/wc-core";
+import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { SVGWidget } from "@hpcc-js/wc-legacy";
 import { degreesToRadians, normalizeRadians } from "@hpcc-js/util";
 import * as d3 from "d3";
@@ -485,5 +485,13 @@ export class HPCCPieElement extends HPCCSVGElement {
                 return d[1];
             })
             ;
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-pie"]: WebComponent<HPCCPieElement>;
+        }
     }
 }

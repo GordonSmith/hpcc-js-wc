@@ -26,12 +26,14 @@ export interface BooleanProperty extends PropertyBase {
 export type Property = StringProperty | NumberProperty | BooleanProperty;
 
 export interface ClassMeta {
+    tag: string;
     template?: HTMLTemplate;
     styles: string;
     properties: Property[];
     observedAttributes: string[];
     observedProperties: string[];
     observed: { [id: string]: Property };
+    events: string[];
 }
 
 const _allMeta = new WeakMap<CustomElementConstructor, ClassMeta>();
@@ -39,12 +41,14 @@ function initMeta(target: CustomElementConstructor): ClassMeta {
     let retVal: ClassMeta;
     if (!_allMeta.has(target)) {
         retVal = {
+            tag: "",
             template: { html: "", directives: [] },
             styles: "",
             properties: [],
             observedAttributes: [],
             observedProperties: [],
-            observed: {}
+            observed: {},
+            events: []
         };
         _allMeta.set(target, retVal);
     } else {
@@ -63,11 +67,11 @@ export function instanceMeta(target: HPCCElement): Readonly<ClassMeta> {
 
 //  Web Component Decarators  ---
 
-export type CustomElementOption = { template?: HTMLTemplate, styles?: string };
+export type CustomElementOption = { template?: HTMLTemplate, styles?: string, events?: string[] };
 
 export function customElement(name: string, opts?: CustomElementOption): (target: CustomElementConstructor) => void {
 
-    const { template = { html: "", directives: [] }, styles = "" }: CustomElementOption = opts || {};
+    const { template = { html: "", directives: [] }, styles = "", events = [] }: CustomElementOption = opts || {};
 
     function decorator(target: CustomElementConstructor): void {
         const meta = initMeta(target);
@@ -83,6 +87,7 @@ export function customElement(name: string, opts?: CustomElementOption): (target
             }
             self = Object.getPrototypeOf(self);
         }
+        meta.tag = name;
         meta.template = template;
         meta.styles = styles;
         meta.observedAttributes = allProperties
@@ -94,8 +99,10 @@ export function customElement(name: string, opts?: CustomElementOption): (target
             .map(prop => prop.name)
             ;
         meta.observed = {};
+        meta.events = events;
         allProperties.forEach(prop => meta.observed[prop.name] = prop);
         customElements?.define(name, target);
+
         return;
     }
 

@@ -1,4 +1,4 @@
-import { ChangeMap, HPCCResizeElement, css, customElement, display, html, ref, attribute, property } from "@hpcc-js/wc-core";
+import { ChangeMap, HPCCResizeElement, css, customElement, display, html, ref, attribute, property, WebComponent } from "@hpcc-js/wc-core";
 import { OJSRuntime, OMDRuntime, OJSRuntimeError, OJSSyntaxError } from "@hpcc-js/observable-md";
 import { IObserverHandle } from "@hpcc-js/util";
 
@@ -179,4 +179,12 @@ function stringify(value: any): string {
         return value.toString();
     }
     return value;
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-observable"]: WebComponent<HPCCObservableElement>;
+        }
+    }
 }

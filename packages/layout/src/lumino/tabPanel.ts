@@ -1,4 +1,4 @@
-import { customElement, css, display, html, ref, ChangeMap, attribute } from "@hpcc-js/wc-core";
+import { customElement, css, display, html, ref, ChangeMap, attribute, WebComponent } from "@hpcc-js/wc-core";
 import { TabPanel, Widget } from "@lumino/widgets";
 import { HPCCLuminoElement } from "./common";
 import { tabbar, tabpanel, widget } from "./styles";
@@ -96,5 +96,13 @@ export class HPCCTabPanelElement extends HPCCLuminoElement {
     exit() {
         Widget.detach(this._tabPanel);
         super.exit();
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-tabpanel"]: WebComponent<HPCCTabPanelElement>;
+        }
     }
 }

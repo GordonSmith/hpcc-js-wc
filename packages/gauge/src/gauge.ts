@@ -1,4 +1,4 @@
-import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref, HTMLColor } from "@hpcc-js/wc-core";
+import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, display, html, ref, HTMLColor, WebComponent } from "@hpcc-js/wc-core";
 import * as d3 from "d3";
 import { annotation, annotationCalloutElbow } from "d3-svg-annotation";
 
@@ -437,5 +437,13 @@ export class HPCCGaugeElement extends HPCCSVGElement {
     // Events  ---
 
     click() {
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-gauge"]: WebComponent<HPCCGaugeElement>;
+        }
     }
 }

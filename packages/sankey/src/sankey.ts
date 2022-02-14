@@ -1,4 +1,4 @@
-import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, HTMLColor, display, html, ref } from "@hpcc-js/wc-core";
+import { HPCCSVGElement, attribute, css, property, ChangeMap, customElement, HTMLColor, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { format as d3Format } from "d3";
 import { sankeyFunc } from "./sankeyFunc";
 
@@ -121,6 +121,14 @@ export class HPCCSankeyElement extends HPCCSVGElement {
                     height: this._svg.clientHeight
                 }
             );
+        }
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-sankey"]: WebComponent<HPCCSankeyElement>;
         }
     }
 }

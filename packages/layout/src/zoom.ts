@@ -1,4 +1,4 @@
-import { HPCCSVGElement, attribute, customElement, css, ChangeMap, html, ref, display } from "@hpcc-js/wc-core";
+import { HPCCSVGElement, attribute, customElement, css, ChangeMap, html, ref, display, WebComponent } from "@hpcc-js/wc-core";
 import * as d3 from "d3";
 
 const template = html<HPCCZoomElement>`\
@@ -77,7 +77,6 @@ export class HPCCZoomElement extends HPCCSVGElement {
 
     update(changes: ChangeMap<this>) {
         super.update(changes);
-        // this.svg.attr("viewBox", "0 0 0 0");
         this.content
             .attr("width", `${this.clientWidth}`)
             .attr("height", `${this.clientHeight}`)
@@ -93,5 +92,13 @@ export class HPCCZoomElement extends HPCCSVGElement {
             this.$emit("zoom");
         }
         this._zoom.transform(this.svg, d3.zoomIdentity.translate(this.x, this.y).scale(this.scale));
+    }
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-zoom"]: WebComponent<HPCCZoomElement, "changed">;
+        }
     }
 }

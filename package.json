@@ -117,8 +117,8 @@
     "@types/d3-transition": "^3.0.1",
     "@types/d3-zoom": "^3.0.1",
     "@types/mocha": "^9.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.11.0",
-    "@typescript-eslint/parser": "^5.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
     "auto": "^10.32.6",
     "chai": "^4.3.6",
     "copyfiles": "^2.4.1",
@@ -140,7 +140,7 @@
     "rollup-plugin-transform-tagged-template": "^0.0.3",
     "turbo": "^1.1.2",
     "typescript": "^4.5.5",
-    "vitepress": "^0.22.0"
+    "vitepress": "^0.22.2"
   },
   "repository": {
     "type": "git",

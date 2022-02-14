@@ -1,4 +1,4 @@
-import { customElement, ChangeMap, css, display, html, ref } from "@hpcc-js/wc-core";
+import { customElement, ChangeMap, css, display, html, ref, WebComponent } from "@hpcc-js/wc-core";
 import { DockPanel, Widget } from "@lumino/widgets";
 import { IMessageHandler, Message, MessageLoop } from "@lumino/messaging";
 import { HPCCLuminoElement } from "./common";
@@ -86,4 +86,12 @@ export class HPCCDockPanelElement extends HPCCLuminoElement {
         return true;
     }
 
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            ["hpcc-dockpanel"]: WebComponent<HPCCDockPanelElement, "layoutChanged">;
+        }
+    }
 }

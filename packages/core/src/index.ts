@@ -5,5 +5,6 @@ export * from "./html";
 export * from "./message";
 export * from "./panel";
 export * from "./predicates";
+export * from "./react";
 export * from "./resize";
 export * from "./svg";

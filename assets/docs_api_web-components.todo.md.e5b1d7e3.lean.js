@@ -1,0 +1,1 @@
+import{_ as e,c as o,o as t,a}from"./app.be92257f.js";const b='{"title":"todo variable","description":"","frontmatter":{},"headers":[{"level":2,"title":"todo variable","slug":"todo-variable"}],"relativePath":"docs/api/web-components.todo.md"}',r={},s=a("",4),n=[s];function c(d,i,p,_,l,h){return t(),o("div",null,n)}var v=e(r,[["render",c]]);export{b as __pageData,v as default};

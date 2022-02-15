@@ -19,31 +19,32 @@ function getGuideSidebar() {
 
 function getComponentsSidebar() {
     return [
-        // {
-        //     text: "Editors",
-        //     children: [
-        //         { text: "CodeMirror", link: "/packages/editor/src/codemirror" },
-        //     ]
-        // }, {
-        //     text: "Layouts",
-        //     children: [
-        //         { text: "Dock Panel", link: "/packages/layout/src/lumino/dockPanel" },
-        //         { text: "Drag and Zoom", link: "/packages/layout/src/zoom" },
-        //         { text: "Split Panel", link: "/packages/layout/src/lumino/splitPanel" },
-        //         { text: "Tab Panel", link: "/packages/layout/src/lumino/tabPanel" },
-        //     ]
-        // }, {
-        //     text: "Visualizations",
-        //     children: [
-        //         { text: "Gauge", link: "/packages/gauge/src/gauge" },
-        //         { text: "Half Pie", link: "/packages/pie/src/halfpie" },
-        //         { text: "Observable JS", link: "/packages/observable/src/observable" },
-        //         { text: "Pie", link: "/packages/pie/src/pie" },
-        //         { text: "Quarter Pie", link: "/packages/pie/src/quarterpie" },
-        //         { text: "Sankey", link: "/packages/sankey/src/sankey" },
-        //         { text: "Treemap", link: "/packages/treemap/src/treemap" },
-        //     ]
-        // }
+        {
+            text: "Editors",
+            children: [
+                { text: "CodeMirror", link: "/packages/editor/src/codemirror" },
+            ]
+        }, {
+            text: "Layouts",
+            children: [
+                { text: "Dock Panel", link: "/packages/layout/src/lumino/dockPanel" },
+                { text: "Drag and Zoom", link: "/packages/layout/src/zoom" },
+                { text: "Split Panel", link: "/packages/layout/src/lumino/splitPanel" },
+                { text: "Tab Panel", link: "/packages/layout/src/lumino/tabPanel" },
+            ]
+        }, {
+            text: "Visualizations",
+            children: [
+                { text: "Gauge", link: "/packages/gauge/src/gauge" },
+                { text: "Half Pie", link: "/packages/pie/src/halfpie" },
+                { text: "Observable JS", link: "/packages/observable/src/observable" },
+                { text: "Pie", link: "/packages/pie/src/pie" },
+                { text: "Quarter Pie", link: "/packages/pie/src/quarterpie" },
+                { text: "Sankey", link: "/packages/sankey/src/sankey" },
+                { text: "Treemap", link: "/packages/treemap/src/treemap" },
+            ]
+        }
+
     ];
 }
 
@@ -58,7 +59,7 @@ module.exports = {
     ],
 
     themeConfig: {
-        repo: "hpcc-systems/hpcc-js-wc",
+        repo: "GordonSmith/hpcc-js-wc",
         docsDir: "",
         docsBranch: "trunk",
         editLinks: true,
@@ -78,7 +79,7 @@ module.exports = {
             },
             {
                 text: "Release Notes",
-                link: "https://github.com/hpcc-systems/hpcc-js-wc/releases"
+                link: "https://github.com/GordonSmith/hpcc-js-wc/releases"
             }
         ],
 

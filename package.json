@@ -26,7 +26,7 @@
     "compile-root": "tsc -p ./tsconfig.json",
     "compile-workspaces": "turbo run compile",
     "compile": "run-s compile-workspaces compile-root",
-    "bundle-root": "rollup -c ./packages/rollup.config.js",
+    "bundle-root": "rollup -c ./rollup.config.js",
     "bundle-workspaces": "turbo run bundle",
     "bundle": "run-p bundle-workspaces bundle-root",
     "syntax": "turbo run compile -- --noEmit",

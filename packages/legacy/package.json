@@ -1,0 +1,36 @@
+{
+  "name": "@hpcc-js/wc-legacy",
+  "version": "0.0.0",
+  "description": "",
+  "sideEffects": false,
+  "main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
+  "jsdelivr": "dist/index.umd.min.js",
+  "unpkg": "dist/index.umd.min.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "scripts": {
+    "clean": "rimraf build dist lib* types temp tmp *.tsbuildinfo",
+    "compile": "tsc -p ./tsconfig.json",
+    "bundle": "rollup -c ../rollup.config.js",
+    "update": "npx npm-check-updates -u"
+  },
+  "dependencies": {
+    "@hpcc-js/wc-core": "0.0.0",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GordonSmith/hpcc-js-wc.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GordonSmith/hpcc-js-wc/issues"
+  },
+  "homepage": "https://github.com/GordonSmith/hpcc-js-wc#readme"
+}

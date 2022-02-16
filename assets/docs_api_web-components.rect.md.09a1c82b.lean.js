@@ -1,0 +1,1 @@
+import{_ as n,c as a,o as s,a as e}from"./app.6a85d98e.js";const h='{"title":"Rect type","description":"","frontmatter":{},"headers":[{"level":2,"title":"Rect type","slug":"rect-type"}],"relativePath":"docs/api/web-components.rect.md"}',t={},p=e("",4),o=[p];function c(r,l,i,u,_,d){return s(),a("div",null,o)}var m=n(t,[["render",c]]);export{h as __pageData,m as default};

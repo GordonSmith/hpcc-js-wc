@@ -22,7 +22,7 @@
     "@hpcc-js/wc-core": "0.0.0",
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/lang-html": "^0.19.4",
-    "@codemirror/lang-json": "^0.19.1",
+    "@codemirror/lang-json": "^0.19.2",
     "@codemirror/theme-one-dark": "^0.19.1",
     "tslib": "^2.3.1"
   },

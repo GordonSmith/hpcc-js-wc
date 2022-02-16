@@ -1,6 +1,6 @@
 import { ApiClass, ApiItem, ApiModel, ApiProperty } from "@microsoft/api-extractor-model";
 import { IndentedWriter, writeApiItem } from "./mdWriter";
-import path from 'path';
+import path from "path";
 
 function getGuideSidebar() {
     return [
@@ -119,18 +119,33 @@ module.exports = {
             const structs: { [id: string]: ApiItem } = {};
             const props: { [id: string]: ApiItem } = {};
 
-            function writeClass(struct: ApiItem, writer: IndentedWriter) {
+            let allMeta = {};
+            try {
+                allMeta = require(path.join(__dirname, "../temp/web-components.meta.json"));
+            } catch (e) {
+                //  File might not exit yet  ---
+            }
+
+            function writeAttributes(struct: ApiItem, writer: IndentedWriter, isAttribute: boolean = true): boolean {
+                let retVal = false;
                 const structClass = struct as ApiClass;
                 // writer.writeLine(struct.displayName);
                 const baseClass = structs[structClass.extendsType?.excerpt?.text?.trim()];
                 if (baseClass) {
-                    writeClass(baseClass, writer);
+                    retVal = writeAttributes(baseClass, writer, isAttribute);
                 }
+                const classMeta = allMeta[struct.displayName] ?? { observed: {} };
                 for (const prop of struct.members) {
+                    const propMeta = classMeta.observed[prop.displayName];
                     if ((prop as ApiProperty).tsdocComment) {
-                        writeApiItem(prop, { writer }, false);
+                        if (propMeta === undefined || propMeta.isAttribute === isAttribute) {
+                            if (writeApiItem(prop, { writer }, false)) {
+                                retVal = true;
+                            }
+                        }
                     }
                 }
+                return retVal;
             }
 
             md.core.ruler.before("normalize", "types", function replace(state) {
@@ -153,16 +168,24 @@ module.exports = {
                     }
                 });
 
-
                 for (const key in structs) {
                     const struct = structs[key];
                     const search = `## \`${key}\``;
                     if (state.src.indexOf(search) >= 0) {
-                        const writer = new IndentedWriter();
-                        writer.writeLine(`## Attributes`);
-                        writer.writeLine();
-                        writeClass(struct, writer);
-                        state.src = state.src.split(search).join(writer.toString());
+                        let replacement = "";
+                        const attrWriter = new IndentedWriter();
+                        attrWriter.writeLine(`## Attributes`);
+                        attrWriter.writeLine();
+                        if (writeAttributes(struct, attrWriter, true)) {
+                            replacement += attrWriter.toString();
+                        }
+                        const propWriter = new IndentedWriter();
+                        propWriter.writeLine(`## Properties`);
+                        propWriter.writeLine();
+                        if (writeAttributes(struct, propWriter, false)) {
+                            replacement += propWriter.toString();
+                        }
+                        state.src = state.src.split(search).join(replacement);
                     }
                 }
 

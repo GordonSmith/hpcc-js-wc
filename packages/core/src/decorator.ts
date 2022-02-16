@@ -37,6 +37,7 @@ export interface ClassMeta {
 }
 
 const _allMeta = new WeakMap<CustomElementConstructor, ClassMeta>();
+const _allMetaByName: { [id: string]: ClassMeta } = {};
 function initMeta(target: CustomElementConstructor): ClassMeta {
     let retVal: ClassMeta;
     if (!_allMeta.has(target)) {
@@ -51,13 +52,21 @@ function initMeta(target: CustomElementConstructor): ClassMeta {
             events: []
         };
         _allMeta.set(target, retVal);
+        _allMetaByName[target.name] = retVal;
     } else {
         retVal = _allMeta.get(target)!;
     }
     return retVal;
 }
 
-export function classMeta(target: CustomElementConstructor): Readonly<ClassMeta> {
+export function allMeta() {
+    return _allMetaByName;
+}
+
+export function classMeta(target: CustomElementConstructor | string): Readonly<ClassMeta> {
+    if (typeof target === "string") {
+        return _allMetaByName[target];
+    }
     return _allMeta.get(target)!;
 }
 

@@ -275,7 +275,7 @@ function writeNodes(docNodes: ReadonlyArray<DocNode>, context: IMarkdownEmitterC
     }
 }
 
-export function writeApiItem(apiItem: ApiItem, context: IMarkdownEmitterContext, docNodeSiblings: boolean): void {
+export function writeApiItem(apiItem: ApiItem, context: IMarkdownEmitterContext, docNodeSiblings: boolean): boolean {
     const writer: IndentedWriter = context.writer;
 
     switch (apiItem.kind) {
@@ -298,6 +298,8 @@ export function writeApiItem(apiItem: ApiItem, context: IMarkdownEmitterContext,
                 writeDocNode(property.tsdocComment?.remarksBlock, context, docNodeSiblings);
                 writer.writeLine(`:::`);
             }
+            return true;
     }
+    return false;
 }
 

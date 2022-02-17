@@ -1,0 +1,1 @@
+import{_ as a,c as e,o as t,a as s}from"./app.6a85d98e.js";const u='{"title":"Data type","description":"","frontmatter":{},"headers":[{"level":2,"title":"Data type","slug":"data-type"}],"relativePath":"docs/api/web-components.data.md"}',n={},o=s("",5),p=[o];function c(r,d,l,_,i,h){return t(),e("div",null,p)}var f=a(n,[["render",c]]);export{u as __pageData,f as default};

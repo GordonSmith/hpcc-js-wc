@@ -1,0 +1,1 @@
+import{_ as n,c as a,o as t,a as e}from"./app.6a85d98e.js";const h='{"title":"Point type","description":"","frontmatter":{},"headers":[{"level":2,"title":"Point type","slug":"point-type"}],"relativePath":"docs/api/web-components.point.md"}',s={},o=e("",4),p=[o];function c(r,i,l,_,d,u){return t(),a("div",null,p)}var m=n(s,[["render",c]]);export{h as __pageData,m as default};

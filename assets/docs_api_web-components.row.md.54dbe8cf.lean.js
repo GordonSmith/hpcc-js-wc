@@ -1,1 +1,0 @@
-import{_ as e,c as a,o as s,a as n}from"./app.6a85d98e.js";const h='{"title":"Row type","description":"","frontmatter":{},"headers":[{"level":2,"title":"Row type","slug":"row-type"}],"relativePath":"docs/api/web-components.row.md"}',t={},o=n("",4),p=[o];function c(r,l,i,_,d,u){return s(),a("div",null,p)}var k=e(t,[["render",c]]);export{h as __pageData,k as default};

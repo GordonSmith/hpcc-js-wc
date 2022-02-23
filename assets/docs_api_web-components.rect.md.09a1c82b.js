@@ -1,7 +1,0 @@
-import{_ as n,c as a,o as s,a as e}from"./app.6a85d98e.js";const h='{"title":"Rect type","description":"","frontmatter":{},"headers":[{"level":2,"title":"Rect type","slug":"rect-type"}],"relativePath":"docs/api/web-components.rect.md"}',t={},p=e(`<p><a href="./">Home</a> &gt; <a href="./web-components.html">@hpcc-js/web-components</a> &gt; <a href="./web-components.rect.html">Rect</a></p><h2 id="rect-type" tabindex="-1">Rect type <a class="header-anchor" href="#rect-type" aria-hidden="true">#</a></h2><p><b>Signature:</b></p><div class="language-typescript"><pre><code><span class="token keyword">export</span> <span class="token keyword">declare</span> <span class="token keyword">type</span> <span class="token class-name">Rect</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
-    x<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
-    y<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
-    width<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
-    height<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div>`,4),o=[p];function c(r,l,i,u,_,d){return s(),a("div",null,o)}var m=n(t,[["render",c]]);export{h as __pageData,m as default};
